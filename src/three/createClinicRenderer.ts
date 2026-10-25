@@ -77,7 +77,7 @@ export function createClinicRenderer(options: Options): ClinicRendererAPI {
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.95;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -95,9 +95,9 @@ export function createClinicRenderer(options: Options): ClinicRendererAPI {
   host.appendChild(canvas);
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(options.mission.theme.soft);
-  const hemisphere = new THREE.HemisphereLight(0xf5fbf3, 0xa2b294, 1.8);
+  const hemisphere = new THREE.HemisphereLight(0xf3fcff, 0x729b91, 1.25);
   scene.add(hemisphere);
-  const sun = new THREE.DirectionalLight(0xfff7e5, 2.3);
+  const sun = new THREE.DirectionalLight(0xfff7e5, 2.8);
   sun.position.set(-7, 18, 12);
   sun.castShadow = true;
   sun.shadow.mapSize.set(1024, 1024);

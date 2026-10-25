@@ -157,7 +157,7 @@ export default function App() {
             </span>
             <span>
               <b>
-                外勤養成
+                營一外勤養成
               </b>
               <small>營一部外勤產品推廣情境訓練</small>
             </span>

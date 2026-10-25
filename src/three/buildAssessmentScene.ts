@@ -22,8 +22,8 @@ export function buildAssessmentScene(mission: VisitMission) {
   box(5.3,.2,4.4,0,-.13,0,material(0xd5e3de),'assessment-platform');
   box(5.12,.04,4.22,0,-.01,0,ivory);
   for(let i=-2;i<=2;i++)box(.012,.006,4.2,i,.017,0,material(0xe4e8e1));
-  box(5.3,2.7,.13,0,1.31,-2.13,material(mission.kind==='training'?0xcadcd9:0xd5e6df));
-  box(.13,2.7,4.15,-2.58,1.31,-.02,material(0xe1e9e2));
+  box(5.3,2.7,.13,0,1.31,-2.13,material(mission.kind==='training'?0x77c9be:0x91cbbf));
+  box(.13,2.7,4.15,-2.58,1.31,-.02,material(0xd5eee1));
   box(5.25,.065,.18,0,2.69,-2.12,ivory);
   box(.18,.065,4.3,-2.58,2.69,0,ivory);
   box(2.95,.13,1.18,.03,.77,.08,wood,'assessment-desk');

@@ -6,14 +6,14 @@ import { buildAssessmentScene } from './buildAssessmentScene';
 export interface AssessmentState { question:number; selected:number|null; submitted:boolean; correct:boolean; reduced:boolean; }
 export function createAssessmentRenderer(host:HTMLElement,mission:VisitMission,state:{current:AssessmentState}) {
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
   renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
   const canvas=renderer.domElement;canvas.dataset.testid='assessment-3d-canvas';canvas.setAttribute('role','img');canvas.setAttribute('aria-label','外勤與'+mission.doctor.name+'面對面交流的3D考核場景');host.appendChild(canvas);
-  const scene=new THREE.Scene();scene.background=new THREE.Color(0xeaf2ef);
+  const scene=new THREE.Scene();scene.background=new THREE.Color(0xdcf5ed);
   const model=buildAssessmentScene(mission);scene.add(model.root);
-  scene.add(new THREE.HemisphereLight(0xffffff,0xa5bdb2,2));
+  scene.add(new THREE.HemisphereLight(0xf6fcff,0x719b91,1.3));
   const key=new THREE.DirectionalLight(0xfff5de,3.1);key.position.set(3,7,4);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-6;key.shadow.camera.right=6;key.shadow.camera.top=6;key.shadow.camera.bottom=-6;key.shadow.bias=-.001;scene.add(key);
-  const fill=new THREE.DirectionalLight(0xe4f4ff,1.2);fill.position.set(-4,3,1);scene.add(fill);
+  const fill=new THREE.DirectionalLight(0xe4f4ff,.65);fill.position.set(-4,3,1);scene.add(fill);
   const camera=new THREE.OrthographicCamera(-4,4,3,-3,.1,60);
   const controls=new OrbitControls(camera,canvas);controls.target.set(0,1.18,0);controls.enablePan=false;controls.enableDamping=true;controls.dampingFactor=.12;controls.minPolarAngle=.62;controls.maxPolarAngle=1.3;controls.minZoom=.8;controls.maxZoom=1.65;
   const reset=()=>{camera.position.set(6.5,5.0,8.1);camera.zoom=host.clientWidth<480?1.14:1;camera.updateProjectionMatrix();controls.target.set(0,host.clientHeight<=280?1.35:1.18,0);controls.update();};reset();

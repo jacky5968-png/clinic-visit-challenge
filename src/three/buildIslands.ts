@@ -6,7 +6,7 @@ export function buildIslands(){
  const root=new THREE.Group(),islands:THREE.Group[]=[],bridges:THREE.Group[]=[],markers:THREE.Mesh[]=[],flags:THREE.Mesh[]=[];
  const materials=new Map<number,THREE.MeshStandardMaterial>();
  const material=(color:number)=>{let m=materials.get(color);if(!m){m=new THREE.MeshStandardMaterial({color,roughness:.88,flatShading:true});materials.set(color,m);}return m;};
- const cream=material(0xfff3d6),white=material(0xf5f4e9),dark=material(0x294b59),wood=material(0xb48655),grass=material(0x9dbf7d),trunk=material(0x8c7155);
+ const cream=material(0xffedc3),white=material(0xfffdf4),dark=material(0x183e58),wood=material(0xb87838),grass=material(0x58b969),trunk=material(0x83532e);
  function box(p:THREE.Object3D,w:number,h:number,d:number,x:number,y:number,z:number,m:THREE.Material){
   const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;p.add(o);return o;
  }
@@ -25,7 +25,7 @@ export function buildIslands(){
  }
  function tree(p:THREE.Object3D,x:number,z:number,s=1,autumn=false){
   cyl(p,.07*s,.65*s,x,1.35+.3*s,z,trunk,5);
-  const leaf=new THREE.Mesh(new THREE.ConeGeometry(.42*s,1.05*s,6),material(autumn?0xe2a54e:0x5c965e));leaf.position.set(x,1.35+1.02*s,z);leaf.castShadow=true;p.add(leaf);
+  const leaf=new THREE.Mesh(new THREE.ConeGeometry(.42*s,1.05*s,6),material(autumn?0xffb72e:0x288e49));leaf.position.set(x,1.35+1.02*s,z);leaf.castShadow=true;p.add(leaf);
  }
  function desk(p:THREE.Object3D,x:number,z:number,c:THREE.Material){
   box(p,.58,.08,.4,x,.47,z,c);box(p,.08,.36,.28,x,.25,z,wood);box(p,.28,.23,.13,x,.26,z+.35,white);box(p,.24,.025,.2,x,.525,z,white);
@@ -36,8 +36,8 @@ export function buildIslands(){
  function bed(p:THREE.Object3D,x:number,z:number,c:THREE.Material){
   box(p,1.4,.2,.58,x,.53,z,c);box(p,.3,.1,.48,x-.48,.68,z,white);for(const dx of [-.52,.52])box(p,.07,.36,.42,x+dx,.28,z,dark);
  }
- const sea=new THREE.Mesh(new THREE.PlaneGeometry(170,170),new THREE.MeshBasicMaterial({color:0x9bd3de,toneMapped:false}));sea.rotation.x=-Math.PI/2;sea.position.y=-.13;sea.receiveShadow=true;root.add(sea);
- const foam=material(0xc9e8e6),sand=material(0xe5d2a6),cliff=material(0xe9e4cd),blueCliff=material(0x8cbdc9);
+ const sea=new THREE.Mesh(new THREE.PlaneGeometry(170,170),new THREE.MeshBasicMaterial({color:0x40bfdf,toneMapped:false}));sea.rotation.x=-Math.PI/2;sea.position.y=-.13;sea.receiveShadow=true;root.add(sea);
+ const foam=material(0xb9f2ec),sand=material(0xf1d08a),cliff=material(0xfff0cd),blueCliff=material(0x3098b1);
  sevenStages.forEach((stage,index)=>{
   const g=new THREE.Group();g.name='island-'+stage.id;g.userData.stageId=stage.id;g.scale.setScalar(ISLAND_SCENE_SCALE);root.add(g);islands.push(g);
   const color=material(islandThemes[stage.id].color);

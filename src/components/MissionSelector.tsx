@@ -71,7 +71,7 @@ export const MissionSelector=forwardRef<IslandDepartureHandle,MissionSelectorPro
  }
  return <section className="mission-selector island-selector" aria-label="七關任務選擇">
   <div className="mission-selector-heading island-heading"><div><span className="eyebrow">FIELD TRAINING / SEVEN ISLANDS</span>
-   <h2>七島外勤養成</h2><p>每項{QUESTION_COUNT}題全對合格，累積{PRODUCTS_TO_PASS_STAGE}項不同產品／主題，解鎖下一關。</p></div>
+   <h2>營一外勤養成</h2><p>每項{QUESTION_COUNT}題全對合格，累積{PRODUCTS_TO_PASS_STAGE}項不同產品／主題，解鎖下一關。</p></div>
    <div className="mission-progress-count" role="status" data-testid="mission-progress-count"><b>{completed.length}<small> / 7</small></b><span>已通關島嶼</span></div>
   </div>
   <div className="island-toolbar" aria-label="島嶼地圖工具">
@@ -122,7 +122,6 @@ export const MissionSelector=forwardRef<IslandDepartureHandle,MissionSelectorPro
    </aside>
   </div>
   {(status==='fallback'||notice)&&<p className="mission-storage-note" role="status">{notice||'此裝置無法顯示3D島嶼，已切換關卡清單；題庫與挑戰照常使用。'}</p>}
-  <p className="mission-local-note">通關紀錄僅保存在此瀏覽器。題庫內容更新後會重新核對；原三診所紀錄保留。</p>
   {legacyProgressAvailable&&<p className="mission-storage-note" role="status">規則已更新：舊版5題通關紀錄仍保留，但不列入新版{QUESTION_COUNT}題合格進度。請重新完成每關至少{PRODUCTS_TO_PASS_STAGE}項考驗。</p>}
   {!storageAvailable&&<p className="mission-storage-note" role="status">此瀏覽器無法儲存，仍可完成本次七關；關閉後進度不保留。</p>}
  </section>;
