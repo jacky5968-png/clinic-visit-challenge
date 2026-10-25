@@ -55,4 +55,15 @@ body{background:radial-gradient(ellipse at 0 0,#c4f2ff 0,transparent 48%),radial
 .journey-icon{box-shadow:inset 0 2px 0 #fff,0 4px 0 #9fcbb8,0 8px 15px #17574614}
 @media(min-width:1000px){.stage-selection-screen .archipelago{background:transparent;box-shadow:none}.stage-selection-screen .archipelago-viewport{border-color:#268da7;box-shadow:0 5px 0 #25869e,0 14px 28px #126c8625}}
 @media(max-width:600px){.brand b{font-size:21px}.brand small{letter-spacing:0}.brand{gap:10px}.brand-mark{width:74px;height:74px}.island-selector .island-heading h2{letter-spacing:0}.card-picker-layout .product-card{box-shadow:0 3px 0 #b9d5e2,0 7px 12px #17446a12}}
+/* Reserve separate tracks for the brand and full-size touch controls. */
+@media(max-width:760px){
+ .site-header{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px}
+ .site-header .brand{width:auto;min-width:0}
+ .site-header nav{gap:8px;min-width:96px;justify-self:end}
+ .site-header .icon-button{width:44px;min-width:44px;height:44px}
+}
+@media(max-width:374px){
+ .site-header{grid-template-columns:minmax(0,1fr)}
+ .site-header .brand{width:100%}
+}
 @media(prefers-reduced-motion:reduce){.button.primary:active:not(:disabled){translate:none}}
