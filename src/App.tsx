@@ -187,10 +187,6 @@ export default function App() {
             >
               {sound.enabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
             </button>
-            <span className="local-badge">
-              <i />
-              本機體驗版
-            </span>
           </nav>
         </header>
         {state.screen !== 'home' && (

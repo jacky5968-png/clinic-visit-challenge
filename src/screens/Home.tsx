@@ -44,10 +44,6 @@ export function Home({
             </button>
           </div>
           <div className="hero-meta">
-            <span>
-              <i />
-              本機訓練版
-            </span>
             <span>無需登入</span>
             <span>每項約 5 分鐘</span>
           </div>
