@@ -8,7 +8,7 @@ import photos from '../src/data/productPhotos.json';
 
 describe('實際產品照片', () => {
   it('每個照片檔都存在，複本SHA-256與核對紀錄一致', () => {
-    const audit = JSON.parse(fs.readFileSync('output/product-photo-audit.json', 'utf8'));
+    const audit = JSON.parse(fs.readFileSync('tests/fixtures/product-photo-audit.json', 'utf8'));
     expect(Object.keys(photos)).toHaveLength(audit.mappedItems);
     for (const record of audit.records) {
       const file = fs.readFileSync(path.resolve(record.target));
@@ -38,7 +38,7 @@ describe('實際產品照片', () => {
     ]);
     expect(p[0].caption).toContain('2mg');
     expect(p[1].caption).toContain('4mg');
-    const audit = JSON.parse(fs.readFileSync('output/product-photo-audit.json', 'utf8'));
+    const audit = JSON.parse(fs.readFileSync('tests/fixtures/product-photo-audit.json', 'utf8'));
     expect(
       audit.records.find((r: { target: string }) =>
         r.target.replaceAll('\\', '/').endsWith('/pitastatin-2mg.jpg'),
@@ -61,7 +61,7 @@ describe('實際產品照片', () => {
     expect(findLocalProductPhotos('Bistin')![0].caption).not.toBe('changed');
   });
   it('照片對照不改寫正式CSV中的題幹、選項、答案及有效題數', () => {
-    const csv = fs.readFileSync('output/official-quiz.csv', 'utf8');
+    const csv = fs.readFileSync('tests/fixtures/product-photos-source.csv', 'utf8');
     const data = parseQuizCsv(csv);
     expect(data.products).toHaveLength(80);
     expect(data.questions).toHaveLength(1428);
