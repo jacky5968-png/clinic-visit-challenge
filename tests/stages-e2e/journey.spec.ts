@@ -7,7 +7,7 @@ const stages=[
  {id:'new-training',name:'新訓中心',npc:'外勤主管',tags:['新人必修'],target:'新訓考場',action:'與外勤主管交流',challenge:'開始新人必修考驗'},
  {id:'product-names',name:'認識產品',npc:'產品教官',tags:['商品名測驗'],target:'產品教學區',action:'與產品教官交流',challenge:'開始商品名測驗'},
  {id:'ent',name:'耳鼻喉科診所',npc:'林醫師',tags:['呼吸系統'],target:'醫師診間',action:'進入診間',challenge:'接受醫師挑戰'},
- {id:'pharmacy-client',name:'藥局客戶',npc:'謝藥師',tags:['自費'],target:'藥局櫃台',action:'與謝藥師交流',challenge:'接受藥師挑戰'},
+ {id:'pharmacy-client',name:'生達大藥局',npc:'謝藥師',tags:['自費'],target:'藥局櫃台',action:'與謝藥師交流',challenge:'接受藥師挑戰'},
  {id:'gastro',name:'胃腸科診所',npc:'王醫師',tags:['胃腸藥'],target:'醫師診間',action:'進入診間',challenge:'接受醫師挑戰'},
  {id:'orthopedics',name:'骨科診所',npc:'李醫師',tags:['肌肉骨骼'],target:'醫師診間',action:'進入診間',challenge:'接受醫師挑戰'},
  {id:'family',name:'家醫科診所',npc:'陳醫師',tags:['糖尿病','高血壓','高血脂','泌尿科','痛風'],target:'醫師診間',action:'進入診間',challenge:'接受醫師挑戰'},
