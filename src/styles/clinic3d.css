@@ -1,0 +1,418 @@
+.clinic3d-explorer {
+  background: #eff4e9;
+}
+.clinic3d-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 17px;
+  background: #fafff4;
+  border-bottom: 1px solid #dce6d3;
+}
+.three-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #456e56;
+}
+.three-status b {
+  white-space: nowrap;
+}
+.three-status small {
+  font-size: 14px;
+  color: #42566b;
+}
+.camera-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.camera-actions button {
+  width: 35px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d6e2cd;
+  background: #fff;
+  border-radius: 6px;
+  color: #42566b;
+  transition: background 0.15s;
+}
+.camera-actions button:hover:not(:disabled) {
+  background: #e8f0dd;
+}
+.camera-actions output {
+  font-size: 14px;
+  color: #42566b;
+  min-width: 38px;
+  text-align: center;
+}
+.camera-divider {
+  height: 19px;
+  width: 1px;
+  background: #d8e4cc;
+  margin: 0 4px;
+}
+.clinic3d-stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  min-height: 420px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.three-canvas-mount {
+  position: absolute;
+  inset: 0;
+}
+.three-canvas-mount canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+  outline-offset: -4px;
+}
+.three-canvas-mount canvas:active {
+  cursor: grabbing;
+}
+.clinic3d-stage .three-hotspot {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -100%);
+  margin: 0;
+  min-height: 39px;
+  padding: 8px 11px;
+  border: 1px solid #c7d9bb;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 7px;
+  font-size: 14px;
+  white-space: nowrap;
+  background: #fcfff6ed;
+  color: #3f674e;
+  box-shadow: 0 3px 12px #173e2920;
+  visibility: hidden;
+}
+.three-hotspot > span {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e8f1dc;
+  color: #42566b;
+  font-size: 14px;
+}
+.three-hotspot > b {
+  font-weight: 600;
+}
+.clinic3d-stage .three-hotspot.hotspot-doctor {
+  background: #1d5549;
+  border-color: #1d5549;
+  color: #fff;
+}
+.clinic3d-stage .three-hotspot.hotspot-doctor > span {
+  background: #3e755a;
+  color: #42566b;
+}
+.clinic3d-stage .three-hotspot.current {
+  border-color: #8dad76;
+}
+.clinic3d-stage .three-hotspot:disabled {
+  opacity: 0.6;
+}
+.scene3d-player-tag {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+  background: #2c7565;
+  border: 1px solid #d9e9c7;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  visibility: hidden;
+}
+.three-scene-caption {
+  position: absolute;
+  left: 20px;
+  bottom: 16px;
+  pointer-events: none;
+  color: #42566b;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+}
+.three-scene-caption > span {
+  display: block;
+  font-size: 14px;
+  margin-top: 7px;
+  letter-spacing: 1px;
+  color: #42566b;
+}
+.three-loading,
+.three-loading-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 350px;
+  background: #eff4e9;
+  color: #42566b;
+  font-size: 14px;
+}
+.three-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+.three-fallback {
+  padding: 15px 20px;
+  background: #fff2e5;
+  color: #42566b;
+  font-size: 14px;
+  line-height: 1.8;
+  border-bottom: 1px solid #ecd7be;
+}
+.free-walk-controls {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 20px;
+  border-top: 1px solid #dce6d3;
+  background: #f9fdf2;
+}
+.walk-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 34px);
+  grid-template-rows: repeat(2, 34px);
+  gap: 3px;
+}
+.walk-pad button {
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 1px solid #c7d9bb;
+  border-radius: 6px;
+  color: #456e56;
+  touch-action: none;
+  user-select: none;
+}
+.walk-pad button:active {
+  background: #d8e9c6;
+}
+.walk-up {
+  grid-column: 2;
+}
+.walk-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+.walk-down {
+  grid-column: 2;
+  grid-row: 2;
+}
+.walk-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+.walk-instructions {
+  min-width: 0;
+  color: #456e56;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.walk-instructions span,
+.walk-instructions small {
+  display: block;
+  font-size: 14px;
+  color: #42566b;
+}
+.proximity-action {
+  min-width: 145px;
+  display: grid;
+  gap: 7px;
+  font-size: 14px;
+  color: #42566b;
+}
+.proximity-action.available {
+  color: #315c49;
+}
+.proximity-action .button {
+  min-height: 37px;
+  padding: 9px 12px;
+  font-size: 14px;
+  gap: 7px;
+}
+.proximity-action kbd {
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid #ffffff60;
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+.clinic3d-explorer > .clinic-minimap {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: auto;
+  margin: 0 15px 14px;
+  padding: 11px 16px;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0 18px;
+  box-shadow: none;
+  background: #f9fdf2;
+}
+.clinic3d-explorer .minimap-heading {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 14px;
+}
+.clinic3d-explorer .clinic-minimap svg:not(.lucide) {
+  grid-column: 1;
+  grid-row: 2;
+  height: 62px;
+  margin: 2px 0;
+}
+.clinic3d-explorer .minimap-destinations {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+.clinic3d-explorer .minimap-destinations button {
+  min-height: 43px;
+  justify-content: center;
+  border: 1px solid #e1ead7;
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 8px 5px;
+}
+@media (max-width: 1000px) {
+  .three-status {
+    flex-wrap: wrap;
+  }
+  .three-status small {
+    width: 100%;
+    padding-left: 14px;
+  }
+  .clinic3d-toolbar {
+    gap: 9px;
+  }
+}
+@media (max-width: 760px) {
+  .free-walk-controls {
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px 12px;
+  }
+  .walk-instructions {
+    font-size: 14px;
+  }
+  .walk-instructions span,
+  .walk-instructions small {
+    font-size: 14px;
+  }
+  .proximity-action {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+  }
+  .proximity-action .button {
+    white-space: nowrap;
+  }
+  .clinic3d-stage {
+    aspect-ratio: 1 / 1;
+    min-height: 350px;
+  }
+  .clinic3d-toolbar {
+    padding: 12px 10px;
+    justify-content: center;
+  }
+  .three-status {
+    justify-content: center;
+    width: 100%;
+    font-size: 14px;
+  }
+  .three-status small {
+    padding: 0;
+    text-align: center;
+    font-size: 14px;
+  }
+  .camera-actions {
+    gap: 3px;
+    justify-content: center;
+  }
+  .camera-actions button {
+    width: 34px;
+    height: 40px;
+  }
+  .camera-actions output {
+    min-width: 34px;
+    font-size: 14px;
+  }
+  .camera-divider {
+    display: none;
+  }
+  .clinic3d-stage .three-hotspot {
+    padding: 7px 8px;
+    gap: 5px;
+    min-height: 39px;
+    font-size: 14px;
+  }
+  .three-hotspot > span {
+    height: 16px;
+    width: 16px;
+  }
+  .three-hotspot svg {
+    height: 12px;
+    width: 12px;
+  }
+  .scene3d-player-tag {
+    font-size: 14px;
+  }
+  .three-scene-caption {
+    bottom: 13px;
+    left: 13px;
+    font-size: 14px;
+  }
+  .clinic3d-explorer > .clinic-minimap {
+    grid-template-columns: 95px 1fr;
+    gap: 0 10px;
+    margin: 0 10px 12px;
+    padding: 10px;
+  }
+  .clinic3d-explorer .minimap-destinations {
+    grid-template-columns: 1fr;
+    gap: 3px;
+    padding: 0;
+  }
+  .clinic3d-explorer .minimap-destinations button {
+    min-height: 35px;
+    font-size: 14px;
+    padding: 6px 5px;
+    justify-content: flex-start;
+  }
+  .clinic3d-explorer .minimap-heading {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 14px;
+    padding: 0;
+  }
+  .clinic3d-explorer .clinic-minimap svg:not(.lucide) {
+    height: 78px;
+    align-self: start;
+  }
+}

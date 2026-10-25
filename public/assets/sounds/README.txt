@@ -1,0 +1,1 @@
+V1音效由 Web Audio API 即時合成，預設關閉，不依賴外部音檔。可於 src/hooks/useSound.ts 替換為授權音檔。

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "demo-1",
+    "productId": "demo",
+    "prompt": "在這次拜訪中，介紹的示範產品名稱是什麼？",
+    "options": ["澄心示範錠", "舒眠示範液", "安康示範膠囊", "營養示範粉"],
+    "correctIndex": 0,
+    "explanation": "本次選擇的是「澄心示範錠」，僅供操作訓練，並非真實藥品。",
+    "explanationReviewed": true
+  },
+  {
+    "id": "demo-2",
+    "productId": "demo",
+    "prompt": "醫師詢問產品的真實適應症時，應以哪一種資料為依據？",
+    "options": ["個人猜測", "未註明來源的網路留言", "經核准仿單與公司審核教材", "其他產品的廣告"],
+    "correctIndex": 2,
+    "explanation": "產品資訊應回到經核准仿單及公司審核教材確認。此題不提供任何真實藥品的適應症。",
+    "explanationReviewed": true
+  },
+  {
+    "id": "demo-3",
+    "productId": "demo",
+    "prompt": "這次醫師挑戰一共需要回答幾道問題？",
+    "options": ["3題", "5題", "8題", "10題"],
+    "correctIndex": 1,
+    "explanation": "每次挑戰共5題，每題20分，全部答對才能通關。",
+    "explanationReviewed": true
+  },
+  {
+    "id": "demo-4",
+    "productId": "demo",
+    "prompt": "遇到尚未確認的產品用法用量，適當的回應是什麼？",
+    "options": [
+      "自行推測給藥方式",
+      "直接套用別的產品用量",
+      "依照印象回答",
+      "查證核准資料後再回覆醫師"
+    ],
+    "correctIndex": 3,
+    "explanation": "未確認的內容需查證後再回覆，不應自行編造用法用量。",
+    "explanationReviewed": true
+  },
+  {
+    "id": "demo-5",
+    "productId": "demo",
+    "prompt": "要完成「外勤養成V3」的這次挑戰，必須達成哪個條件？",
+    "options": ["只要走進診間", "答對3題即可", "5題全部答對，取得100分", "完成任意一題"],
+    "correctIndex": 2,
+    "explanation": "五題全部答對，總分100分，才會顯示挑戰成功。",
+    "explanationReviewed": true
+  }
+]

@@ -1,0 +1,6 @@
+product,ingredient,question,optionA,optionB,optionC,optionD,answer,explanation,explanationReviewed
+CSV示範產品,虛構成分,本局挑戰有幾題？,3題,5題,8題,10題,B,每局5題。,true
+CSV示範產品,虛構成分,每題幾分？,10分,15分,20分,25分,C,每題20分。,true
+CSV示範產品,虛構成分,通關分數是多少？,40分,60分,80分,100分,D,五題全對100分。,true
+CSV示範產品,虛構成分,如何移動到診間？,點擊醫師診間,按方向鍵,搖晃手機,按音量鍵,A,點擊目的地後自動移動。,true
+CSV示範產品,虛構成分,送出答案後可以修改嗎？,可以隨時修改,只可修改一次,不可修改,可修改三次,C,送出後鎖定答案。,true

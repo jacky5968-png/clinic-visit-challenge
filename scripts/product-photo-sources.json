@@ -1,0 +1,124 @@
+{
+  "localRoot": "../產品照片",
+  "supplementRoots": {
+    "seminar": "C:/Users/acer/我的雲端硬碟/生達2026/啄木鳥seminar/產品照片",
+    "training": "C:/Users/acer/我的雲端硬碟/生達2026/2026月初會/202606月初會/教育訓練"
+  },
+  "products": {
+    "優乳鈣": [
+      {
+        "file": "All Right.jpg",
+        "target": "all-right.jpg",
+        "caption": "包裝標示：All-Right Calcium 優乳鈣"
+      }
+    ],
+    "Amlobin-O": [
+      { "file": "Amlobin-O.jpg", "target": "amlobin-o.jpg", "caption": "包裝標示：5/40mg" }
+    ],
+    "Bistin": [{ "file": "Bistin.jpg", "target": "bistin.jpg", "caption": "包裝標示：20mg" }],
+    "Co-Midis": [
+      { "file": "Co-Midis.jpg", "target": "co-midis.jpg", "caption": "包裝標示：80/5mg" }
+    ],
+    "Dalisoon": [{ "file": "Dalisoon.jpg", "target": "dalisoon.jpg", "caption": "包裝標示：5mg" }],
+    "Eufan Sol.": [
+      {
+        "file": "Eufan 60ml.jpg",
+        "target": "eufan-solution-60ml.jpg",
+        "caption": "包裝標示：優喉液 60mL；非錠劑"
+      }
+    ],
+    "Febuton": [
+      { "file": "Febuton.jpg", "target": "febuton-40mg.jpg", "caption": "包裝標示：40mg" },
+      { "file": "Febuton 80mg.jpg", "target": "febuton-80mg.jpg", "caption": "包裝標示：80mg" }
+    ],
+    "Lecipam": [{ "file": "Lecipam.jpg", "target": "lecipam.jpg", "caption": "包裝標示：10mg" }],
+    "Lonfilis": [
+      { "file": "Lonfilis 5mg.jpg", "target": "lonfilis-5mg.jpg", "caption": "包裝標示：5mg" }
+    ],
+    "Nebipress": [
+      { "file": "Nebipress.jpg", "target": "nebipress.jpg", "caption": "包裝標示：5mg" }
+    ],
+    "Panzolec 20": [
+      {
+        "file": "Panzolec 20mg.jpg",
+        "target": "panzolec-20mg.jpg",
+        "caption": "包裝標示：20mg；7錠包裝"
+      }
+    ],
+    "Panzolec 40": [
+      {
+        "file": "Panzolec 40mg.jpg",
+        "target": "panzolec-40mg.jpg",
+        "caption": "包裝標示：40mg；14錠包裝"
+      }
+    ],
+    "Pitastatin": [
+      {
+        "file": "Pitastatin 4mg.jpg",
+        "target": "pitastatin-2mg.jpg",
+        "caption": "包裝實際標示：2mg（依包裝核對）",
+        "note": "來源檔名寫4mg，但包裝實際標示2mg；只依包裝內容命名複本，不修改來源檔。"
+      },
+      {
+        "file": "Pitastatin 2mg.jpg",
+        "target": "pitastatin-4mg.jpg",
+        "caption": "包裝實際標示：4mg（依包裝核對）",
+        "note": "來源檔名寫2mg，但包裝實際標示4mg；只依包裝內容命名複本，不修改來源檔。"
+      }
+    ],
+    "Scrat": [{ "file": "Scrat.jpg", "target": "scrat.jpg", "caption": "包裝標示：10mL × 4包" }],
+    "Sigtamet": [
+      { "file": "Sigtamet.jpg", "target": "sigtamet.jpg", "caption": "包裝標示：50/500mg" }
+    ],
+    "Tamlosin 0.4": [
+      {
+        "file": "Tamlosin 04mg.jpg",
+        "target": "tamlosin-0-4mg.jpg",
+        "caption": "包裝標示：0.4mg；非 Tamlosin D"
+      }
+    ],
+    "Telmisa": [{ "file": "Telmisa.jpg", "target": "telmisa.jpg", "caption": "包裝標示：80mg" }],
+    "Vidatin": [
+      { "file": "Vidatin.jpg", "target": "vidatin.jpg", "caption": "包裝標示：50mg；非 Vildamet" }
+    ],
+    "Vildamet": [
+      {
+        "file": "Vildamet.jpg",
+        "target": "vildamet.jpg",
+        "caption": "包裝標示：50/500mg；非 Vidatin"
+      }
+    ],
+    "Wellnitin OD": [
+      {
+        "file": "Wellnitin.jpg",
+        "target": "wellnitin-odt.jpg",
+        "caption": "包裝標示：Wellnitin ODT 50mg 口溶錠",
+        "note": "題庫產品名為Wellnitin OD，包裝為Wellnitin ODT，依相同商品及口溶劑型對應，保留原題庫名稱。"
+      }
+    ],
+    "Apolam": [
+      {
+        "root": "training",
+        "file": "Apolam-1000錠盒.png",
+        "target": "apolam-0-5mg.png",
+        "caption": "包裝標示：0.5mg；1,000錠盒裝"
+      }
+    ],
+    "Shielin Powder": [
+      {
+        "root": "seminar",
+        "file": "Shielin Powder.jpg",
+        "target": "shielin-powder.jpg",
+        "caption": "本機速備粉產品照片"
+      }
+    ],
+    "Deherp Tab.": [
+      {
+        "root": "seminar",
+        "file": "Deherp Tab-1.jpg",
+        "target": "deherp-tablet-200mg.jpg",
+        "caption": "包裝標示：200mg 錠劑；非 Deherp Cream"
+      }
+    ]
+  }
+}

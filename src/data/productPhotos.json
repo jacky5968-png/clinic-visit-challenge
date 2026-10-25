@@ -1,0 +1,148 @@
+{
+  "優乳鈣": [
+    {
+      "src": "/assets/products/local/all-right.jpg",
+      "caption": "包裝標示：All-Right Calcium 優乳鈣"
+    }
+  ],
+  "Amlobin-O": [
+    {
+      "src": "/assets/products/local/amlobin-o.jpg",
+      "caption": "包裝標示：5/40mg"
+    }
+  ],
+  "Bistin": [
+    {
+      "src": "/assets/products/local/bistin.jpg",
+      "caption": "包裝標示：20mg"
+    }
+  ],
+  "Co-Midis": [
+    {
+      "src": "/assets/products/local/co-midis.jpg",
+      "caption": "包裝標示：80/5mg"
+    }
+  ],
+  "Dalisoon": [
+    {
+      "src": "/assets/products/local/dalisoon.jpg",
+      "caption": "包裝標示：5mg"
+    }
+  ],
+  "Eufan Sol.": [
+    {
+      "src": "/assets/products/local/eufan-solution-60ml.jpg",
+      "caption": "包裝標示：優喉液 60mL；非錠劑"
+    }
+  ],
+  "Febuton": [
+    {
+      "src": "/assets/products/local/febuton-40mg.jpg",
+      "caption": "包裝標示：40mg"
+    },
+    {
+      "src": "/assets/products/local/febuton-80mg.jpg",
+      "caption": "包裝標示：80mg"
+    }
+  ],
+  "Lecipam": [
+    {
+      "src": "/assets/products/local/lecipam.jpg",
+      "caption": "包裝標示：10mg"
+    }
+  ],
+  "Lonfilis": [
+    {
+      "src": "/assets/products/local/lonfilis-5mg.jpg",
+      "caption": "包裝標示：5mg"
+    }
+  ],
+  "Nebipress": [
+    {
+      "src": "/assets/products/local/nebipress.jpg",
+      "caption": "包裝標示：5mg"
+    }
+  ],
+  "Panzolec 20": [
+    {
+      "src": "/assets/products/local/panzolec-20mg.jpg",
+      "caption": "包裝標示：20mg；7錠包裝"
+    }
+  ],
+  "Panzolec 40": [
+    {
+      "src": "/assets/products/local/panzolec-40mg.jpg",
+      "caption": "包裝標示：40mg；14錠包裝"
+    }
+  ],
+  "Pitastatin": [
+    {
+      "src": "/assets/products/local/pitastatin-2mg.jpg",
+      "caption": "包裝實際標示：2mg（依包裝核對）"
+    },
+    {
+      "src": "/assets/products/local/pitastatin-4mg.jpg",
+      "caption": "包裝實際標示：4mg（依包裝核對）"
+    }
+  ],
+  "Scrat": [
+    {
+      "src": "/assets/products/local/scrat.jpg",
+      "caption": "包裝標示：10mL × 4包"
+    }
+  ],
+  "Sigtamet": [
+    {
+      "src": "/assets/products/local/sigtamet.jpg",
+      "caption": "包裝標示：50/500mg"
+    }
+  ],
+  "Tamlosin 0.4": [
+    {
+      "src": "/assets/products/local/tamlosin-0-4mg.jpg",
+      "caption": "包裝標示：0.4mg；非 Tamlosin D"
+    }
+  ],
+  "Telmisa": [
+    {
+      "src": "/assets/products/local/telmisa.jpg",
+      "caption": "包裝標示：80mg"
+    }
+  ],
+  "Vidatin": [
+    {
+      "src": "/assets/products/local/vidatin.jpg",
+      "caption": "包裝標示：50mg；非 Vildamet"
+    }
+  ],
+  "Vildamet": [
+    {
+      "src": "/assets/products/local/vildamet.jpg",
+      "caption": "包裝標示：50/500mg；非 Vidatin"
+    }
+  ],
+  "Wellnitin OD": [
+    {
+      "src": "/assets/products/local/wellnitin-odt.jpg",
+      "caption": "包裝標示：Wellnitin ODT 50mg 口溶錠"
+    }
+  ],
+  "Apolam": [
+    {
+      "src": "/assets/products/local/apolam-0-5mg.png",
+      "caption": "包裝標示：0.5mg；1,000錠盒裝"
+    }
+  ],
+  "Shielin Powder": [
+    {
+      "src": "/assets/products/local/shielin-powder.jpg",
+      "caption": "本機速備粉產品照片"
+    }
+  ],
+  "Deherp Tab.": [
+    {
+      "src": "/assets/products/local/deherp-tablet-200mg.jpg",
+      "caption": "包裝標示：200mg 錠劑；非 Deherp Cream"
+    }
+  ]
+}

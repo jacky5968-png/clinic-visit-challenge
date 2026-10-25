@@ -1,0 +1,11 @@
+[
+  {
+    "id": "demo",
+    "name": "澄心示範錠",
+    "ingredient": "示範成分 DEMO-01（虛構）",
+    "image": "/assets/products/demo-product.svg",
+    "category": "示範訓練",
+    "description": "先用一場拜訪，熟悉你的外勤日常。此為虛構產品，題目僅涵蓋遊戲操作與資料查核。",
+    "demo": true
+  }
+]

@@ -1,0 +1,112 @@
+.island-selector{margin:24px 0 32px;min-width:0}
+.island-selector .island-heading{align-items:center;gap:20px;margin-bottom:18px}
+.island-selector .island-heading h2{font-size:30px;line-height:1.4;margin:5px 0 8px;color:#183b42}
+.island-selector .island-heading p{font-size:17px;color:#415b61;margin:0}
+.island-selector .mission-progress-count b{color:#097866;font-size:34px}
+.island-selector .mission-progress-count span{font-size:14px;color:#415b61}
+.island-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.island-view-tabs,.island-camera-tools{display:flex;align-items:center;gap:6px}
+.island-camera-tools[hidden]{display:none}
+.island-toolbar button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:46px;border:1px solid #b8c8c5;border-radius:10px;background:#fffcf5;color:#244a51;padding:10px 13px;font-size:16px;font-weight:700;cursor:pointer}
+.island-toolbar button[aria-pressed=true]{background:#006b61;color:white;border-color:#006b61}
+.island-toolbar button:disabled{background:#e7eeed;color:#52676b;cursor:default}
+.island-toolbar button:hover:not(:disabled){border-color:#006b61}
+.archipelago{display:grid;grid-template-columns:minmax(0,1fr) 300px;background:#9bd3de;border:1px solid #8dbdc5;border-radius:22px;overflow:hidden;isolation:isolate}
+.archipelago-viewport{position:relative;height:650px;min-width:0;overflow:hidden}
+.archipelago-viewport canvas{position:absolute;inset:0;width:100%;height:100%;display:block;outline-offset:-5px;touch-action:none}
+.island-stage-labels{position:absolute;inset:0;pointer-events:none;z-index:2}
+.island-selector .island-stage-button{position:absolute;left:0;top:0;width:172px;min-height:68px;box-sizing:border-box;visibility:hidden;pointer-events:auto;display:flex;flex-direction:column;gap:4px;padding:8px 10px;border:2px solid #a1b8b3;border-radius:14px;background:#fffcf5;color:#193b43;box-shadow:0 4px 0 #476d6e23,0 3px 10px #284b5320;text-align:left;cursor:pointer;line-height:1.35}
+.island-selector .island-stage-button.selected{border-color:#00796d;background:#effff7;box-shadow:0 0 0 3px #f6c54f,0 5px 14px #244f5440}
+.island-selector .island-stage-button.passed{border-color:#188259}
+.island-selector .island-stage-button.locked{background:#f3f5f1;border-color:#9eaeab;color:#445c60;cursor:default}
+.island-button-title{display:flex;align-items:center;gap:7px;min-width:0}
+.island-button-title i{font-style:normal;flex-shrink:0;display:flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;font-size:15px;font-weight:800;background:var(--island-color);color:#fff}
+.island-stage-button.locked .island-button-title i{background:#627b7f}
+.island-selector .island-button-title strong{font-size:17px;font-weight:800;white-space:nowrap;line-height:1.4}
+.island-button-status{display:flex;align-items:center;gap:5px;font-size:14px;color:#3d5b61;white-space:nowrap}
+.island-stage-button.passed .island-button-status{color:#13633f}
+.island-list-details{display:none}
+.island-map-loading{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;background:#bde1e7;color:#204b54;padding:24px;text-align:center}
+.island-map-loading b{font-size:20px}.island-map-loading span{font-size:16px}
+.island-map-caption{position:absolute;z-index:1;left:16px;bottom:16px;display:flex;align-items:center;gap:8px;color:#244a51;background:#fffcf5;padding:9px 12px;border:1px solid #9cb9bb;border-radius:10px;font-size:14px;pointer-events:none}
+.island-itinerary{align-self:start;margin:18px 18px 18px 0;padding:23px;background:#fffcf5;border:1px solid #e6e1d2;border-radius:20px;box-shadow:0 8px 24px #36585c19;min-width:0;color:#193b43}
+.island-itinerary .eyebrow{font-size:12px;letter-spacing:1.4px;color:#516d71}
+.island-destination-state{display:flex;align-items:center;gap:7px;margin:18px 0;color:#14774e;font-size:15px;font-weight:700}
+.island-selector .island-kicker{font-size:15px;color:#755124;margin:0 0 5px}
+.island-selector .island-itinerary h3{font-size:27px;line-height:1.5;color:#173b43;margin:0 0 12px}
+.island-selector .island-feature{font-size:15px;color:#4e6568;line-height:1.8;margin:0 0 18px}
+.island-itinerary dl{margin:0 0 22px}
+.island-itinerary dl>div{border-top:1px solid #d7ded5;padding:12px 0}
+.island-itinerary dt{font-size:14px;color:#526b70}
+.island-itinerary dd{font-size:17px;color:#193b43;font-weight:700;line-height:1.7;margin:4px 0 0;overflow-wrap:anywhere}
+.island-itinerary .button{font-size:17px;padding:12px 10px;gap:8px}
+.island-selector .island-route-note{font-size:14px;line-height:1.8;color:#4c656b;margin:14px 0 20px}
+.island-legend{border-top:1px solid #d7ded5;padding-top:15px;display:flex;flex-wrap:wrap;gap:10px;font-size:13px;color:#425f65}
+.island-legend span{display:flex;align-items:center;gap:4px}
+.island-legend i{width:9px;height:9px;border-radius:50%;background:#087e78}
+.island-legend .legend-done{background:#218055}
+.island-selector .mission-local-note{font-size:14px;line-height:1.85;margin-top:12px}
+.list-view .archipelago-viewport{height:auto;min-height:400px;padding:18px}
+.list-view .archipelago-viewport canvas{display:none}
+.list-view .island-stage-labels{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;pointer-events:auto}
+.island-selector .list-view .island-stage-button{position:relative;width:100%;max-width:none;visibility:visible;transform:none!important;min-height:126px;gap:9px;padding:14px}
+.list-view .island-list-details{display:block;font-size:15px;line-height:1.7;white-space:normal}
+@media(min-width:1400px){.archipelago-viewport{height:710px}}
+@media(max-width:1000px){.archipelago{grid-template-columns:minmax(0,1fr) 270px}.island-itinerary{padding:18px;margin:14px 14px 14px 0}.island-selector .island-stage-button{width:158px}.island-selector .island-button-title strong{font-size:16px}.archipelago-viewport{height:620px}}
+@media(max-width:850px){
+ .archipelago{grid-template-columns:minmax(0,1fr)}
+ .archipelago-viewport{height:650px}
+ .island-itinerary{margin:0 14px 14px;padding:20px}
+ .island-selector .island-itinerary h3{font-size:26px}
+ .island-itinerary dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+ .island-itinerary dl>div:last-child{grid-column:1/-1}
+ .list-view .archipelago-viewport{min-height:0}
+}
+@media(max-width:520px){
+ .island-selector .island-heading{gap:12px;align-items:flex-start}
+ .island-selector .island-heading h2{font-size:26px}
+ .island-selector .island-heading p{font-size:16px}
+ .island-selector .mission-progress-count{min-width:60px}
+ .island-selector .mission-progress-count b{font-size:28px}
+ .island-selector .mission-progress-count span{font-size:13px;white-space:nowrap}
+ .island-toolbar{gap:10px}
+ .island-toolbar button{padding:9px 10px;min-height:46px}
+ .island-camera-tools{gap:4px;width:100%;justify-content:flex-end}
+ .archipelago-viewport{height:670px}
+ .island-selector .island-stage-button{width:148px;min-height:66px;padding:8px;gap:4px;border-radius:12px}
+ .island-button-title{gap:5px}.island-button-title i{width:24px;height:24px;font-size:14px}
+ .island-selector .island-button-title strong{font-size:16px}
+ .island-button-status{font-size:13px;gap:4px}
+ .island-map-caption{left:10px;bottom:10px;font-size:13px;padding:8px}
+ .island-itinerary dl{display:block}.island-itinerary dd{font-size:17px}
+ .list-view .island-stage-labels{grid-template-columns:minmax(0,1fr)}
+ .island-selector .list-view .island-stage-button{min-height:116px}
+}
+@media(prefers-reduced-motion:reduce){.island-selector *{scroll-behavior:auto}}
+
+/* Let the island map use the content width; avoid nested card padding on phones. */
+.content-screen .mission-selector.island-selector{padding:0;border:0;background:transparent;box-shadow:none}
+.island-selector .island-heading{display:grid;grid-template-columns:minmax(0,1fr) auto}
+@media(max-width:520px){
+ .island-selector .island-stage-button{max-width:calc((100% - 24px)/2)}
+ .island-selector .island-button-title strong{white-space:normal;overflow-wrap:normal}
+}
+
+/* Keep the rendered sea as tall as the itinerary and reserve the upper-left water for the hint. */
+.map-view .archipelago-viewport{height:auto;min-height:650px;align-self:stretch}
+.island-map-caption{top:12px;bottom:auto}
+@media(min-width:1400px){.map-view .archipelago-viewport{min-height:710px}}
+@media(max-width:1000px){.map-view .archipelago-viewport{min-height:620px}}
+@media(max-width:850px){.map-view .archipelago-viewport{height:650px;min-height:650px}}
+@media(max-width:520px){.map-view .archipelago-viewport{height:670px;min-height:670px}}
+
+.island-actor-label{position:absolute;left:0;top:0;z-index:4;visibility:hidden;pointer-events:none;padding:3px 7px;background:#07544e;color:#fff;border:2px solid #fff;border-radius:7px;font-size:13px;font-weight:700;line-height:1.5;box-shadow:0 2px 5px #17374730}
+.list-view .island-actor-label{display:none}
+.island-travel-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 16px;margin:10px 0;background:#e9fff5;border:2px solid #087e78;border-radius:12px;color:#16463e;font-size:16px;font-weight:700}
+.island-travel-bar>div{display:flex;gap:8px}
+.island-travel-bar button{min-height:44px;padding:8px 12px;background:#fff;border:1px solid #7ba699;border-radius:8px;color:#16463e;font-size:15px;font-weight:700;cursor:pointer}
+.island-selector .island-stage-button:disabled:not(.locked){cursor:wait}
+
+@media(max-width:520px){.map-view .island-replay-note{display:none}}
+
+@media(max-width:520px){.map-view .archipelago-viewport{height:950px;min-height:950px}}
