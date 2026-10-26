@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { formulationControls } from './formulationControls';
 import { buildFormulationBuilding } from './buildFormulationBuilding';
+import { fitFormulationView } from './fitFormulationView';
 
 function addRoofMotto(building: THREE.Group, renderer: THREE.WebGLRenderer) {
   const text = '誠正精新、造福人群';
@@ -57,20 +58,13 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
   const controls = formulationControls(camera, canvas);
   let width = 1, height = 1, frame = 0, disposed = false;
   function fit() {
-    camera.updateMatrixWorld(true);
-    let halfX = 0, halfY = 0;
-    for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
-      const point = new THREE.Vector3(x, y, z).applyMatrix4(camera.matrixWorldInverse);
-      halfX = Math.max(halfX, Math.abs(point.x)); halfY = Math.max(halfY, Math.abs(point.y));
-    }
-    const halfHeight = Math.max(halfY, halfX / (width / height)) * (width <= 1068 ? 1.06 : 1.13);
-    camera.top = halfHeight; camera.bottom = -halfHeight;
-    camera.right = halfHeight * width / height; camera.left = -camera.right; camera.updateProjectionMatrix();
+    controls.maxZoom = fitFormulationView(camera, bounds, mottoBounds, width, height);
   }
   function render() {
     frame = 0; if (disposed) return;
     renderer.render(scene, camera);
     canvas.dataset.renderer = 'webgl'; canvas.dataset.zoom = camera.zoom.toFixed(3);
+    canvas.dataset.maxZoom = controls.maxZoom.toFixed(3);
     canvas.dataset.azimuth = controls.getAzimuthalAngle().toFixed(3);
     for (const [key, box] of [['modelArea', bounds], ['signArea', signBounds], ['roofMottoArea', mottoBounds]] as const) {
       if (!box) continue;
@@ -82,14 +76,14 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
     onZoom(camera.zoom);
   }
   function invalidate() { if (!disposed && !frame) frame = requestAnimationFrame(render); }
-  function change() { if (camera.zoom <= 1) fit(); invalidate(); }
+  function change() { fit(); invalidate(); }
   controls.addEventListener('change', change);
   function reset() { camera.position.set(18, 12, 28).normalize().multiplyScalar(45); camera.zoom = 1; controls.target.set(0, 0, 0); controls.update(); fit(); invalidate(); }
   function resize() {
     const rect = host.getBoundingClientRect(); width = Math.max(1, rect.width); height = Math.max(1, rect.height);
     renderer.setSize(width, height, false); fit(); invalidate();
   }
-  function zoom(factor: number) { camera.zoom = THREE.MathUtils.clamp(camera.zoom * factor, .7, 3); camera.updateProjectionMatrix(); controls.update(); invalidate(); }
+  function zoom(factor: number) { camera.zoom = THREE.MathUtils.clamp(camera.zoom * factor, .7, controls.maxZoom); fit(); controls.update(); invalidate(); }
   function rotate(angle: number) { camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), angle); controls.update(); change(); }
   function key(event: KeyboardEvent) {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); rotate(event.key === 'ArrowLeft' ? -.2 : .2); }
