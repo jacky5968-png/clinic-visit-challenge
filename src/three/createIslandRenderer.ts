@@ -71,6 +71,12 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   const from=groundAt(area.x+area.width/2,area.y+area.height/2),to=groundAt(width*.5,110);
   if(from&&to)building.position.add(to.sub(from));
   model.root.updateMatrixWorld(true);
+  const landmark=projectArea(building,'landmark');
+  // Keep the distant factory silhouette clear when responsive framing moves it behind scenery.
+  for(const object of model.landmarkBackdrop){
+   const scenery=projectArea(object,'scenery');
+   object.visible=!(Math.min(landmark.x+landmark.width,scenery.x+scenery.width)-Math.max(landmark.x,scenery.x)>-8&&Math.min(landmark.y+landmark.height,scenery.y+scenery.height)-Math.max(landmark.y,scenery.y)>-8);
+  }
  }
  function frameCallouts(){
   camera.left=-baseHeight*width/height/2;camera.right=-camera.left;

@@ -120,7 +120,7 @@ export function buildIslands(){
  for(let i=0;i<48;i++){
   const x=-31+(i*7.19)%62,z=-18-(i%4)*2;
   if(x>-6&&x<12&&z>-28)continue;
-  tree(shoreline,x,z,.6+(i%3)*.16);
+  const grove=new THREE.Group();shoreline.add(grove);tree(grove,x,z,.6+(i%3)*.16);
  }
  const formulationBuilding=buildFormulationBuilding();
  formulationBuilding.scale.setScalar(.68);formulationBuilding.position.set(3,.3,-28.5);formulationBuilding.rotation.y=-.18;
@@ -150,5 +150,6 @@ export function buildIslands(){
   });
  }
  layout(false);
- return {root,islands,bridges,boat,flags,markers,formulationBuilding,layout,state};
+ const landmarkBackdrop=shoreline.children.filter(object=>object!==shore&&object!==formulationBuilding);
+ return {root,islands,bridges,boat,flags,markers,formulationBuilding,landmarkBackdrop,layout,state};
 }
