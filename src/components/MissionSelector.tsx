@@ -8,6 +8,7 @@ import {stageUnlockPreview} from '../engine/stagePreview';
 import {QUESTION_COUNT,PRODUCTS_TO_PASS_STAGE} from '../config/challenge';
 import type {createIslandRenderer} from '../three/createIslandRenderer';
 import '../styles/islands.css';
+import {FormulationViewer} from './FormulationViewer';
 type Controller=ReturnType<typeof createIslandRenderer>;
 export interface IslandDepartureHandle {depart:(onArrival:()=>void)=>void;}
 interface MissionSelectorProps {
@@ -17,6 +18,8 @@ interface MissionSelectorProps {
 }
 export const MissionSelector=forwardRef<IslandDepartureHandle,MissionSelectorProps>(function MissionSelector({selectedId,onSelect,completed,qualifications,legacyProgressAvailable,storageAvailable,onTravelChange,previewId,onPreview},ref){
  const [travelling,setTravelling]=useState<StageId|null>(null);
+ const [landmarkOpen,setLandmarkOpen]=useState(false);
+ const landmarkButton=useRef<HTMLButtonElement>(null);
  const requestToken=useRef(0),selectByMap=useRef<(id:StageId)=>void>(()=>{});
  const [mode,setMode]=useState<'map'|'list'>('map'),[status,setStatus]=useState<'loading'|'ready'|'fallback'>('loading'),[notice,setNotice]=useState('');
  const host=useRef<HTMLDivElement>(null),controller=useRef<Controller|null>(null);
@@ -30,14 +33,18 @@ export const MissionSelector=forwardRef<IslandDepartureHandle,MissionSelectorPro
    if(cancelled||!host.current)return;
    try{
     const value=latest.current;
-    controller.current=createIslandRenderer(host.current,{selected:value.viewedId,completed:value.completed},id=>selectByMap.current(id),setNotice);
+    controller.current=createIslandRenderer(host.current,{selected:value.viewedId,completed:value.completed},id=>selectByMap.current(id),setNotice,()=>setLandmarkOpen(true));
     if(cancelled){controller.current.dispose();return;}setStatus('ready');
    }catch{setStatus('fallback');setMode('list');}
   }).catch(()=>{if(!cancelled){setStatus('fallback');setMode('list');}});
   return()=>{cancelled=true;requestToken.current++;controller.current?.dispose();controller.current=null;};
  },[]);
  useEffect(()=>{controller.current?.update({selected:viewedId,completed});setNotice('');},[viewedId,completed]);
- useEffect(()=>{if(mode==='list')controller.current?.pause();else controller.current?.resume();},[mode]);
+ useEffect(()=>{if(mode==='list'||landmarkOpen)controller.current?.pause();else controller.current?.resume();},[mode,landmarkOpen,status]);
+ function closeLandmark(){
+  setLandmarkOpen(false);setMode('map');controller.current?.home();
+  requestAnimationFrame(()=>{landmarkButton.current?.focus({preventScroll:true});const map=host.current;map?.scrollIntoView({behavior:'instant',block:map.getBoundingClientRect().height>innerHeight-32?'start':'center'});});
+ }
  function goToBanks(){if(latest.current.previewId)return;host.current?.closest('.content-screen')?.querySelector('.product-layout')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});}
  function beginJourney(id:StageId,afterArrival?:()=>void){
   if(travelling||!stageUnlocked(id,latest.current.completed))return;
@@ -104,7 +111,7 @@ export const MissionSelector=forwardRef<IslandDepartureHandle,MissionSelectorPro
      })}
     </div>
     <span className="island-actor-label" data-testid="island-actor-label" aria-hidden="true">外勤</span>
-    {mode==='map'&&<span className="island-landmark-label">生達製劑大樓</span>}
+    {mode==='map'&&<button ref={landmarkButton} type="button" className="island-landmark-label" aria-label="放大查看生達製劑大樓" title="點選放大查看" aria-haspopup="dialog" aria-expanded={landmarkOpen} disabled={status!=='ready'||!!travelling} onClick={()=>setLandmarkOpen(true)}>生達製劑大樓</button>}
     {mode==='map'&&<div className="island-map-caption" aria-label="拖曳旋轉，點島名選關"><Compass size={15}/><span className="island-hint-long">拖曳旋轉 · 點島名選關</span><span className="island-hint-short">拖曳旋轉</span></div>}
    </div>
    <aside className={'island-itinerary'+(!unlock.unlocked?' is-preview':'')} aria-label="所選島嶼資訊">
@@ -125,5 +132,6 @@ export const MissionSelector=forwardRef<IslandDepartureHandle,MissionSelectorPro
   {(status==='fallback'||notice)&&<p className="mission-storage-note" role="status">{notice||'此裝置無法顯示3D島嶼，已切換關卡清單；題庫與挑戰照常使用。'}</p>}
   {legacyProgressAvailable&&<p className="mission-storage-note" role="status">規則已更新：舊版5題通關紀錄仍保留，但不列入新版{QUESTION_COUNT}題合格進度。請重新完成每關至少{PRODUCTS_TO_PASS_STAGE}項考驗。</p>}
   {!storageAvailable&&<p className="mission-storage-note" role="status">此瀏覽器無法儲存，仍可完成本次七關；關閉後進度不保留。</p>}
+  {landmarkOpen&&<FormulationViewer onClose={closeLandmark}/>}
  </section>;
 });
