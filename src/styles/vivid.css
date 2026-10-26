@@ -143,23 +143,33 @@ body{background:radial-gradient(ellipse at 0 0,#c4f2ff 0,transparent 48%),radial
 .formulation-viewer-footer { padding:12px 20px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; border-top:1px solid #a7cbbf; }
 .formulation-viewer-footer p { margin:0; color:#365b68; font-size:16px; }
 .formulation-viewer-footer .button { min-height:48px; }
+@media(max-width:1100px) {
+ .formulation-viewer-heading { padding:10px 16px; }
+ .formulation-viewer-heading p { font-size:12px; }
+ .formulation-viewer-heading h2 { font-size:26px; }
+ .formulation-viewer-toolbar { padding:6px 10px; gap:6px; }
+ .formulation-viewer-stage { height:clamp(180px,54vw,min(560px,calc(100dvh - 250px))); }
+ .formulation-viewer-footer { padding:8px 16px 10px; }
+}
 @media(max-width:600px) {
  .formulation-viewer { width:calc(100vw - 16px); max-height:calc(100dvh - 16px); border-radius:14px; }
- .formulation-viewer-heading { padding:12px 14px; }
+ .formulation-viewer-heading { padding:8px 14px; }
  .formulation-viewer-heading h2 { font-size:24px; }
  .formulation-viewer-toolbar { gap:4px; padding:6px; }
  .formulation-viewer-toolbar button { padding:8px; }
  .formulation-viewer-toolbar button span { display:none; }
  .formulation-viewer-toolbar output { min-width:44px; }
- .formulation-viewer-stage { height:clamp(190px,calc(100dvh - 320px),460px); }
- .formulation-viewer-footer { padding:10px 14px 14px; }
+ .formulation-viewer-footer { padding:8px 14px 10px; gap:6px; }
+ .formulation-viewer-footer p { font-size:14px; }
  .formulation-viewer-footer .button { width:100%; }
 }
 @media(max-height:600px) {
  .formulation-viewer-heading { padding:8px 14px; }
+ .formulation-viewer-heading p { font-size:12px; }
  .formulation-viewer-heading h2 { font-size:22px; }
  .formulation-viewer-heading .icon-button { width:44px; height:44px; }
- .formulation-viewer-stage { height:clamp(120px,calc(100dvh - 260px),300px); }
+ .formulation-viewer-toolbar { padding-top:6px; padding-bottom:6px; }
+ .formulation-viewer-stage { height:clamp(110px,min(54vw,calc(100dvh - 235px)),360px); }
  .formulation-viewer-footer { padding:8px 14px; }
  .formulation-viewer-footer p { display:none; }
 }

@@ -21,9 +21,12 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
   let building: THREE.Group;
   try { building = buildFormulationBuilding(); }
   catch (error) { renderer.dispose(); renderer.forceContextLoss(); canvas.remove(); throw error; }
+  const sign = building.getObjectByName('formulation-building-name');
+  sign?.scale.set(1.18, 1.22, 1);
   const initialBounds = new THREE.Box3().setFromObject(building), center = initialBounds.getCenter(new THREE.Vector3());
   building.position.sub(center); scene.add(building); building.updateMatrixWorld(true);
   const bounds = new THREE.Box3().setFromObject(building);
+  const signBounds = sign ? new THREE.Box3().setFromObject(sign) : null;
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.MeshStandardMaterial({ color: 0xd7e8d9, roughness: 1 }));
   floor.rotation.x = -Math.PI / 2; floor.position.y = bounds.min.y - .035; floor.receiveShadow = true; scene.add(floor);
   const camera = new THREE.OrthographicCamera(-16, 16, 10, -10, .1, 160);
@@ -36,7 +39,7 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
       const point = new THREE.Vector3(x, y, z).applyMatrix4(camera.matrixWorldInverse);
       halfX = Math.max(halfX, Math.abs(point.x)); halfY = Math.max(halfY, Math.abs(point.y));
     }
-    const halfHeight = Math.max(halfY, halfX / (width / height)) * 1.13;
+    const halfHeight = Math.max(halfY, halfX / (width / height)) * (width <= 1068 ? 1.06 : 1.13);
     camera.top = halfHeight; camera.bottom = -halfHeight;
     camera.right = halfHeight * width / height; camera.left = -camera.right; camera.updateProjectionMatrix();
   }
@@ -45,10 +48,13 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
     renderer.render(scene, camera);
     canvas.dataset.renderer = 'webgl'; canvas.dataset.zoom = camera.zoom.toFixed(3);
     canvas.dataset.azimuth = controls.getAzimuthalAngle().toFixed(3);
-    const projected: THREE.Vector3[] = [];
-    for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) projected.push(new THREE.Vector3(x, y, z).project(camera));
-    const xs = projected.map(p => (p.x + 1) * width / 2), ys = projected.map(p => (1 - p.y) * height / 2);
-    canvas.dataset.modelArea = JSON.stringify({ x: Math.min(...xs), y: Math.min(...ys), width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys) });
+    for (const [key, box] of [['modelArea', bounds], ['signArea', signBounds]] as const) {
+      if (!box) continue;
+      const projected: THREE.Vector3[] = [];
+      for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) projected.push(new THREE.Vector3(x, y, z).project(camera));
+      const xs = projected.map(p => (p.x + 1) * width / 2), ys = projected.map(p => (1 - p.y) * height / 2);
+      canvas.dataset[key] = JSON.stringify({ x: Math.min(...xs), y: Math.min(...ys), width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys) });
+    }
     onZoom(camera.zoom);
   }
   function invalidate() { if (!disposed && !frame) frame = requestAnimationFrame(render); }
