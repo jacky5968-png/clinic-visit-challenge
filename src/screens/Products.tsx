@@ -190,7 +190,7 @@ export function Products({
               <p className="empty-state">找不到符合的產品，請嘗試其他關鍵字。</p>
             )}
           </div>
-          {pageCount>1&&<nav className="product-pagination" aria-label="產品卡片分頁"><button type="button" disabled={travelBusy||currentPage===0} onClick={()=>changeProductPage(currentPage-1)}>上一頁</button><span role="status" aria-live="polite">第{currentPage+1}／{pageCount}頁 · 每頁最多9項</span><button type="button" disabled={travelBusy||currentPage===pageCount-1} onClick={()=>changeProductPage(currentPage+1)}>下一頁</button></nav>}
+          {pageCount>1&&<nav className="product-pagination" aria-label="產品卡片分頁"><button type="button" disabled={travelBusy||currentPage===0} onClick={()=>changeProductPage(currentPage-1)}><ArrowLeft size={22} aria-hidden="true"/>上一頁</button><span role="status" aria-live="polite">第{currentPage+1}／{pageCount}頁 · 每頁最多9項</span><button type="button" disabled={travelBusy||currentPage===pageCount-1} onClick={()=>changeProductPage(currentPage+1)}>下一頁<ArrowRight size={22} aria-hidden="true"/></button></nav>}
           <details className="csv-panel">
             <summary>
               <FileSpreadsheet size={17} />
