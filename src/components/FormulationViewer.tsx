@@ -1,21 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, House, Minus, Plus, RotateCcw, X } from 'lucide-react';
 import type { createFormulationViewer } from '../three/createFormulationViewer';
+import { createPointerTap } from '../engine/pointerTap';
+import { lockModalScroll } from '../engine/modalScroll';
 
 export function FormulationViewer({ onClose }: { onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null), host = useRef<HTMLDivElement>(null), close = useRef<HTMLButtonElement>(null);
   const api = useRef<ReturnType<typeof createFormulationViewer> | null>(null);
+  const backdrop = useRef(createPointerTap()), backdropTapped = useRef(false);
   const [status, setStatus] = useState<'loading' | 'ready' | 'failed'>('loading'), [zoom, setZoom] = useState(100);
   useEffect(() => {
-    const element = dialog.current!, previousOverflow = document.body.style.overflow;
-    element.showModal(); document.body.style.overflow = 'hidden'; close.current?.focus({ preventScroll: true });
+    const element = dialog.current!, unlockScroll = lockModalScroll();
+    element.showModal(); close.current?.focus({ preventScroll: true });
     let cancelled = false;
     import('../three/createFormulationViewer').then(({ createFormulationViewer }) => {
       if (cancelled) return;
       try { api.current = createFormulationViewer(host.current!, value => setZoom(Math.round(value * 100)), () => { api.current?.dispose(); api.current = null; setStatus('failed'); }); setStatus('ready'); }
       catch { host.current?.replaceChildren(); setStatus('failed'); }
     }).catch(() => { if (!cancelled) setStatus('failed'); });
-    return () => { cancelled = true; api.current?.dispose(); api.current = null; element.close(); document.body.style.overflow = previousOverflow; };
+    return () => { cancelled = true; api.current?.dispose(); api.current = null; element.close(); unlockScroll(); };
   }, []);
   return <dialog ref={dialog} className="formulation-viewer" aria-labelledby="formulation-viewer-title" aria-modal="true" data-testid="formulation-viewer-dialog"
     onCancel={event => { event.preventDefault(); onClose(); }}
@@ -26,7 +29,11 @@ export function FormulationViewer({ onClose }: { onClose: () => void }) {
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     }}
-    onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+    onPointerDownCapture={event => { backdropTapped.current = false; backdrop.current.down(event, event.target === event.currentTarget); }}
+    onPointerMoveCapture={event => backdrop.current.move(event)}
+    onPointerUpCapture={event => { backdropTapped.current = backdrop.current.up(event); }}
+    onPointerCancelCapture={event => { backdrop.current.cancel(event); backdropTapped.current = false; }}
+    onClick={event => { const tapped = backdropTapped.current; backdropTapped.current = false; if (event.target === event.currentTarget && tapped) onClose(); }}>
     <header className="formulation-viewer-heading"><div><p>3D 建築巡覽</p><h2 id="formulation-viewer-title">生達製劑大樓</h2></div>
       <button ref={close} className="icon-button" aria-label="關閉大樓放大檢視" onClick={onClose}><X size={24}/></button>
     </header>

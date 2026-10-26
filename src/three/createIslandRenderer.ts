@@ -7,6 +7,7 @@ import {sevenStages,type StageId} from '../data/sevenStages';
 import {ISLAND_SCENE_SCALE} from '../data/islandStages';
 import {stageUnlocked} from '../engine/stageProgress';
 import {placeIslandCallouts,islandLabelsFit,type IslandCallout} from '../engine/islandLabels';
+import {createPointerTap} from '../engine/pointerTap';
 let islandSession:{id:StageId;atGate:boolean}|null=null;
 export interface IslandState {selected:StageId;completed:StageId[];}
 export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSelect:(id:StageId)=>void,onLocked:(message:string)=>void,onLandmark?:()=>void){
@@ -189,13 +190,12 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  document.addEventListener('visibilitychange',visibility);
  function motion(){moving=!reduced.matches;if(reduced.matches&&travel)finish();if(!moving){model.boat.rotation.z=0;model.boat.position.y=.05;}invalidate();}
  reduced.addEventListener('change',motion);
- let downX=0,downY=0,tapPointer:number|null=null;
- const activePointers=new Set<number>();
- function down(e:PointerEvent){activePointers.add(e.pointerId);if(activePointers.size===1){downX=e.clientX;downY=e.clientY;tapPointer=e.pointerId;}else tapPointer=null;}
- function cancelPointer(e:PointerEvent){activePointers.delete(e.pointerId);tapPointer=null;}
+ const tap=createPointerTap();
+ function down(e:PointerEvent){tap.down(e);}
+ function movePointer(e:PointerEvent){tap.move(e);}
+ function cancelPointer(e:PointerEvent){tap.cancel(e);}
  function up(e:PointerEvent){
-  const tap=tapPointer===e.pointerId;activePointers.delete(e.pointerId);if(!activePointers.size)tapPointer=null;
-  if(!tap||e.button!==0||Math.hypot(e.clientX-downX,e.clientY-downY)>6||travel)return;
+  if(!tap.up(e)||travel)return;
   const rect=canvas.getBoundingClientRect(),pointer=new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),ray=new THREE.Raycaster();ray.setFromCamera(pointer,camera);
   const hit=ray.intersectObjects([...model.islands,model.formulationBuilding],true)[0];
   for(let object:THREE.Object3D|null=hit?.object??null;object;object=object.parent)if(object===model.formulationBuilding){onLandmark?.();return;}
@@ -203,7 +203,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   if(!id||travel)return;
   onSelect(id);
  }
- canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',cancelPointer);
+ canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',movePointer);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',cancelPointer);
  canvas.addEventListener('webglcontextlost',lost);
  function lost(e:Event){e.preventDefault();onLocked('3D地圖暫停，請切換「關卡清單」繼續選擇。');}
  function rotate(delta:number){
@@ -235,7 +235,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   dispose(){
    disposed=true;if(raf)cancelAnimationFrame(raf);observer.disconnect();intersection.disconnect();controls.dispose();
    document.removeEventListener('visibilitychange',visibility);reduced.removeEventListener('change',motion);
-   canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',cancelPointer);canvas.removeEventListener('keydown',key);canvas.removeEventListener('webglcontextlost',lost);
+   canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',movePointer);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',cancelPointer);canvas.removeEventListener('keydown',key);canvas.removeEventListener('webglcontextlost',lost);
    const geometries=new Set<THREE.BufferGeometry>(),materials=new Set<THREE.Material>(),textures=new Set<THREE.Texture>();
    scene.traverse(o=>{const mesh=o as THREE.Mesh;if(mesh.geometry)geometries.add(mesh.geometry);if(mesh.material)for(const m of Array.isArray(mesh.material)?mesh.material:[mesh.material]){materials.add(m);const map=(m as THREE.MeshBasicMaterial).map;if(map)textures.add(map);}});
    geometries.forEach(g=>g.dispose());textures.forEach(t=>t.dispose());materials.forEach(m=>m.dispose());renderer.dispose();canvas.remove();leaderLayer.remove();

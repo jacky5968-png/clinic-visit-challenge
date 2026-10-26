@@ -124,6 +124,9 @@ body{background:radial-gradient(ellipse at 0 0,#c4f2ff 0,transparent 48%),radial
 .island-selector button.island-landmark-label:disabled { cursor:wait; }
 .formulation-viewer { width:min(1180px,calc(100vw - 32px)); max-width:none; max-height:calc(100dvh - 32px); padding:0; border:2px solid #3a8e89; border-radius:18px; margin:auto; color:#123149; background:#f7fffc; box-shadow:0 24px 80px #082a4566; overflow:auto; font-family:"Microsoft JhengHei","微軟正黑體",sans-serif; }
 .formulation-viewer::backdrop { background:#062738ba; }
+.formulation-viewer { overscroll-behavior:contain; touch-action:pan-y; }
+.formulation-viewer::backdrop { touch-action:none; }
+.formulation-viewer button { touch-action:manipulation; }
 .formulation-viewer-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 22px; background:#173f42; color:#fff9df; }
 .formulation-viewer-heading p { margin:0 0 3px; font-size:14px; color:#bcebe1; }
 .formulation-viewer-heading h2 { margin:0; font-size:28px; line-height:1.35; }

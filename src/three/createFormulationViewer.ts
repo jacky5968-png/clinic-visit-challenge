@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { formulationControls } from './formulationControls';
 import { buildFormulationBuilding } from './buildFormulationBuilding';
 
 export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number) => void, onFailure: () => void) {
@@ -27,9 +27,7 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.MeshStandardMaterial({ color: 0xd7e8d9, roughness: 1 }));
   floor.rotation.x = -Math.PI / 2; floor.position.y = bounds.min.y - .035; floor.receiveShadow = true; scene.add(floor);
   const camera = new THREE.OrthographicCamera(-16, 16, 10, -10, .1, 160);
-  const controls = new OrbitControls(camera, canvas);
-  controls.enablePan = false; controls.enableDamping = false;
-  controls.minPolarAngle = .45; controls.maxPolarAngle = 1.3; controls.minZoom = .7; controls.maxZoom = 3;
+  const controls = formulationControls(camera, canvas);
   let width = 1, height = 1, frame = 0, disposed = false;
   function fit() {
     camera.updateMatrixWorld(true);
