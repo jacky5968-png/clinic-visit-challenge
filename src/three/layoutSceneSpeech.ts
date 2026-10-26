@@ -6,7 +6,10 @@ export function layoutSceneSpeech(anchor:{x:number;y:number},bubble:{width:numbe
   const maxY=Math.max(margin,viewport.height-bubble.height-margin);
   const clamp=(n:number,max:number)=>Math.max(margin,Math.min(n,max));
   const ideal={left:clamp(anchor.x-bubble.width/2,maxX),top:clamp(anchor.y-bubble.height-36,maxY)};
-  const xs=[ideal.left,margin,maxX,clamp(anchor.x+36,maxX),clamp(anchor.x-bubble.width-36,maxX)];
+  // Include obstacle side edges: expanded reminders can fit beside the lower controls
+  // even when every anchor/viewport-edge candidate overlaps a person's silhouette.
+  const xs=[...new Set([ideal.left,margin,maxX,clamp(anchor.x+36,maxX),clamp(anchor.x-bubble.width-36,maxX),
+    ...avoid.flatMap(p=>[clamp(p.left-bubble.width-gap,maxX),clamp(p.left+p.width+gap,maxX)])])];
   const ys=[ideal.top,margin,maxY,clamp(anchor.y+36,maxY),...avoid.flatMap(p=>[
     clamp(p.top-bubble.height-gap,maxY),clamp(p.top+p.height+gap,maxY)])];
   const overlap=(left:number,top:number,p:LabelObstacle)=>
