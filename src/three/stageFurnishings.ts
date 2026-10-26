@@ -74,7 +74,7 @@ export function furnishStage(m:VisitMission,r:Rooms){
  }else if(m.stageNumber===4){
   const g=zone(r.office,'pharmacy-retail-shelving');
   shelf(g,3.62,-3.88,2.68,2.1);
-  sign(g,'自費品項 · 諮詢專區',3.62,2.68,-3.53,2.6);
+  sign(g,m.clinic,3.62,2.68,-3.53,2.6);
   for(let row=0;row<3;row++)for(let i=0;i<6;i++){
    const x=2.5+i*.44,y=.49+row*.66;
    box(g,.27,.34,.29,x,y,-3.77,[white,blue,amber][(i+row)%3]);

@@ -10,6 +10,7 @@ import { defaultMission, type VisitMission } from '../data/visitMissions';
 
 export function buildClinic(mission: VisitMission = defaultMission) {
   const target=mainTarget(mission),names=sceneLocations(mission);
+  const clinicSignText=mission.kind==='pharmacy'?mission.clinic:[...mission.clinic].join(' ');
   const root = new THREE.Group();
   root.userData.missionId = mission.id;
   const pickables: THREE.Object3D[] = [];
@@ -83,7 +84,8 @@ export function buildClinic(mission: VisitMission = defaultMission) {
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, 1024, 256);
     ctx.fillStyle = color;
-    ctx.font = '700 92px "Microsoft JhengHei", "微軟正黑體", sans-serif';
+    const fontSize=mission.kind==='pharmacy'&&value===mission.clinic?144:92;
+    ctx.font = `700 ${fontSize}px "Microsoft JhengHei", "微軟正黑體", sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(value, 512, 132, 960);
@@ -160,7 +162,7 @@ export function buildClinic(mission: VisitMission = defaultMission) {
     box(base, 0.035, 1.35, 0.09, x, 1.87, -4.19, white);
     box(base, 1.12, 0.04, 0.09, x, 1.87, -4.19, white);
   }
-  text(base, [...mission.clinic].join(' '), 2.8, 0.7, 2.85, 2.25, -4.3);
+  text(base, clinicSignText, 2.8, 0.7, 2.85, 2.25, -4.3);
   text(base, mission.english, 2.5, 0.4, 2.85, 1.8, -4.29, '#e5eadc', mission.theme.accent);
   const cross = group();
   cross.visible=mission.kind!=='training';
@@ -174,7 +176,7 @@ export function buildClinic(mission: VisitMission = defaultMission) {
   box(reception, 3.4, 0.92, 0.94, -3.15, 0.61, -0.85, white).name = 'pharmacy-counter';
   box(reception, 3.6, 0.12, 1.06, -3.15, 1.1, -0.85, white);
   box(reception, 3.18, 0.68, 0.035, -3.15, 0.64, -0.365, teal);
-  text(reception, names.reception.name, 1.5, 0.38, -3.15, 0.67, -0.34, mission.theme.accent, '#ffffff');
+  text(reception, mission.kind==='pharmacy'?mission.clinic:names.reception.name, mission.kind==='pharmacy'?2.2:1.5, 0.38, -3.15, 0.67, -0.34, mission.theme.accent, '#ffffff');
   box(reception, 0.52, 0.1, 0.48, -3.15, 1.22, -0.95, steel);
   box(reception, 0.91, 0.57, 0.08, -3.15, 1.53, -1.05, dark);
   box(reception, 0.79, 0.46, 0.015, -3.15, 1.53, -0.998, mat(0x9cbab1));
@@ -224,7 +226,7 @@ export function buildClinic(mission: VisitMission = defaultMission) {
   box(base, 2.8, 0.65, 0.13, -0.1, 0.47, 4.39, white);
   text(
     base,
-    [...mission.clinic].join(' '),
+    clinicSignText,
     1.75,
     0.38,
     -0.1,
