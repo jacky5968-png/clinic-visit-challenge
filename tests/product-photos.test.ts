@@ -11,7 +11,7 @@ describe('實際產品照片', () => {
     const audit = JSON.parse(fs.readFileSync('tests/fixtures/product-photo-audit.json', 'utf8'));
     expect(Object.keys(photos)).toHaveLength(audit.mappedItems);
     for (const record of audit.records) {
-      const file = fs.readFileSync(path.resolve(record.target));
+      const file = fs.readFileSync(path.resolve(record.target.replaceAll('\\', '/')));
       expect(createHash('sha256').update(file).digest('hex')).toBe(record.sha256);
       expect(photos[record.product as keyof typeof photos]).toContainEqual({
         src: '/' + record.target.replaceAll('\\', '/').replace(/^public\//, ''),

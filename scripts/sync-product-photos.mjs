@@ -76,7 +76,7 @@ for (const [name, photos] of Object.entries(sources.products)) {
     records.push({
       product: name,
       source: sourcePath,
-      target: path.relative(root, targetPath),
+      target: path.relative(root, targetPath).split(path.sep).join('/'),
       caption: photo.caption,
       sha256: sha(original),
       note: photo.note || '',
