@@ -2,19 +2,24 @@ import * as THREE from 'three';
 import { formulationControls } from './formulationControls';
 import { buildFormulationBuilding } from './buildFormulationBuilding';
 
-function addRoofMotto(building: THREE.Group) {
+function addRoofMotto(building: THREE.Group, renderer: THREE.WebGLRenderer) {
   const text = '誠正精新、造福人群';
-  const surface = document.createElement('canvas'); surface.width = 2048; surface.height = 256;
+  const surface = document.createElement('canvas');
+  surface.width = Math.min(4096, renderer.capabilities.maxTextureSize); surface.height = surface.width / 8;
   const context = surface.getContext('2d')!;
-  context.font = '700 224px "Microsoft JhengHei","微軟正黑體",sans-serif';
-  context.textAlign = 'center'; context.textBaseline = 'middle';
-  context.lineJoin = 'round'; context.lineWidth = 7; context.strokeStyle = '#704332';
-  context.strokeText(text, 1024, 137, 1940);
-  context.fillStyle = '#fff9df'; context.fillText(text, 1024, 137, 1940);
+  context.font = `700 ${surface.height * .875}px "Microsoft JhengHei","微軟正黑體","Noto Sans CJK TC","Noto Sans TC","Noto Sans CJK JP",sans-serif`;
+  context.textAlign = 'center'; context.textBaseline = 'alphabetic';
+  const ink = context.measureText(text), y = (surface.height + ink.actualBoundingBoxAscent - ink.actualBoundingBoxDescent) / 2;
+  const x = surface.width / 2, maxWidth = surface.width * .947;
+  context.lineJoin = 'round'; context.lineWidth = surface.width * .0034; context.strokeStyle = '#603a2d';
+  context.strokeText(text, x, y, maxWidth);
+  context.fillStyle = '#ffffff'; context.fillText(text, x, y, maxWidth);
   const texture = new THREE.CanvasTexture(surface); texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = Math.max(1, Math.min(16, renderer.capabilities.getMaxAnisotropy()));
   const motto = new THREE.Mesh(new THREE.PlaneGeometry(13.3, 2.2), new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false, toneMapped: false }));
   motto.name = 'formulation-roof-motto'; motto.rotation.x = -Math.PI / 2;
-  motto.position.set(0, 6.31, .75); building.add(motto);
+  // The roof spans z=-3.375..2.675, so its front/back midpoint is z=-.35.
+  motto.position.set(0, 6.31, -.35); building.add(motto);
   return motto;
 }
 
@@ -37,7 +42,7 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
   sun.shadow.camera.updateProjectionMatrix(); sun.shadow.normalBias = .03; scene.add(sun);
   let building: THREE.Group;
   let motto: THREE.Mesh;
-  try { building = buildFormulationBuilding(); motto = addRoofMotto(building); }
+  try { building = buildFormulationBuilding(); motto = addRoofMotto(building, renderer); }
   catch (error) { renderer.dispose(); renderer.forceContextLoss(); canvas.remove(); throw error; }
   const sign = building.getObjectByName('formulation-building-name');
   sign?.scale.set(1.18, 1.22, 1);
