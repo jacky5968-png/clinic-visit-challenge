@@ -44,7 +44,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  }
  function finish(){
   if(!travel)return;const pending=travel;
-  if(!stageUnlocked(pending.to,state.completed)){cancel();onLocked('關卡尚未解鎖，請先完成前一關。');return;}
+  if(!stageUnlocked(pending.to,state.completed)){cancel();onLocked('無法前往這座島嶼，請重新選擇。');return;}
   travel=null;currentIsland=pending.to;atGate=true;islandSession={id:currentIsland,atGate};controls.enableRotate=true;actor.pose(0,false);actor.root.rotation.y=Math.PI;positionActor();draw();pending.arrive();
  }
  function cancel(){
@@ -156,7 +156,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   raf=0;if(disposed)return;
   const dt=lastTime?Math.max(0,(t-lastTime)/1000):0;lastTime=t;
   if(travel&&inView&&!document.hidden){
-   const path=route();if(!path){cancel();onLocked('關卡尚未解鎖，請先完成前一關。');}
+   const path=route();if(!path){cancel();onLocked('無法前往這座島嶼，請重新選擇。');}
    else{
     travel.progress=Math.min(1,travel.progress+dt/travel.duration);const p=sampleIslandWalk(path,travel.progress);
     actor.root.position.set(p.x,1.16*ISLAND_SCENE_SCALE,p.z);const turn=Math.atan2(Math.sin(p.yaw-actor.root.rotation.y),Math.cos(p.yaw-actor.root.rotation.y));actor.root.rotation.y+=turn*Math.min(1,dt*12);
@@ -218,7 +218,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  canvas.addEventListener('keydown',key);
  model.state(state.selected,state.completed);fit(true);
  return {
-  update(next:IslandState){state=next;if(!stageUnlocked(currentIsland,next.completed)){cancel();currentIsland=next.completed.at(-1)??sevenStages[0].id;atGate=false;islandSession={id:currentIsland,atGate};positionActor();}if(travel&&!stageUnlocked(travel.to,next.completed)){cancel();onLocked('關卡尚未解鎖，請先完成前一關。');}model.state(next.selected,next.completed);invalidate();},
+  update(next:IslandState){state=next;if(!stageUnlocked(currentIsland,next.completed)){cancel();currentIsland=next.completed.at(-1)??sevenStages[0].id;atGate=false;islandSession={id:currentIsland,atGate};positionActor();}if(travel&&!stageUnlocked(travel.to,next.completed)){cancel();onLocked('無法前往這座島嶼，請重新選擇。');}model.state(next.selected,next.completed);invalidate();},
   walk(to:StageId,arrive:()=>void,onCancel?:()=>void){
    if(travel||!stageUnlocked(to,state.completed))return false;
    if(currentIsland===to&&atGate){arrive();return true;}

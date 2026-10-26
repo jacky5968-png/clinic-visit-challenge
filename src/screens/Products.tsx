@@ -1,8 +1,7 @@
 import {stageUnlocked,type StageQualifications} from '../engine/stageProgress';
 import {availableQuestionCount,QUESTION_COUNT} from '../engine/quiz';
-import {PRODUCTS_TO_PASS_STAGE} from '../config/challenge';
 import { useEffect, useState, useRef } from 'react';
-import { ArrowRight, Search, Check, FileSpreadsheet, Upload, Link2 } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Search, Check, FileSpreadsheet, Upload, Link2 } from 'lucide-react';
 import type { Product, Question } from '../types';
 import { loadQuizCsv, parseQuizCsv } from '../data/csvLoader';
 import { MissionSelector, type IslandDepartureHandle } from '../components/MissionSelector';
@@ -26,6 +25,7 @@ export function Products({
   qualifications,
   legacyProgressAvailable,
   storageAvailable,
+  view,onViewChange,
 }: {
   products: Product[];
   bank: Question[];
@@ -42,15 +42,15 @@ export function Products({
   qualifications:StageQualifications;
   legacyProgressAvailable:boolean;
   storageAvailable: boolean;
+  view:'map'|'bank';onViewChange:(view:'map'|'bank')=>void;
 }) {
   const islandDeparture=useRef<IslandDepartureHandle>(null),startRef=useRef(onStart);
   const productLayout=useRef<HTMLDivElement>(null);
+  const bankHeading=useRef<HTMLHeadingElement>(null);
   const [travelBusy,setTravelBusy]=useState(false);startRef.current=onStart;
-  const [previewStageId,setPreviewStageId]=useState<StageId|null>(null);
-  const previewingLocked=previewStageId!==null&&!stageUnlocked(previewStageId,completed);
-  useEffect(()=>setPreviewStageId(null),[selectedMissionId]);
-  useEffect(()=>{if(previewStageId&&stageUnlocked(previewStageId,completed))setPreviewStageId(null);},[previewStageId,completed]);
-  function startVisit(){if(previewingLocked)return;if(islandDeparture.current)islandDeparture.current.depart(()=>startRef.current());else onStart();}
+  function openBank(id:StageId){onSelectMission(id);onViewChange('bank');}
+  useEffect(()=>{window.scrollTo({top:0,behavior:'instant'});if(view==='bank')bankHeading.current?.focus({preventScroll:true});},[view,selectedMissionId]);
+  function startVisit(){onViewChange('map');requestAnimationFrame(()=>{if(islandDeparture.current)islandDeparture.current.depart(()=>startRef.current());else startRef.current();});}
   const [search, setSearch] = useState(''),
     [url, setUrl] = useState(''),
     [csvError, setCsvError] = useState(''),
@@ -63,7 +63,6 @@ export function Products({
   const selected = scoped.find(p=>p.id===selectedId)??scoped[0];
   const count = availableQuestionCount(bank,selected?.id??'');
   const qualifiedNames=new Set(qualifications[stage.id].map(r=>r.productName));
-  const eligibleCount=scoped.filter(p=>availableQuestionCount(bank,p.id)>=QUESTION_COUNT).length;
   const visibleProducts = scoped.filter((p) =>
     (p.name + p.ingredient + p.category).toLowerCase().includes(search.toLowerCase()),
   );
@@ -86,7 +85,7 @@ export function Products({
     if(travelBusy||!stageUnlocked(stageId,completed)||!candidate||!allowedInStage(candidate,getStage(stageId))||availableQuestionCount(bank,productId)<QUESTION_COUNT)return;
     const index=products.filter(p=>allowedInStage(p,getStage(stageId))).findIndex(p=>p.id===productId);
     setProductPage(Math.max(0,Math.floor(index/PRODUCTS_PER_PAGE)));
-    setPreviewStageId(null);setSearch('');onSelectMission(stageId);onSelect(productId);
+    setSearch('');openBank(stageId);onSelect(productId);
     requestAnimationFrame(()=>{
       productLayout.current?.scrollIntoView({behavior:'instant',block:'start'});
       productLayout.current?.querySelector<HTMLElement>('.product-information h2')?.focus({preventScroll:true});
@@ -108,11 +107,9 @@ export function Products({
   }
   return (
     <section className="content-screen stage-selection-screen">
-      <QualificationOverview products={products} bank={bank} qualifications={qualifications} completed={completed}
-        selectedStageId={selectedMissionId} loading={sourceStatus==='loading'} busy={travelBusy} onChoose={chooseFromOverview}/>
+      <div className="world-selection" hidden={view!=='map'}>
       <MissionSelector
-        previewId={previewStageId}
-        onPreview={setPreviewStageId}
+        onBrowse={openBank}
         ref={islandDeparture}
         onTravelChange={setTravelBusy}
         selectedId={selectedMissionId}
@@ -122,14 +119,16 @@ export function Products({
         legacyProgressAvailable={legacyProgressAvailable}
         storageAvailable={storageAvailable}
       />
-
-      <div className="stage-bank-section" hidden={previewingLocked}>
+      <QualificationOverview products={products} bank={bank} qualifications={qualifications} completed={completed}
+        selectedStageId={selectedMissionId} loading={sourceStatus==='loading'} busy={travelBusy} onChoose={chooseFromOverview}/>
+      </div>
+      <div className="stage-bank-section" hidden={view!=='bank'}>
+      <button className="button secondary bank-back" onClick={()=>onViewChange('map')}><ArrowLeft size={18}/>返回七島選關</button>
       <div className="section-heading">
         <span className="eyebrow">PREPARE YOUR VISIT</span>
-        <h1>第{stage.stageNumber}關：{stage.clinic}</h1>
+        <h1 ref={bankHeading} tabIndex={-1}>第{stage.stageNumber}關：{stage.clinic}</h1>
         <p>選擇本關限定的產品或主題：{stage.allowedCategories.join('、')}。</p>
-        <p className="stage-qualification-progress" data-testid="stage-qualification-progress" role="status">本關已合格 {qualifiedNames.size} 項／至少 {PRODUCTS_TO_PASS_STAGE} 項；每項須 {QUESTION_COUNT} 題全對。重複合格不重複累計。</p>
-        {sourceStatus!=='loading'&&eligibleCount<PRODUCTS_TO_PASS_STAGE&&<p className="error-text" role="status">目前只有 {eligibleCount} 項題庫具備至少 {QUESTION_COUNT} 題，尚不足 {PRODUCTS_TO_PASS_STAGE} 項。需補足指定分類的題庫後才能通關。</p>}
+        <p className="stage-qualification-progress" data-testid="stage-qualification-progress" role="status">本關已合格 {qualifiedNames.size} 項 · 自由選擇產品／主題，每項 {QUESTION_COUNT} 題全對即合格。</p>
       </div>
       <div
         className={`source-status ${sourceStatus}`}

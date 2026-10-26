@@ -6,6 +6,7 @@ import './styles/clinic3d.css';
 import './styles/missions.css';
 import './styles/readability.css';
 import './styles/vivid.css';
+import './styles/gameplay.css';
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />

@@ -4,14 +4,15 @@ import {islandPositions} from '../src/data/islandStages';
 import {planIslandWalk,sampleIslandWalk,ISLAND_WALK_RADIUS,ISLAND_GATE_Z,islandStandingPoint} from '../src/engine/islandWalk';
 import {placeIslandLabels} from '../src/engine/islandLabels';
 const all=sevenStages.map(s=>s.id);
-it('locked and unknown destinations never produce a route',()=>{
- expect(planIslandWalk('new-training','product-names',[],false)).toBeNull();
- expect(planIslandWalk('new-training','family',['new-training'],false)).toBeNull();
+it('any valid destination is reachable without previous completions; unknown islands are rejected',()=>{
+ expect(planIslandWalk('new-training','product-names',[],false)).not.toBeNull();
+ expect(planIslandWalk('new-training','family',[],false)).not.toBeNull();
+ expect(planIslandWalk('new-training','unknown' as never,[],false)).toBeNull();
 });
 for(const portrait of [false,true])it('every unlocked replay route uses only neighboring bridges in '+(portrait?'portrait':'desktop'),()=>{
  const positions=islandPositions(portrait);
  for(const from of all)for(const to of all){
-  const route=planIslandWalk(from,to,all,portrait)!;expect(route).not.toBeNull();
+  const route=planIslandWalk(from,to,[],portrait)!;expect(route).not.toBeNull();
   const destination=islandStandingPoint(to,portrait,true),end=sampleIslandWalk(route,1);
   expect(end.x).toBeCloseTo(destination.x,8);expect(end.z).toBeCloseTo(destination.z,8);
   for(const p of route.points.filter(p=>p.surface==='bridge')){

@@ -8,7 +8,7 @@ function make(id:StageId,stageNumber:number,clinic:string,name:string,specialty:
  const source=getMission(base);
  const conversation=stageConversation(id);
  return {...source,id,stageNumber,clinic,english:'STAGE '+String(stageNumber).padStart(2,'0'),kind,
-  title:clinic,brief:kind==='training'?'選擇指定主題，每項10題全對才合格，至少5項不同主題合格才通關。':'拜訪'+name+'，介紹本關指定類別；每項10題全對，至少5項不同產品合格才通關。',
+  title:clinic,brief:kind==='training'?'選擇本關主題，與教室角色交流後，完成10題全對的考驗。':'拜訪'+name+'，介紹本關指定類別；每項產品10題全對即合格。',
   required:['reception','waiting'],allowedCategories:categories,target:'doctor',
   doctor:{...source.doctor,name,specialty,initial:name[0],stethoscope:kind==='clinic',
    coat:kind==='training'?0x2877ce:source.doctor.coat,

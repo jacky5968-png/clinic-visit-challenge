@@ -28,24 +28,25 @@ describe('seven stage restrictions',()=>{
   }
   expect(allowedInStage({...p,demo:true},sevenStages[0])).toBe(false);
  });
- it('unlocks sequentially and allows replay of completed stages',()=>{
-  expect(stageUnlocked('new-training',[])).toBe(true);expect(stageUnlocked('product-names',[])).toBe(false);
-  expect(stageUnlocked('product-names',['new-training'])).toBe(true);
-  expect(stageUnlocked('family',['new-training'])).toBe(false);
+ it('opens every valid island immediately, independent of existing qualification records',()=>{
+  for(const stage of sevenStages){expect(stageUnlocked(stage.id,[])).toBe(true);expect(stageUnlocked(stage.id,['family'])).toBe(true);}
+  expect(stageUnlocked('unknown' as never,[])).toBe(false);
  });
  it('counts a stage independently of the product used in later stages',()=>{
   const {products,bank,records}=fixture();
   expect(completedStages(records,products,bank)).toEqual(sevenStages.map(s=>s.id));
-  expect(completedStages(records.slice(1),products,bank)).toEqual([]);
-  expect(completedStages([records[0]],products,bank)).toEqual([]);
-  expect(completedStages(records.slice(0,4),products,bank)).toEqual([]);
+  expect(completedStages(records.slice(1),products,bank)).toEqual(sevenStages.map(s=>s.id));
+  expect(completedStages([records[0]],products,bank)).toEqual(['new-training']);
+  expect(completedStages(records.slice(0,4),products,bank)).toEqual(['new-training']);
   expect(completedStages(records.slice(0,5),products,bank)).toEqual(['new-training']);
  });
  it('invalidates changed bank content or changed eligibility without erasing records',()=>{
   const {products,bank,records}=fixture();
   const changed=bank.map((q,i)=>i===0?{...q,prompt:q.prompt+'版本2'}:q);
-  expect(completedStages(records,products,changed)).toEqual([]);
-  expect(completedStages(records,products.map((p,i)=>i===0?{...p,category:'其他'}:p),bank)).toEqual([]);
+  const sole=records.filter((_,i)=>i%5===0);
+  expect(completedStages(sole,products,changed)).toEqual(sevenStages.slice(1).map(s=>s.id));
+  expect(completedStages(sole,products.map((p,i)=>i===0?{...p,category:'其他'}:p),bank)).toEqual(sevenStages.slice(1).map(s=>s.id));
+  expect(stageQualifications(records,products,changed)['new-training']).toHaveLength(4);
   expect(completedStages(records,products,bank)).toHaveLength(7);
   expect(records).toHaveLength(35);
  });
@@ -65,21 +66,22 @@ describe('seven stage restrictions',()=>{
   expect(recordStageCompletion(saved,{...records[1],correctCount:9})).toBe(saved);
   expect(recordStageCompletion(saved,{...records[1],questionCount:5,correctCount:5})).toBe(saved);
   expect(stageQualifications([...saved,first,first],products,bank)['new-training']).toHaveLength(1);
-  expect(completedStages([...saved,first,first,first,first],products,bank)).toEqual([]);
+  expect(completedStages([...saved,first,first,first,first],products,bank)).toEqual(['new-training']);
  });
- it('keeps the next stage locked until the fifth distinct product and survives serialization',()=>{
+ it('preserves serialized product records without using their count as an access gate',()=>{
   const {products,bank,records}=fixture();
-  for(let n=0;n<5;n++)expect(stageUnlocked('product-names',completedStages(records.slice(0,n),products,bank))).toBe(false);
+  for(let n=0;n<5;n++)for(const stage of sevenStages)expect(stageUnlocked(stage.id,completedStages(records.slice(0,n),products,bank))).toBe(true);
   const restored=parseStageProgress(JSON.stringify({version:2,completed:records.slice(0,5)}));
   expect(stageUnlocked('product-names',completedStages(restored,products,bank))).toBe(true);
-  expect(stageUnlocked('ent',completedStages(restored,products,bank))).toBe(false);
+  expect(stageUnlocked('ent',completedStages(restored,products,bank))).toBe(true);
+  expect(restored).toHaveLength(5);
  });
  it('rejects mismatched categories, too-short banks and invalid evidence without removing history',()=>{
   const {products,bank,records}=fixture();
   const bad=[{...records[0],questionCount:5,correctCount:5},{...records[1],correctCount:9}];
   expect(parseStageProgress(JSON.stringify({version:2,completed:bad}))).toEqual([]);
   const short=bank.filter(q=>q.productId!==products[0].id||q.id!==products[0].id+'-q9');
-  expect(completedStages(records,products,short)).toEqual([]);
+  expect(completedStages([records[0]],products,short)).toEqual([]);
   expect(stageQualifications(records,products,short)['new-training']).toHaveLength(4);
   expect(records).toHaveLength(35);
  });

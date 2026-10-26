@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { ArrowRight, RotateCcw, Home, CheckCircle2, BookOpen } from 'lucide-react';
 import type { GameState, Product } from '../types';
 import { calculateResult,QUESTION_COUNT } from '../engine/quiz';
-import {PRODUCTS_TO_PASS_STAGE} from '../config/challenge';
 import { assets } from '../data/assets';
 import { AssetImage } from '../components/AssetImage';
 import { GAME_NAME } from '../config/game';
@@ -64,12 +63,12 @@ export function Result({
           {mission.clinic} · {mission.doctor.name}
         </b>
         <span>{mission.title}</span>
-        <p className="stage-qualification-progress" data-testid="result-qualified-count" role="status">本關已合格 {qualifiedCount} 項／至少 {PRODUCTS_TO_PASS_STAGE} 項{qualifiedCount>=PRODUCTS_TO_PASS_STAGE?'，本關已通關。':`，還需 ${PRODUCTS_TO_PASS_STAGE-qualifiedCount} 項不同產品／主題合格。`}</p>
+        <p className="stage-qualification-progress" data-testid="result-qualified-count" role="status">本關已有 {qualifiedCount} 項合格紀錄。可繼續挑戰，或自由前往其他島嶼。</p>
         {result.passed&&<p>{alreadyQualified?'此產品／主題先前已合格，重複挑戰不增加合格數。':'本次10題全對，已列入本關合格進度。'}</p>}
         <p>
           {completedCount === 7
-            ? '恭喜完成七個關卡！'
-            : `七關進度：${completedCount} / 7關已通關`}
+            ? '七座島嶼都有你的合格紀錄！'
+            : `已有合格紀錄的島嶼：${completedCount} / 7`}
         </p>
         {!storageAvailable && <small>本次進度僅在頁面開啟期間保留，瀏覽器無法寫入本機紀錄。</small>}
       </div>
@@ -134,7 +133,7 @@ export function Result({
       <div className="result-actions">
         {result.passed && onNextVisit && (
           <button className="button secondary" onClick={onNextVisit}>
-            下一關：{nextClinic}
+            探索另一座島：{nextClinic}
             <ArrowRight size={17} />
           </button>
         )}

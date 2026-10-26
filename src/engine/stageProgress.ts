@@ -3,7 +3,7 @@ import {sevenStages,type StageId} from '../data/sevenStages';
 import {allowedInStage} from '../data/stageRules';
 import {missionProductKey} from './missionProgress';
 import {availableQuestionCount} from './quiz';
-import {QUESTION_COUNT,PRODUCTS_TO_PASS_STAGE} from '../config/challenge';
+import {QUESTION_COUNT} from '../config/challenge';
 export const LEGACY_STAGE_STORAGE_KEY='field-training-seven-stages-v1';
 export const STAGE_STORAGE_KEY='field-training-seven-stages-v2';
 export const STAGE_PROGRESS_VERSION=2;
@@ -46,11 +46,11 @@ export function stageQualifications(records:StageCompletion[],products:Product[]
 export function completedStagesFromQualifications(qualified:StageQualifications):StageId[]{
  const done:StageId[]=[];
  for(const stage of sevenStages){
-  if(qualified[stage.id].length<PRODUCTS_TO_PASS_STAGE)break;done.push(stage.id);
+  if(qualified[stage.id].length>0)done.push(stage.id);
  }
  return done;
 }
 export function completedStages(records:StageCompletion[],products:Product[],bank:Question[]):StageId[]{
  return completedStagesFromQualifications(stageQualifications(records,products,bank));
 }
-export function stageUnlocked(id:StageId,completed:StageId[]){const index=sevenStages.findIndex(s=>s.id===id);return index>=0&&index<=completed.length;}
+export function stageUnlocked(id:StageId,_completed:StageId[]=[]){return sevenStages.some(stage=>stage.id===id);}

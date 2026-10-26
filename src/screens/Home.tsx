@@ -1,5 +1,5 @@
 import { ArrowUpRight, ArrowRight, MousePointer2, MessageCircle, Medal, Play } from 'lucide-react';
-import { ClinicMap } from '../components/ClinicMap';
+import { HomeWorld } from '../components/HomeWorld';
 export function Home({
   onStart,
   onHelp,
@@ -15,6 +15,7 @@ export function Home({
     <div className={`home-screen ${skipIntro ? 'skip-intro' : ''}`}>
       <section className="hero">
         <div className="hero-copy">
+          <span className="hero-game-badge">FIELD ADVENTURE · 七島自由探索</span>
           <h1>
             讓專業，
             <br />
@@ -28,7 +29,7 @@ export function Home({
             。
           </h1>
           <p className="hero-description">
-            從診所的第一聲問候，到醫師的每一道提問。
+            七座島嶼，七種外勤情境，隨時自由出發。
             <br />
             在情境中練習，把產品知識轉化為推廣的自信。
           </p>
@@ -50,15 +51,15 @@ export function Home({
         </div>
         <div className="hero-visual">
           <div className="scene-topline">
-            <span>你的第一站</span>
-            <span>01 / SCENE PREVIEW</span>
+            <span>訓練基地</span>
+            <span>3D TRAINING HUB</span>
           </div>
-          <ClinicMap />
+          <HomeWorld />
           <div className="scene-caption">
             <span className="scene-number">01</span>
             <div>
               <b>從這裡，展開你的外勤旅程</b>
-              <small>新人必修 → 認識產品 → 五類客戶拜訪</small>
+              <small>新人必修・產品知識・五類客戶拜訪</small>
             </div>
             <ArrowUpRight size={22} />
           </div>
@@ -76,8 +77,8 @@ export function Home({
           </span>
           <div>
             <small>STEP 01</small>
-            <h3>七關依序解鎖</h3>
-            <p>限定題庫、自由行走與人物互動</p>
+            <h3>七座島嶼，自由選關</h3>
+            <p>點島先看說明，再選本關題庫</p>
           </div>
         </div>
         <div className="journey-item">
@@ -96,8 +97,8 @@ export function Home({
           </span>
           <div>
             <small>STEP 03</small>
-            <h3>合格累積，依序通關</h3>
-            <p>每項10題全對，每關至少5項合格</p>
+            <h3>完成考驗，收集合格紀錄</h3>
+            <p>每項10題全對，隨時探索其他島嶼</p>
           </div>
         </div>
       </section>

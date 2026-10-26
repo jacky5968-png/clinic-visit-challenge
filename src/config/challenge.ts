@@ -1,3 +1,2 @@
 export const QUESTION_COUNT = 10;
 export const POINTS_PER_QUESTION = 100 / QUESTION_COUNT;
-export const PRODUCTS_TO_PASS_STAGE = 5;

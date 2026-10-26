@@ -43,6 +43,7 @@ export default function App() {
   const sound = useSound();
   const missions = useStageProgress();
   const [selectedMissionId, setSelectedMissionId] = useState<StageId>(defaultStage.id);
+  const [productView,setProductView]=useState<'map'|'bank'>('map');
   const [activeVisit, setActiveVisit] = useState<{
     missionId: StageId;
     productKey: string;
@@ -65,8 +66,7 @@ export default function App() {
     if(first)dispatch({type:'SELECT_PRODUCT',id:first.id});
     else dispatch({type:'NAVIGATE',screen:'products'});
   }
-  useEffect(()=>{if(state.screen==='products'&&!stageUnlocked(selectedMissionId,completed))selectStage(sevenStages[Math.min(completed.length,6)].id);},[state.screen,completed.length,selectedMissionId]);
-  function openJourney(){selectStage(sevenStages[Math.min(completed.length,6)].id);}
+  function openJourney(){setProductView('map');dispatch({type:'NAVIGATE',screen:'products'});}
   const main = useRef<HTMLElement>(null);
   const product = products.find((p) => p.id === state.productId) ?? products[0];
   const activeMission = getStage(activeVisit?.missionId ?? defaultStage.id);
@@ -75,7 +75,7 @@ export default function App() {
       missions.complete({missionId:activeVisit.missionId,productKey:activeVisit.productKey,productName:activeVisit.productName,questionCount:QUESTION_COUNT,correctCount:QUESTION_COUNT,completedAt:Date.now()});
     }
   }, [state.screen, state.answers, activeVisit, missions.complete]);
-  const navigate = (screen: Screen) => dispatch({ type: 'NAVIGATE', screen });
+  const navigate = (screen: Screen) => {if(screen==='products')setProductView('map');dispatch({ type: 'NAVIGATE', screen });};
   const importData = (data: ReturnType<typeof parseQuizCsv>) => {
     const pending = activeLoad.current;
     activeLoad.current = null;
@@ -137,8 +137,7 @@ export default function App() {
     if(state.productId!==chosen.id)dispatch({type:'SELECT_PRODUCT',id:chosen.id});
     dispatch({type:'START',bank});
   };
-  const nextVisit=completed.includes(activeMission.id)
-    ? sevenStages[sevenStages.findIndex(s=>s.id===activeMission.id)+1] : undefined;
+  const nextVisit=sevenStages[(sevenStages.findIndex(s=>s.id===activeMission.id)+1)%sevenStages.length];
   const step = ['products', 'clinic', 'consultation', 'quiz', 'result'].indexOf(state.screen);
   return (
     <VisitContext.Provider value={activeMission}>
@@ -243,6 +242,7 @@ export default function App() {
               qualifications={qualifications}
               legacyProgressAvailable={missions.legacyProgressAvailable}
               storageAvailable={missions.storageAvailable}
+              view={productView} onViewChange={setProductView}
             />
           )}
           {(state.screen === 'clinic' || state.screen === 'consultation') && (
@@ -266,14 +266,14 @@ export default function App() {
               state={state}
               product={product}
               onRetry={() => start(activeMission.id)}
-              onProducts={() => selectStage(activeMission.id)}
+              onProducts={() => {selectStage(activeMission.id);setProductView('bank');}}
               onHome={() => navigate('home')}
               onSuccess={() => sound.play('success')}
               completedCount={completed.length}
               qualifiedCount={qualifications[activeMission.id].length}
               alreadyQualified={activeVisit?.alreadyQualified??false}
               nextClinic={nextVisit?.clinic}
-              onNextVisit={nextVisit?()=>selectStage(nextVisit.id):undefined}
+              onNextVisit={()=>{selectStage(nextVisit.id);setProductView('bank');}}
               storageAvailable={missions.storageAvailable}
             />
           )}
