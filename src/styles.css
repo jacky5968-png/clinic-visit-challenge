@@ -1156,6 +1156,11 @@ input::placeholder {
   height: 53px;
   object-fit: contain;
 }
+.mission-product > img {
+  width: 96px;
+  height: 106px;
+  flex-shrink: 0;
+}
 .mission-product small {
   font-size: 14px;
   color: #42566b;
@@ -3006,7 +3011,7 @@ input::placeholder {
     padding: 9px 0;
   }
   .mission-product > img {
-    height: 43px;
+    height: 86px;
   }
   .mission-checklist {
     display: none;
