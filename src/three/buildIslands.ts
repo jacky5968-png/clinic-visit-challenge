@@ -119,7 +119,7 @@ export function buildIslands(){
   tree(shoreline,x,z,.6+(i%3)*.16);
  }
  const formulationBuilding=buildFormulationBuilding();
- formulationBuilding.scale.setScalar(.45);formulationBuilding.position.set(3,.3,-28.5);formulationBuilding.rotation.y=-.18;
+ formulationBuilding.scale.setScalar(.68);formulationBuilding.position.set(3,.3,-28.5);formulationBuilding.rotation.y=-.18;
  shoreline.add(formulationBuilding);
  // Small sailboat, modeled geometry rather than a photo.
  const boat=new THREE.Group();boat.position.set(-14,.05,3);root.add(boat);
@@ -129,7 +129,7 @@ export function buildIslands(){
  function layout(portrait:boolean){
   const points=islandPositions(portrait);
   shoreline.position.z=Math.min(...points.map(p=>p[1]))+10;
-  formulationBuilding.scale.setScalar(portrait?.4:.45);
+  formulationBuilding.scale.setScalar(portrait?.6:.68);
   formulationBuilding.position.set(portrait?0:3,.3,portrait?-32:-28.5);
   islands.forEach((g,i)=>g.position.set(points[i][0],0,points[i][1]));
   bridges.forEach((g,i)=>{

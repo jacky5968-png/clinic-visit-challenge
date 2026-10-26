@@ -101,16 +101,19 @@ body{background:radial-gradient(ellipse at 0 0,#c4f2ff 0,transparent 48%),radial
   .clinic3d-stage .three-hotspot[data-visit-status] > span:first-child,.explorer-hotspot[data-visit-status] > .hotspot-marker { width:30px; min-width:30px; height:30px; font-size:16px; }
 }
 /* Reserve shoreline space for the distant formulation building; retain island scale. */
-.island-landmark-label { position:absolute; z-index:1; visibility:hidden; pointer-events:none; padding:3px 10px; border:1px solid #ffffff; border-radius:6px; background:#204d4ced; color:#fff9e7; font:700 14px/1.5 "Microsoft JhengHei","微軟正黑體",sans-serif; box-shadow:0 2px 5px #12314926; white-space:nowrap; }
+.island-landmark-label { position:absolute; z-index:1; visibility:hidden; pointer-events:none; padding:6px 14px; border:2px solid #ffffff; border-radius:8px; background:#173f42; color:#fff9df; font:700 18px/1.5 "Microsoft JhengHei","微軟正黑體",sans-serif; box-shadow:0 3px 7px #12314940; white-space:nowrap; }
+.island-hint-short { display:none; }
 @media(min-width:851px) {
- .stage-selection-screen .map-view .archipelago-viewport { height:clamp(530px,calc(100dvh - 220px),590px); }
+ .stage-selection-screen .map-view .archipelago-viewport { height:clamp(600px,calc(100dvh - 150px),660px); }
 }
 @media(max-width:850px) {
- .stage-selection-screen .map-view .archipelago-viewport { height:770px; min-height:770px; }
+ .stage-selection-screen .map-view .archipelago-viewport { height:800px; min-height:800px; }
 }
 @media(max-width:520px) {
- .stage-selection-screen .map-view .archipelago-viewport { height:950px; min-height:950px; }
- .stage-selection-screen .island-map-caption { max-width:calc(100% - 140px); }
+ .stage-selection-screen .map-view .archipelago-viewport { height:1000px; min-height:1000px; }
+ .stage-selection-screen .island-map-caption { max-width:calc(100% - 176px); }
+ .stage-selection-screen .island-hint-long { display:none; }
+ .stage-selection-screen .island-hint-short { display:inline; }
 }
 @media(max-width:374px) {
  .stage-selection-screen [data-testid="stage-ent"] .island-button-title strong { font-size:13px; white-space:nowrap; }

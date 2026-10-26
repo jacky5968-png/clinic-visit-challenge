@@ -74,11 +74,11 @@ export function buildFormulationBuilding() {
   }
   const canvas = document.createElement('canvas'); canvas.width = 1024; canvas.height = 160;
   const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = '#35474b'; ctx.fillRect(0, 0, 1024, 160);
-  ctx.fillStyle = '#fff2c5'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#173f42'; ctx.fillRect(0, 0, 1024, 160);
+  ctx.fillStyle = '#fff9df'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.font = '700 128px "Microsoft JhengHei","微軟正黑體",sans-serif'; ctx.fillText('生達製劑大樓', 512, 86, 960);
   const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
-  const plaque = new THREE.Mesh(new THREE.PlaneGeometry(4.9, .65), new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
+  const plaque = new THREE.Mesh(new THREE.PlaneGeometry(6.1, .82), new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
   plaque.name = 'formulation-building-name'; plaque.position.set(0, 1.81, 4.835); root.add(plaque);
   return root;
 }

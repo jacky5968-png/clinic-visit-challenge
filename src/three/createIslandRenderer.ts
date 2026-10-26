@@ -59,22 +59,22 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  }
  function frameLandmark(){
   // Frame only the distant backdrop; island positions, camera scale and walking routes stay unchanged.
-  const building=model.formulationBuilding,baseScale=portrait?.4:.45;
+  const building=model.formulationBuilding,baseScale=portrait?.6:.68;
   building.scale.setScalar(baseScale);building.position.set(portrait?0:3,.3,portrait?-32:-28.5);
   model.root.updateMatrixWorld(true);
   let area=projectArea(building,'landmark');
-  const factor=Math.min(1,(portrait?100:110)/area.height,(width-32)/area.width);
+  const factor=Math.min(1,(portrait?150:160)/area.height,(width-32)/area.width);
   building.scale.setScalar(baseScale*factor);model.root.updateMatrixWorld(true);area=projectArea(building,'landmark');
   const ray=new THREE.Raycaster(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),-.3);
   function groundAt(x:number,y:number){ray.setFromCamera(new THREE.Vector2(x/width*2-1,1-y/height*2),camera);return ray.ray.intersectPlane(plane,new THREE.Vector3());}
-  const from=groundAt(area.x+area.width/2,area.y+area.height/2),to=groundAt(width*.5,portrait?100:80);
+  const from=groundAt(area.x+area.width/2,area.y+area.height/2),to=groundAt(width*.5,130);
   if(from&&to)building.position.add(to.sub(from));
   model.root.updateMatrixWorld(true);
  }
  function frameCallouts(){
   camera.left=-baseHeight*width/height/2;camera.right=-camera.left;
   camera.top=baseHeight/2;camera.bottom=-baseHeight/2;camera.zoom=zoom;camera.updateProjectionMatrix();camera.updateMatrixWorld(true);model.root.updateMatrixWorld(true);
-  const upper=Math.max(...sevenStages.slice(3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+20+(portrait?(host.querySelector<HTMLElement>('.island-map-caption')?.offsetHeight||40)+20:0)+(portrait?70:110);
+  const upper=Math.max(...sevenStages.slice(3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+20+(portrait?(host.querySelector<HTMLElement>('.island-map-caption')?.offsetHeight||40)+20:0)+(portrait?120:180);
   const lower=Math.max(...sevenStages.slice(0,3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+(portrait?20:40);
   let areas=sevenStages.map((s,i)=>projectArea(model.islands[i].getObjectByName('building-'+s.id)!,s.id));
   let min=Math.min(...areas.map(a=>a.y)),max=Math.max(...areas.map(a=>a.y+a.height));
@@ -98,7 +98,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   const landmarkLabel=host.querySelector<HTMLElement>('.island-landmark-label');
   if(landmarkLabel){
    landmarkLabel.style.left=(portrait?width-landmarkLabel.offsetWidth-10:Math.max(8,Math.min(width-landmarkLabel.offsetWidth-8,landmark.x+landmark.width/2-landmarkLabel.offsetWidth/2)))+'px';
-   landmarkLabel.style.top=(portrait?10:Math.max(8,landmark.y-28))+'px';landmarkLabel.style.visibility='visible';
+   landmarkLabel.style.top=(portrait?10:Math.max(8,landmark.y-landmarkLabel.offsetHeight-8))+'px';landmarkLabel.style.visibility='visible';
   }
   const buildings=sevenStages.map((s,i)=>projectArea(model.islands[i].getObjectByName('building-'+s.id)!,'building-'+s.id));
   const candidates=sevenStages.map((s,i)=>{
@@ -170,7 +170,9 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  function fit(reset=false){
   const rect=host.getBoundingClientRect();if(rect.width<1||rect.height<1)return;
   const wasPortrait=portrait;
-  width=rect.width;height=rect.height;portrait=width/height<.85;model.layout(portrait);
+  width=rect.width;height=rect.height;
+  // The backdrop's extra height must not switch an iPad from its existing wide island layout.
+  portrait=width/Math.max(1,height-180)<.85;model.layout(portrait);
   const azimuthLimit=portrait?.14:.42;
   controls.minAzimuthAngle=-azimuthLimit;controls.maxAzimuthAngle=azimuthLimit;
   const viewHeight=portrait?44*height/670:Math.max(20,27/(width/height)),viewWidth=viewHeight*width/height;

@@ -105,7 +105,7 @@ export const MissionSelector=forwardRef<IslandDepartureHandle,MissionSelectorPro
     </div>
     <span className="island-actor-label" data-testid="island-actor-label" aria-hidden="true">外勤</span>
     {mode==='map'&&<span className="island-landmark-label">生達製劑大樓</span>}
-    {mode==='map'&&<div className="island-map-caption"><Compass size={15}/><span>拖曳旋轉 · 點島名選關</span></div>}
+    {mode==='map'&&<div className="island-map-caption" aria-label="拖曳旋轉，點島名選關"><Compass size={15}/><span className="island-hint-long">拖曳旋轉 · 點島名選關</span><span className="island-hint-short">拖曳旋轉</span></div>}
    </div>
    <aside className={'island-itinerary'+(!unlock.unlocked?' is-preview':'')} aria-label="所選島嶼資訊">
     <div className="island-itinerary-heading"><p className="island-kicker">第 {stage.stageNumber} 關</p><span className="island-destination-state">{!unlock.unlocked?<><LockKeyhole size={16}/>待解鎖・預覽</>:done?<><CheckCircle2 size={16}/>已通關</>:<><Flag size={16}/>目前開放</>}</span></div>
