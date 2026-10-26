@@ -2,6 +2,22 @@ import * as THREE from 'three';
 import { formulationControls } from './formulationControls';
 import { buildFormulationBuilding } from './buildFormulationBuilding';
 
+function addRoofMotto(building: THREE.Group) {
+  const text = '誠正精新、造福人群';
+  const surface = document.createElement('canvas'); surface.width = 2048; surface.height = 256;
+  const context = surface.getContext('2d')!;
+  context.font = '700 224px "Microsoft JhengHei","微軟正黑體",sans-serif';
+  context.textAlign = 'center'; context.textBaseline = 'middle';
+  context.lineJoin = 'round'; context.lineWidth = 7; context.strokeStyle = '#704332';
+  context.strokeText(text, 1024, 137, 1940);
+  context.fillStyle = '#fff9df'; context.fillText(text, 1024, 137, 1940);
+  const texture = new THREE.CanvasTexture(surface); texture.colorSpace = THREE.SRGBColorSpace;
+  const motto = new THREE.Mesh(new THREE.PlaneGeometry(13.3, 2.2), new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false, toneMapped: false }));
+  motto.name = 'formulation-roof-motto'; motto.rotation.x = -Math.PI / 2;
+  motto.position.set(0, 6.31, .75); building.add(motto);
+  return motto;
+}
+
 export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number) => void, onFailure: () => void) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
@@ -10,7 +26,8 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
   const canvas = renderer.domElement;
   canvas.dataset.testid = 'formulation-viewer-canvas'; canvas.tabIndex = 0;
-  canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', '生達製劑大樓放大3D模型，可拖曳旋轉與雙指縮放');
+  canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', '生達製劑大樓放大3D模型，屋頂由左至右為「誠正精新、造福人群」；可拖曳旋轉與雙指縮放');
+  canvas.dataset.roofMotto = '誠正精新、造福人群';
   host.append(canvas);
   const scene = new THREE.Scene(); scene.background = new THREE.Color(0xe6f4ef);
   scene.add(new THREE.HemisphereLight(0xf9fcff, 0x71968a, 1.5));
@@ -19,7 +36,8 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
   Object.assign(sun.shadow.camera, { left: -22, right: 22, top: 22, bottom: -22, near: 1, far: 100 });
   sun.shadow.camera.updateProjectionMatrix(); sun.shadow.normalBias = .03; scene.add(sun);
   let building: THREE.Group;
-  try { building = buildFormulationBuilding(); }
+  let motto: THREE.Mesh;
+  try { building = buildFormulationBuilding(); motto = addRoofMotto(building); }
   catch (error) { renderer.dispose(); renderer.forceContextLoss(); canvas.remove(); throw error; }
   const sign = building.getObjectByName('formulation-building-name');
   sign?.scale.set(1.18, 1.22, 1);
@@ -27,6 +45,7 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
   building.position.sub(center); scene.add(building); building.updateMatrixWorld(true);
   const bounds = new THREE.Box3().setFromObject(building);
   const signBounds = sign ? new THREE.Box3().setFromObject(sign) : null;
+  const mottoBounds = new THREE.Box3().setFromObject(motto);
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.MeshStandardMaterial({ color: 0xd7e8d9, roughness: 1 }));
   floor.rotation.x = -Math.PI / 2; floor.position.y = bounds.min.y - .035; floor.receiveShadow = true; scene.add(floor);
   const camera = new THREE.OrthographicCamera(-16, 16, 10, -10, .1, 160);
@@ -48,7 +67,7 @@ export function createFormulationViewer(host: HTMLElement, onZoom: (zoom: number
     renderer.render(scene, camera);
     canvas.dataset.renderer = 'webgl'; canvas.dataset.zoom = camera.zoom.toFixed(3);
     canvas.dataset.azimuth = controls.getAzimuthalAngle().toFixed(3);
-    for (const [key, box] of [['modelArea', bounds], ['signArea', signBounds]] as const) {
+    for (const [key, box] of [['modelArea', bounds], ['signArea', signBounds], ['roofMottoArea', mottoBounds]] as const) {
       if (!box) continue;
       const projected: THREE.Vector3[] = [];
       for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) projected.push(new THREE.Vector3(x, y, z).project(camera));
