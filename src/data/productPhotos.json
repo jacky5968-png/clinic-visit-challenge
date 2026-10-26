@@ -129,20 +129,182 @@
   ],
   "Apolam": [
     {
-      "src": "/assets/products/local/apolam-0-5mg.png",
-      "caption": "包裝標示：0.5mg；1,000錠盒裝"
+      "src": "/assets/products/local/apolam.png",
+      "caption": "包裝標示：Apolam 0.5mg 錠劑"
     }
   ],
   "Shielin Powder": [
     {
-      "src": "/assets/products/local/shielin-powder.jpg",
-      "caption": "本機速備粉產品照片"
+      "src": "/assets/products/local/shielin-powder.png",
+      "caption": "包裝標示：Shielin Powder 速備粉"
     }
   ],
   "Deherp Tab.": [
     {
-      "src": "/assets/products/local/deherp-tablet-200mg.jpg",
-      "caption": "包裝標示：200mg 錠劑；非 Deherp Cream"
+      "src": "/assets/products/local/deherp-tablet.png",
+      "caption": "包裝標示：Deherp 200mg 錠劑；非乳膏"
+    }
+  ],
+  "Acarose 100mg": [
+    {
+      "src": "/assets/products/local/acarose-100mg.png",
+      "caption": "包裝標示：Acarose 100mg"
+    }
+  ],
+  "Acystin": [
+    {
+      "src": "/assets/products/local/acystin.png",
+      "caption": "包裝標示：Acystin 600mg 顆粒"
+    }
+  ],
+  "Adapine": [
+    {
+      "src": "/assets/products/local/adapine.png",
+      "caption": "包裝標示：Adapine 持續性藥效錠 30mg"
+    }
+  ],
+  "Allopurinol": [
+    {
+      "src": "/assets/products/local/allopurinol.png",
+      "caption": "包裝標示：Allopurinol 100mg 錠劑"
+    }
+  ],
+  "Aluzaine": [
+    {
+      "src": "/assets/products/local/aluzaine.png",
+      "caption": "包裝標示：ALUZAINE TABLETS"
+    }
+  ],
+  "Ascofen": [
+    {
+      "src": "/assets/products/local/ascofen.png",
+      "caption": "包裝標示：Ascofen 錠劑"
+    }
+  ],
+  "Befat": [
+    {
+      "src": "/assets/products/local/befat.png",
+      "caption": "包裝標示：Befat 錠劑"
+    }
+  ],
+  "Broncolin": [
+    {
+      "src": "/assets/products/local/broncolin.png",
+      "caption": "包裝標示：Broncolin Tablets"
+    }
+  ],
+  "Butmira Liq.": [
+    {
+      "src": "/assets/products/local/butmira-liquid.png",
+      "caption": "包裝標示：Butmira Liquid 60mL"
+    }
+  ],
+  "Erispan-S": [
+    {
+      "src": "/assets/products/local/erispan-s.png",
+      "caption": "包裝標示：Erispan-S 0.25mg 錠劑"
+    }
+  ],
+  "Etoxib": [
+    {
+      "src": "/assets/products/local/etoxib.png",
+      "caption": "包裝標示：Etoxib 60mg"
+    }
+  ],
+  "Eufan Tab.": [
+    {
+      "src": "/assets/products/local/eufan-tablet.png",
+      "caption": "包裝標示：Eufan F.C. Tablets 10mg；錠劑"
+    }
+  ],
+  "Framycin": [
+    {
+      "src": "/assets/products/local/framycin.png",
+      "caption": "包裝標示：Framycin 護樂黴素石蠟紗布 10cm × 10cm；外用"
+    }
+  ],
+  "Glubon-S": [
+    {
+      "src": "/assets/products/local/glubon-s.png",
+      "caption": "包裝標示：Glubon-S 速療骨"
+    }
+  ],
+  "Gouless": [
+    {
+      "src": "/assets/products/local/gouless.png",
+      "caption": "包裝標示：Gouless 25mg"
+    }
+  ],
+  "Grumed-M": [
+    {
+      "src": "/assets/products/local/grumed-m.png",
+      "caption": "包裝標示：Grumed-M 膜衣錠"
+    }
+  ],
+  "Levozine": [
+    {
+      "src": "/assets/products/local/levozine.png",
+      "caption": "包裝標示：Levozine 5mg"
+    }
+  ],
+  "Lodiglit": [
+    {
+      "src": "/assets/products/local/lodiglit.png",
+      "caption": "包裝標示：Lodiglit 15mg"
+    }
+  ],
+  "Migbose": [
+    {
+      "src": "/assets/products/local/migbose.png",
+      "caption": "包裝標示：Migbose 50mg"
+    }
+  ],
+  "Selexib": [
+    {
+      "src": "/assets/products/local/selexib.png",
+      "caption": "包裝標示：SELEXIB 200mg 膠囊"
+    }
+  ],
+  "Siliflo 8mg": [
+    {
+      "src": "/assets/products/local/siliflo-8mg.png",
+      "caption": "包裝標示：Siliflo 8mg 膜衣錠"
+    }
+  ],
+  "Sindecon": [
+    {
+      "src": "/assets/products/local/sindecon.png",
+      "caption": "包裝標示：醫鼻易噴鼻液 0.5mg／mL"
+    }
+  ],
+  "Soma": [
+    {
+      "src": "/assets/products/local/soma.png",
+      "caption": "包裝標示：Soma 膠囊"
+    }
+  ],
+  "Tamlosin D": [
+    {
+      "src": "/assets/products/local/tamlosin-d.png",
+      "caption": "包裝標示：Tamlosin D 0.2mg 持續釋放口溶錠"
+    }
+  ],
+  "Utraphen": [
+    {
+      "src": "/assets/products/local/utraphen.png",
+      "caption": "包裝標示：Utraphen 37.5mg／325mg 膜衣錠"
+    }
+  ],
+  "Volna-K": [
+    {
+      "src": "/assets/products/local/volna-k.png",
+      "caption": "包裝標示：Volna-K 25mg"
+    }
+  ],
+  "Deherp Cream": [
+    {
+      "src": "/assets/products/local/deherp-cream.png",
+      "caption": "包裝標示：Deherp 乳膏 5%；5gm；非錠劑"
     }
   ]
 }

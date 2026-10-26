@@ -3,8 +3,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = [ROOT.parent / '產品照片', Path('C:/Users/acer/我的雲端硬碟/生達2026/啄木鳥seminar/產品照片'), Path('C:/Users/acer/我的雲端硬碟/生達2026/2026月初會/202606月初會/教育訓練')]
-files = list(SOURCES[0].glob('*.jpg')) + list(SOURCES[1].glob('*.jpg')) + [p for p in SOURCES[2].glob('Apolam*') if p.suffix.lower() in ['.jpg','.png']]
+SOURCES = [ROOT.parent / '產品照片']
+files = sorted((p for p in SOURCES[0].iterdir() if p.suffix.lower() in ['.jpg', '.jpeg', '.png']), key=lambda p: p.name.lower())
 out = ROOT / 'output' / 'photo-review'
 out.mkdir(parents=True, exist_ok=True)
 font = ImageFont.truetype('C:/Windows/Fonts/msjh.ttc', 17)

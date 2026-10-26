@@ -1,15 +1,15 @@
 {
-  "verifiedDate": "2026-10-24",
+  "verifiedDate": "2026-10-26",
   "sourcePolicy": "本機既有實拍照片，逐張核對包裝標示。原檔不改名、不覆寫，不使用生成圖卡。",
-  "quizItems": 80,
-  "mappedItems": 23,
-  "photoFiles": 25,
-  "pendingItems": 57,
+  "quizItems": 91,
+  "mappedItems": 50,
+  "photoFiles": 52,
+  "pendingItems": 41,
   "records": [
     {
       "product": "優乳鈣",
       "source": "All Right.jpg",
-      "target": "public/assets/products/local/all-right.jpg",
+      "target": "public\\assets\\products\\local\\all-right.jpg",
       "caption": "包裝標示：All-Right Calcium 優乳鈣",
       "sha256": "865b7b672fe79b3f1c2a413d74f91cb7cdd8439d8d8c2929de24d35a898f8208",
       "note": ""
@@ -17,7 +17,7 @@
     {
       "product": "Amlobin-O",
       "source": "Amlobin-O.jpg",
-      "target": "public/assets/products/local/amlobin-o.jpg",
+      "target": "public\\assets\\products\\local\\amlobin-o.jpg",
       "caption": "包裝標示：5/40mg",
       "sha256": "0403b4512a5e2ccc6d62f97396adf900bf02ebc9c0ae5fcc2adca8ebcec06194",
       "note": ""
@@ -25,7 +25,7 @@
     {
       "product": "Bistin",
       "source": "Bistin.jpg",
-      "target": "public/assets/products/local/bistin.jpg",
+      "target": "public\\assets\\products\\local\\bistin.jpg",
       "caption": "包裝標示：20mg",
       "sha256": "e45a8c644c12973e635d0890217086592af7439f1736572bcd04b1bd8e907678",
       "note": ""
@@ -33,7 +33,7 @@
     {
       "product": "Co-Midis",
       "source": "Co-Midis.jpg",
-      "target": "public/assets/products/local/co-midis.jpg",
+      "target": "public\\assets\\products\\local\\co-midis.jpg",
       "caption": "包裝標示：80/5mg",
       "sha256": "20a2cacbca6770fba829c677bf7c54239b808f55302d3c1b93d52154c54803d0",
       "note": ""
@@ -41,7 +41,7 @@
     {
       "product": "Dalisoon",
       "source": "Dalisoon.jpg",
-      "target": "public/assets/products/local/dalisoon.jpg",
+      "target": "public\\assets\\products\\local\\dalisoon.jpg",
       "caption": "包裝標示：5mg",
       "sha256": "659d21f3ce8186934274d7445ed825d98555a6a039505571111ac962630a36a5",
       "note": ""
@@ -49,7 +49,7 @@
     {
       "product": "Eufan Sol.",
       "source": "Eufan 60ml.jpg",
-      "target": "public/assets/products/local/eufan-solution-60ml.jpg",
+      "target": "public\\assets\\products\\local\\eufan-solution-60ml.jpg",
       "caption": "包裝標示：優喉液 60mL；非錠劑",
       "sha256": "f8995b2f59e9ee3eb4d15a54fa6a5f997781f7ad09af52c265f7e610e279b9c7",
       "note": ""
@@ -57,7 +57,7 @@
     {
       "product": "Febuton",
       "source": "Febuton.jpg",
-      "target": "public/assets/products/local/febuton-40mg.jpg",
+      "target": "public\\assets\\products\\local\\febuton-40mg.jpg",
       "caption": "包裝標示：40mg",
       "sha256": "ea035f455b01689698341015d53b49e140cf1e996cfb2ec04f7846bddac014cb",
       "note": ""
@@ -65,7 +65,7 @@
     {
       "product": "Febuton",
       "source": "Febuton 80mg.jpg",
-      "target": "public/assets/products/local/febuton-80mg.jpg",
+      "target": "public\\assets\\products\\local\\febuton-80mg.jpg",
       "caption": "包裝標示：80mg",
       "sha256": "a3c9290a2d75aa7069e8dae460e4b537a8261fa07ac2841a5f511f4080cf9734",
       "note": ""
@@ -73,7 +73,7 @@
     {
       "product": "Lecipam",
       "source": "Lecipam.jpg",
-      "target": "public/assets/products/local/lecipam.jpg",
+      "target": "public\\assets\\products\\local\\lecipam.jpg",
       "caption": "包裝標示：10mg",
       "sha256": "c5a9432955ce75295540ac0f1fbf78c093c8ab7f80d3e8ccf1a591cb6e65c674",
       "note": ""
@@ -81,7 +81,7 @@
     {
       "product": "Lonfilis",
       "source": "Lonfilis 5mg.jpg",
-      "target": "public/assets/products/local/lonfilis-5mg.jpg",
+      "target": "public\\assets\\products\\local\\lonfilis-5mg.jpg",
       "caption": "包裝標示：5mg",
       "sha256": "140fe80bc17cbb247f26ad0e3225b184cebe9e952463a9c0b416974ce1fc6d6a",
       "note": ""
@@ -89,7 +89,7 @@
     {
       "product": "Nebipress",
       "source": "Nebipress.jpg",
-      "target": "public/assets/products/local/nebipress.jpg",
+      "target": "public\\assets\\products\\local\\nebipress.jpg",
       "caption": "包裝標示：5mg",
       "sha256": "6a9265e08793610cdd8a08482564f86c5c0b92382d67a693194522783fe48ca1",
       "note": ""
@@ -97,7 +97,7 @@
     {
       "product": "Panzolec 20",
       "source": "Panzolec 20mg.jpg",
-      "target": "public/assets/products/local/panzolec-20mg.jpg",
+      "target": "public\\assets\\products\\local\\panzolec-20mg.jpg",
       "caption": "包裝標示：20mg；7錠包裝",
       "sha256": "bd99fcc67f636e14658f23767dbe8c96cfc905aa5785e125108b3cbb676e24b2",
       "note": ""
@@ -105,7 +105,7 @@
     {
       "product": "Panzolec 40",
       "source": "Panzolec 40mg.jpg",
-      "target": "public/assets/products/local/panzolec-40mg.jpg",
+      "target": "public\\assets\\products\\local\\panzolec-40mg.jpg",
       "caption": "包裝標示：40mg；14錠包裝",
       "sha256": "d254b3430dd97d1b9da693b95ad0c184224653095cb5276f484e08c0c602ac08",
       "note": ""
@@ -113,7 +113,7 @@
     {
       "product": "Pitastatin",
       "source": "Pitastatin 4mg.jpg",
-      "target": "public/assets/products/local/pitastatin-2mg.jpg",
+      "target": "public\\assets\\products\\local\\pitastatin-2mg.jpg",
       "caption": "包裝實際標示：2mg（依包裝核對）",
       "sha256": "c43c7a74014fdf8dc00515e8c0ccbb6a3665f6a81a9de3aaac06787256082488",
       "note": "來源檔名寫4mg，但包裝實際標示2mg；只依包裝內容命名複本，不修改來源檔。"
@@ -121,7 +121,7 @@
     {
       "product": "Pitastatin",
       "source": "Pitastatin 2mg.jpg",
-      "target": "public/assets/products/local/pitastatin-4mg.jpg",
+      "target": "public\\assets\\products\\local\\pitastatin-4mg.jpg",
       "caption": "包裝實際標示：4mg（依包裝核對）",
       "sha256": "8199526be994f1525b95ff41a5d409ca2a61c691eb36189b51aed30996aa5c8f",
       "note": "來源檔名寫2mg，但包裝實際標示4mg；只依包裝內容命名複本，不修改來源檔。"
@@ -129,7 +129,7 @@
     {
       "product": "Scrat",
       "source": "Scrat.jpg",
-      "target": "public/assets/products/local/scrat.jpg",
+      "target": "public\\assets\\products\\local\\scrat.jpg",
       "caption": "包裝標示：10mL × 4包",
       "sha256": "3efa09cdf28f2bdcd05ef3279b4670e996612586cd1c315e3495db4eabdf8f27",
       "note": ""
@@ -137,7 +137,7 @@
     {
       "product": "Sigtamet",
       "source": "Sigtamet.jpg",
-      "target": "public/assets/products/local/sigtamet.jpg",
+      "target": "public\\assets\\products\\local\\sigtamet.jpg",
       "caption": "包裝標示：50/500mg",
       "sha256": "1aa81bd2d25ecf8a62a72b436a66c2016e40db5042848ad0549276d07aa3b5cd",
       "note": ""
@@ -145,7 +145,7 @@
     {
       "product": "Tamlosin 0.4",
       "source": "Tamlosin 04mg.jpg",
-      "target": "public/assets/products/local/tamlosin-0-4mg.jpg",
+      "target": "public\\assets\\products\\local\\tamlosin-0-4mg.jpg",
       "caption": "包裝標示：0.4mg；非 Tamlosin D",
       "sha256": "86fa9dba9486e10fa4fc3c82e55426755bbd6e7cf734c86d0d50b27dc8c8d1bd",
       "note": ""
@@ -153,7 +153,7 @@
     {
       "product": "Telmisa",
       "source": "Telmisa.jpg",
-      "target": "public/assets/products/local/telmisa.jpg",
+      "target": "public\\assets\\products\\local\\telmisa.jpg",
       "caption": "包裝標示：80mg",
       "sha256": "0a2c6500bb7dd81dd29f82112a8f34a6c20525c7feb50224cefae22c5ba56c40",
       "note": ""
@@ -161,7 +161,7 @@
     {
       "product": "Vidatin",
       "source": "Vidatin.jpg",
-      "target": "public/assets/products/local/vidatin.jpg",
+      "target": "public\\assets\\products\\local\\vidatin.jpg",
       "caption": "包裝標示：50mg；非 Vildamet",
       "sha256": "ea7a9ec37f5ab95c708df7f452b4d4c4d2b4daee16c4afda06607959befd15f4",
       "note": ""
@@ -169,7 +169,7 @@
     {
       "product": "Vildamet",
       "source": "Vildamet.jpg",
-      "target": "public/assets/products/local/vildamet.jpg",
+      "target": "public\\assets\\products\\local\\vildamet.jpg",
       "caption": "包裝標示：50/500mg；非 Vidatin",
       "sha256": "9bd5dcbbec0266d13775e2a9a50e75a2abb09ef581bc1b17ef6a3f65c62e3401",
       "note": ""
@@ -177,79 +177,271 @@
     {
       "product": "Wellnitin OD",
       "source": "Wellnitin.jpg",
-      "target": "public/assets/products/local/wellnitin-odt.jpg",
+      "target": "public\\assets\\products\\local\\wellnitin-odt.jpg",
       "caption": "包裝標示：Wellnitin ODT 50mg 口溶錠",
       "sha256": "c088ad60fb69e07222c73e800c05ea78facb6cd8cade46bae73c679783169f0a",
       "note": "題庫產品名為Wellnitin OD，包裝為Wellnitin ODT，依相同商品及口溶劑型對應，保留原題庫名稱。"
     },
     {
       "product": "Apolam",
-      "source": "Apolam-1000錠盒.png",
-      "target": "public/assets/products/local/apolam-0-5mg.png",
-      "caption": "包裝標示：0.5mg；1,000錠盒裝",
-      "sha256": "d1bff382f4e1029c0090021954203c48e40c08aabf568668f916addd6e9d0c97",
+      "source": "Apolam.png",
+      "target": "public\\assets\\products\\local\\apolam.png",
+      "caption": "包裝標示：Apolam 0.5mg 錠劑",
+      "sha256": "17b6d3c5a741aaa183cf57baea4690c22e7b676b187a32b0437918c7f9954fc6",
       "note": ""
     },
     {
       "product": "Shielin Powder",
-      "source": "Shielin Powder.jpg",
-      "target": "public/assets/products/local/shielin-powder.jpg",
-      "caption": "本機速備粉產品照片",
-      "sha256": "8a4db324c913be205002012453e56c970c30be66c5f32bae2e054f62b4e6e154",
+      "source": "Shielin Powder.png",
+      "target": "public\\assets\\products\\local\\shielin-powder.png",
+      "caption": "包裝標示：Shielin Powder 速備粉",
+      "sha256": "d913de29f8310462262f9047c6ffcfc7f17cfbb07f06586a3fcf231f6724a3f1",
       "note": ""
     },
     {
       "product": "Deherp Tab.",
-      "source": "Deherp Tab-1.jpg",
-      "target": "public/assets/products/local/deherp-tablet-200mg.jpg",
-      "caption": "包裝標示：200mg 錠劑；非 Deherp Cream",
-      "sha256": "ac19a8f87363ccfe42f92aef8513cf6c8fc8e9509de94d8a0312d945b90f99fe",
+      "source": "Deherp Tab.png",
+      "target": "public\\assets\\products\\local\\deherp-tablet.png",
+      "caption": "包裝標示：Deherp 200mg 錠劑；非乳膏",
+      "sha256": "5cf7c0a2ac279f670fb3fa63d52e4e15072e3a0ec0f904d9fbc4cf661549dda3",
+      "note": ""
+    },
+    {
+      "product": "Acarose 100mg",
+      "source": "Acarose 100mg.png",
+      "target": "public\\assets\\products\\local\\acarose-100mg.png",
+      "caption": "包裝標示：Acarose 100mg",
+      "sha256": "819f01b446780daaa122f448429a9a84d98e12603b303095a7c3fc780b651370",
+      "note": ""
+    },
+    {
+      "product": "Acystin",
+      "source": "Acystin.png",
+      "target": "public\\assets\\products\\local\\acystin.png",
+      "caption": "包裝標示：Acystin 600mg 顆粒",
+      "sha256": "edc2ae578a2666191129edd31a5319be7087a6287309c001bf037361a2c42a11",
+      "note": ""
+    },
+    {
+      "product": "Adapine",
+      "source": "Adapine.png",
+      "target": "public\\assets\\products\\local\\adapine.png",
+      "caption": "包裝標示：Adapine 持續性藥效錠 30mg",
+      "sha256": "213c2e5d3d2bd9e1a8547fecfeea697dc5c620ff0563abc8331a480dd5f73980",
+      "note": ""
+    },
+    {
+      "product": "Allopurinol",
+      "source": "Allopurinol.png",
+      "target": "public\\assets\\products\\local\\allopurinol.png",
+      "caption": "包裝標示：Allopurinol 100mg 錠劑",
+      "sha256": "2fd7753dea785624607e454981a511fa9849e9163f4d07d1da6bb8c70967b1a2",
+      "note": ""
+    },
+    {
+      "product": "Aluzaine",
+      "source": "Aluzaine.png",
+      "target": "public\\assets\\products\\local\\aluzaine.png",
+      "caption": "包裝標示：ALUZAINE TABLETS",
+      "sha256": "461986c83c95f1635eb47db076370ffe4019d25fd9d5c3fead5eec321e23f0bb",
+      "note": ""
+    },
+    {
+      "product": "Ascofen",
+      "source": "Ascofen.png",
+      "target": "public\\assets\\products\\local\\ascofen.png",
+      "caption": "包裝標示：Ascofen 錠劑",
+      "sha256": "a5a913caa6303b4c4daa2c1b6c43a95c4d14ccb9d94cd7984b11d029276f6bbc",
+      "note": ""
+    },
+    {
+      "product": "Befat",
+      "source": "Befat.png",
+      "target": "public\\assets\\products\\local\\befat.png",
+      "caption": "包裝標示：Befat 錠劑",
+      "sha256": "a4e5c0d3d0aafdca81df50475e8f222d2bef13555615f19516f869f0239d4db3",
+      "note": ""
+    },
+    {
+      "product": "Broncolin",
+      "source": "Broncolin.png",
+      "target": "public\\assets\\products\\local\\broncolin.png",
+      "caption": "包裝標示：Broncolin Tablets",
+      "sha256": "dd0dbfc93e170a4add62f2c49f4066588c99ebea1ef6dcf5ccf5be8ae060787b",
+      "note": ""
+    },
+    {
+      "product": "Butmira Liq.",
+      "source": "Butmira.png",
+      "target": "public\\assets\\products\\local\\butmira-liquid.png",
+      "caption": "包裝標示：Butmira Liquid 60mL",
+      "sha256": "83a4c63dc8a398927df3602213a34c4920913db5b6dd3356f07b0ed5feede523",
+      "note": ""
+    },
+    {
+      "product": "Erispan-S",
+      "source": "Erispan-S.png",
+      "target": "public\\assets\\products\\local\\erispan-s.png",
+      "caption": "包裝標示：Erispan-S 0.25mg 錠劑",
+      "sha256": "be9a24822c22e00d8d6a1bce729d0a0f7fbdcf2b500a40ad31ca280262d5ebd5",
+      "note": ""
+    },
+    {
+      "product": "Etoxib",
+      "source": "Etoxib.png",
+      "target": "public\\assets\\products\\local\\etoxib.png",
+      "caption": "包裝標示：Etoxib 60mg",
+      "sha256": "c894911130c3fa1f77a81c37eada77230719a80312f98440eeabc7ad078eb13f",
+      "note": ""
+    },
+    {
+      "product": "Eufan Tab.",
+      "source": "Eufan Tab.png",
+      "target": "public\\assets\\products\\local\\eufan-tablet.png",
+      "caption": "包裝標示：Eufan F.C. Tablets 10mg；錠劑",
+      "sha256": "72994c3d2de7d4f7192324f2c8e0561c161f5337e73b62eda0ac6a43cb8ba85b",
+      "note": ""
+    },
+    {
+      "product": "Framycin",
+      "source": "Framycin.png",
+      "target": "public\\assets\\products\\local\\framycin.png",
+      "caption": "包裝標示：Framycin 護樂黴素石蠟紗布 10cm × 10cm；外用",
+      "sha256": "1dd37e6d38538d706444f8d724b531e4bfb2f9e7a7b0c4193df708a284a5300f",
+      "note": ""
+    },
+    {
+      "product": "Glubon-S",
+      "source": "Glubon-S.png",
+      "target": "public\\assets\\products\\local\\glubon-s.png",
+      "caption": "包裝標示：Glubon-S 速療骨",
+      "sha256": "d1d0424392a9ddbddf37db2cede0baf73b7ae914f9f26b6872cc6b911996e1b1",
+      "note": ""
+    },
+    {
+      "product": "Gouless",
+      "source": "Gouless.png",
+      "target": "public\\assets\\products\\local\\gouless.png",
+      "caption": "包裝標示：Gouless 25mg",
+      "sha256": "11f287b1701d7ea85c7fb267c80ee95620b27c9b23f3a6afc5edf78f684908af",
+      "note": ""
+    },
+    {
+      "product": "Grumed-M",
+      "source": "Grumed-M.png",
+      "target": "public\\assets\\products\\local\\grumed-m.png",
+      "caption": "包裝標示：Grumed-M 膜衣錠",
+      "sha256": "8bed0b4ba36dc755ac8ff6fc7e6b91312f901601053b2bb9d58c602596ea1834",
+      "note": ""
+    },
+    {
+      "product": "Levozine",
+      "source": "Levozine.png",
+      "target": "public\\assets\\products\\local\\levozine.png",
+      "caption": "包裝標示：Levozine 5mg",
+      "sha256": "03c27b76b134b9869db995fa0eb0e714892f33e6d943ac6f2720be1c457eb1c2",
+      "note": ""
+    },
+    {
+      "product": "Lodiglit",
+      "source": "Lodiglit.png",
+      "target": "public\\assets\\products\\local\\lodiglit.png",
+      "caption": "包裝標示：Lodiglit 15mg",
+      "sha256": "9d16d572207166b1d6824dce86cc3fb8a74cfe010aefd9d7ae17156640472770",
+      "note": ""
+    },
+    {
+      "product": "Migbose",
+      "source": "Migbose.png",
+      "target": "public\\assets\\products\\local\\migbose.png",
+      "caption": "包裝標示：Migbose 50mg",
+      "sha256": "3eb2777002eb5b43d3e2a35d6b08559928abdfe361744605804832f017485fa2",
+      "note": ""
+    },
+    {
+      "product": "Selexib",
+      "source": "Selexib.png",
+      "target": "public\\assets\\products\\local\\selexib.png",
+      "caption": "包裝標示：SELEXIB 200mg 膠囊",
+      "sha256": "281b6d985a43e0f9b0f56568e40e9232f545f44a86bf6120ba1620129d76d0b9",
+      "note": ""
+    },
+    {
+      "product": "Siliflo 8mg",
+      "source": "Siliflo 8mg.png",
+      "target": "public\\assets\\products\\local\\siliflo-8mg.png",
+      "caption": "包裝標示：Siliflo 8mg 膜衣錠",
+      "sha256": "b7099e374f9f348ece481632791f0050d2a13ff9e5ff490dc4ed5a326c7214f2",
+      "note": ""
+    },
+    {
+      "product": "Sindecon",
+      "source": "Sindecon.png",
+      "target": "public\\assets\\products\\local\\sindecon.png",
+      "caption": "包裝標示：醫鼻易噴鼻液 0.5mg／mL",
+      "sha256": "26b1be1e50a7c8f63643b6babb793eb321826be455300c91f4cadf1f2dc7f6f3",
+      "note": ""
+    },
+    {
+      "product": "Soma",
+      "source": "Soma.png",
+      "target": "public\\assets\\products\\local\\soma.png",
+      "caption": "包裝標示：Soma 膠囊",
+      "sha256": "80c0ec1ee86366e245fe101aa16023f3298e9e1e96a8dcf99dfd5001d86268ed",
+      "note": ""
+    },
+    {
+      "product": "Tamlosin D",
+      "source": "Tamlosin D.png",
+      "target": "public\\assets\\products\\local\\tamlosin-d.png",
+      "caption": "包裝標示：Tamlosin D 0.2mg 持續釋放口溶錠",
+      "sha256": "2cdc8bf09d43e9e67154d1dbfc3612b81caeed6dab560d4c58e21cfb66705f08",
+      "note": ""
+    },
+    {
+      "product": "Utraphen",
+      "source": "Utraphen.png",
+      "target": "public\\assets\\products\\local\\utraphen.png",
+      "caption": "包裝標示：Utraphen 37.5mg／325mg 膜衣錠",
+      "sha256": "723fd5e4e1a45e88a2b39df8a8e37cf6478b5c810f95329f473d190b6244116b",
+      "note": ""
+    },
+    {
+      "product": "Volna-K",
+      "source": "Volna-K.png",
+      "target": "public\\assets\\products\\local\\volna-k.png",
+      "caption": "包裝標示：Volna-K 25mg",
+      "sha256": "6ba19e941b74e144b25fb04579c322599d99f8ace64e376a5884486429ac71b8",
+      "note": ""
+    },
+    {
+      "product": "Deherp Cream",
+      "source": "Deherp Cream.png",
+      "target": "public\\assets\\products\\local\\deherp-cream.png",
+      "caption": "包裝標示：Deherp 乳膏 5%；5gm；非錠劑",
+      "sha256": "b683c8f2a76fcd1da30879649188b84e281a98d0c0a1ab0c35464a4593b86d42",
       "note": ""
     }
   ],
   "pending": [
-    "Acarose 100mg",
-    "Acystin",
-    "Erispan-S",
-    "Broncolin",
     "Pecolin",
     "Mosapin",
     "Panzyme",
-    "Aluzaine",
     "原瓶液劑",
-    "Befat",
-    "Ascofen",
-    "Utraphen",
-    "Butmira Liq.",
     "止痛針劑",
-    "Framycin",
-    "Volna-K",
-    "Selexib",
-    "Siliflo 8mg",
     "Diphenidol",
     "Fluzine",
-    "Lodiglit",
     "相關法規",
     "處方縮寫",
     "藥品劑型",
     "藥學常識",
     "血脂新給付",
-    "Migbose",
-    "Grumed-M",
     "糖尿病給付",
     "痛風給付規定",
     "Atorva",
-    "Glubon-S",
     "Trand",
-    "Sindecon",
-    "Eufan Tab.",
-    "Soma",
-    "Allopurinol",
-    "Gouless",
     "Sanyl",
     "Hisbeta",
-    "Etoxib",
-    "Levozine",
     "Estromon",
     "不可做的事",
     "Silygen",
@@ -259,45 +451,29 @@
     "Peptidin",
     "Fadin",
     "Omezol",
-    "Tamlosin D",
     "Lopedin",
-    "Deherp Cream",
     "退貨&怨訴",
     "大口合約",
-    "客戶主檔與規章"
+    "客戶主檔與規章",
+    "心血管/循環",
+    "肌肉骨骼用藥",
+    "自費品項",
+    "呼吸系統",
+    "泌尿科用藥",
+    "胃腸用藥",
+    "神經/其他",
+    "高血脂/痛風",
+    "高血壓",
+    "糖尿病"
   ],
   "unusedLocalFiles": [
+    "Acarose 50mg.png",
     "Acetamol.jpg",
+    "Amlobin.png",
     "Rostatin 10mg.jpg",
     "Rostatin 5mg.jpg",
     "Sabina.jpg",
     "Valsoon 5-160.jpg"
   ],
-  "sourceFiles": {
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\All Right.jpg": "865b7b672fe79b3f1c2a413d74f91cb7cdd8439d8d8c2929de24d35a898f8208",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Amlobin-O.jpg": "0403b4512a5e2ccc6d62f97396adf900bf02ebc9c0ae5fcc2adca8ebcec06194",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Bistin.jpg": "e45a8c644c12973e635d0890217086592af7439f1736572bcd04b1bd8e907678",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Co-Midis.jpg": "20a2cacbca6770fba829c677bf7c54239b808f55302d3c1b93d52154c54803d0",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Dalisoon.jpg": "659d21f3ce8186934274d7445ed825d98555a6a039505571111ac962630a36a5",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Eufan 60ml.jpg": "f8995b2f59e9ee3eb4d15a54fa6a5f997781f7ad09af52c265f7e610e279b9c7",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Febuton.jpg": "ea035f455b01689698341015d53b49e140cf1e996cfb2ec04f7846bddac014cb",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Febuton 80mg.jpg": "a3c9290a2d75aa7069e8dae460e4b537a8261fa07ac2841a5f511f4080cf9734",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Lecipam.jpg": "c5a9432955ce75295540ac0f1fbf78c093c8ab7f80d3e8ccf1a591cb6e65c674",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Lonfilis 5mg.jpg": "140fe80bc17cbb247f26ad0e3225b184cebe9e952463a9c0b416974ce1fc6d6a",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Nebipress.jpg": "6a9265e08793610cdd8a08482564f86c5c0b92382d67a693194522783fe48ca1",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Panzolec 20mg.jpg": "bd99fcc67f636e14658f23767dbe8c96cfc905aa5785e125108b3cbb676e24b2",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Panzolec 40mg.jpg": "d254b3430dd97d1b9da693b95ad0c184224653095cb5276f484e08c0c602ac08",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Pitastatin 4mg.jpg": "c43c7a74014fdf8dc00515e8c0ccbb6a3665f6a81a9de3aaac06787256082488",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Pitastatin 2mg.jpg": "8199526be994f1525b95ff41a5d409ca2a61c691eb36189b51aed30996aa5c8f",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Scrat.jpg": "3efa09cdf28f2bdcd05ef3279b4670e996612586cd1c315e3495db4eabdf8f27",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Sigtamet.jpg": "1aa81bd2d25ecf8a62a72b436a66c2016e40db5042848ad0549276d07aa3b5cd",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Tamlosin 04mg.jpg": "86fa9dba9486e10fa4fc3c82e55426755bbd6e7cf734c86d0d50b27dc8c8d1bd",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Telmisa.jpg": "0a2c6500bb7dd81dd29f82112a8f34a6c20525c7feb50224cefae22c5ba56c40",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Vidatin.jpg": "ea7a9ec37f5ab95c708df7f452b4d4c4d2b4daee16c4afda06607959befd15f4",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Vildamet.jpg": "9bd5dcbbec0266d13775e2a9a50e75a2abb09ef581bc1b17ef6a3f65c62e3401",
-    "C:\\Users\\acer\\我的雲端硬碟\\2026Codex\\外勤養成V1\\產品照片\\Wellnitin.jpg": "c088ad60fb69e07222c73e800c05ea78facb6cd8cade46bae73c679783169f0a",
-    "C:\\Users\\acer\\我的雲端硬碟\\生達2026\\2026月初會\\202606月初會\\教育訓練\\Apolam-1000錠盒.png": "d1bff382f4e1029c0090021954203c48e40c08aabf568668f916addd6e9d0c97",
-    "C:\\Users\\acer\\我的雲端硬碟\\生達2026\\啄木鳥seminar\\產品照片\\Shielin Powder.jpg": "8a4db324c913be205002012453e56c970c30be66c5f32bae2e054f62b4e6e154",
-    "C:\\Users\\acer\\我的雲端硬碟\\生達2026\\啄木鳥seminar\\產品照片\\Deherp Tab-1.jpg": "ac19a8f87363ccfe42f92aef8513cf6c8fc8e9509de94d8a0312d945b90f99fe"
-  }
+  "quizSha256": "51327db997201f34ee15cd5c29e122962892717342972ac23ab91b20a9665b6d"
 }

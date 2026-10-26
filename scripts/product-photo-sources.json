@@ -1,9 +1,5 @@
 {
   "localRoot": "../產品照片",
-  "supplementRoots": {
-    "seminar": "C:/Users/acer/我的雲端硬碟/生達2026/啄木鳥seminar/產品照片",
-    "training": "C:/Users/acer/我的雲端硬碟/生達2026/2026月初會/202606月初會/教育訓練"
-  },
   "products": {
     "優乳鈣": [
       {
@@ -13,13 +9,33 @@
       }
     ],
     "Amlobin-O": [
-      { "file": "Amlobin-O.jpg", "target": "amlobin-o.jpg", "caption": "包裝標示：5/40mg" }
+      {
+        "file": "Amlobin-O.jpg",
+        "target": "amlobin-o.jpg",
+        "caption": "包裝標示：5/40mg"
+      }
     ],
-    "Bistin": [{ "file": "Bistin.jpg", "target": "bistin.jpg", "caption": "包裝標示：20mg" }],
+    "Bistin": [
+      {
+        "file": "Bistin.jpg",
+        "target": "bistin.jpg",
+        "caption": "包裝標示：20mg"
+      }
+    ],
     "Co-Midis": [
-      { "file": "Co-Midis.jpg", "target": "co-midis.jpg", "caption": "包裝標示：80/5mg" }
+      {
+        "file": "Co-Midis.jpg",
+        "target": "co-midis.jpg",
+        "caption": "包裝標示：80/5mg"
+      }
     ],
-    "Dalisoon": [{ "file": "Dalisoon.jpg", "target": "dalisoon.jpg", "caption": "包裝標示：5mg" }],
+    "Dalisoon": [
+      {
+        "file": "Dalisoon.jpg",
+        "target": "dalisoon.jpg",
+        "caption": "包裝標示：5mg"
+      }
+    ],
     "Eufan Sol.": [
       {
         "file": "Eufan 60ml.jpg",
@@ -28,15 +44,37 @@
       }
     ],
     "Febuton": [
-      { "file": "Febuton.jpg", "target": "febuton-40mg.jpg", "caption": "包裝標示：40mg" },
-      { "file": "Febuton 80mg.jpg", "target": "febuton-80mg.jpg", "caption": "包裝標示：80mg" }
+      {
+        "file": "Febuton.jpg",
+        "target": "febuton-40mg.jpg",
+        "caption": "包裝標示：40mg"
+      },
+      {
+        "file": "Febuton 80mg.jpg",
+        "target": "febuton-80mg.jpg",
+        "caption": "包裝標示：80mg"
+      }
     ],
-    "Lecipam": [{ "file": "Lecipam.jpg", "target": "lecipam.jpg", "caption": "包裝標示：10mg" }],
+    "Lecipam": [
+      {
+        "file": "Lecipam.jpg",
+        "target": "lecipam.jpg",
+        "caption": "包裝標示：10mg"
+      }
+    ],
     "Lonfilis": [
-      { "file": "Lonfilis 5mg.jpg", "target": "lonfilis-5mg.jpg", "caption": "包裝標示：5mg" }
+      {
+        "file": "Lonfilis 5mg.jpg",
+        "target": "lonfilis-5mg.jpg",
+        "caption": "包裝標示：5mg"
+      }
     ],
     "Nebipress": [
-      { "file": "Nebipress.jpg", "target": "nebipress.jpg", "caption": "包裝標示：5mg" }
+      {
+        "file": "Nebipress.jpg",
+        "target": "nebipress.jpg",
+        "caption": "包裝標示：5mg"
+      }
     ],
     "Panzolec 20": [
       {
@@ -66,9 +104,19 @@
         "note": "來源檔名寫2mg，但包裝實際標示4mg；只依包裝內容命名複本，不修改來源檔。"
       }
     ],
-    "Scrat": [{ "file": "Scrat.jpg", "target": "scrat.jpg", "caption": "包裝標示：10mL × 4包" }],
+    "Scrat": [
+      {
+        "file": "Scrat.jpg",
+        "target": "scrat.jpg",
+        "caption": "包裝標示：10mL × 4包"
+      }
+    ],
     "Sigtamet": [
-      { "file": "Sigtamet.jpg", "target": "sigtamet.jpg", "caption": "包裝標示：50/500mg" }
+      {
+        "file": "Sigtamet.jpg",
+        "target": "sigtamet.jpg",
+        "caption": "包裝標示：50/500mg"
+      }
     ],
     "Tamlosin 0.4": [
       {
@@ -77,9 +125,19 @@
         "caption": "包裝標示：0.4mg；非 Tamlosin D"
       }
     ],
-    "Telmisa": [{ "file": "Telmisa.jpg", "target": "telmisa.jpg", "caption": "包裝標示：80mg" }],
+    "Telmisa": [
+      {
+        "file": "Telmisa.jpg",
+        "target": "telmisa.jpg",
+        "caption": "包裝標示：80mg"
+      }
+    ],
     "Vidatin": [
-      { "file": "Vidatin.jpg", "target": "vidatin.jpg", "caption": "包裝標示：50mg；非 Vildamet" }
+      {
+        "file": "Vidatin.jpg",
+        "target": "vidatin.jpg",
+        "caption": "包裝標示：50mg；非 Vildamet"
+      }
     ],
     "Vildamet": [
       {
@@ -98,26 +156,212 @@
     ],
     "Apolam": [
       {
-        "root": "training",
-        "file": "Apolam-1000錠盒.png",
-        "target": "apolam-0-5mg.png",
-        "caption": "包裝標示：0.5mg；1,000錠盒裝"
+        "file": "Apolam.png",
+        "target": "apolam.png",
+        "caption": "包裝標示：Apolam 0.5mg 錠劑"
       }
     ],
     "Shielin Powder": [
       {
-        "root": "seminar",
-        "file": "Shielin Powder.jpg",
-        "target": "shielin-powder.jpg",
-        "caption": "本機速備粉產品照片"
+        "file": "Shielin Powder.png",
+        "target": "shielin-powder.png",
+        "caption": "包裝標示：Shielin Powder 速備粉"
       }
     ],
     "Deherp Tab.": [
       {
-        "root": "seminar",
-        "file": "Deherp Tab-1.jpg",
-        "target": "deherp-tablet-200mg.jpg",
-        "caption": "包裝標示：200mg 錠劑；非 Deherp Cream"
+        "file": "Deherp Tab.png",
+        "target": "deherp-tablet.png",
+        "caption": "包裝標示：Deherp 200mg 錠劑；非乳膏"
+      }
+    ],
+    "Acarose 100mg": [
+      {
+        "file": "Acarose 100mg.png",
+        "target": "acarose-100mg.png",
+        "caption": "包裝標示：Acarose 100mg"
+      }
+    ],
+    "Acystin": [
+      {
+        "file": "Acystin.png",
+        "target": "acystin.png",
+        "caption": "包裝標示：Acystin 600mg 顆粒"
+      }
+    ],
+    "Adapine": [
+      {
+        "file": "Adapine.png",
+        "target": "adapine.png",
+        "caption": "包裝標示：Adapine 持續性藥效錠 30mg"
+      }
+    ],
+    "Allopurinol": [
+      {
+        "file": "Allopurinol.png",
+        "target": "allopurinol.png",
+        "caption": "包裝標示：Allopurinol 100mg 錠劑"
+      }
+    ],
+    "Aluzaine": [
+      {
+        "file": "Aluzaine.png",
+        "target": "aluzaine.png",
+        "caption": "包裝標示：ALUZAINE TABLETS"
+      }
+    ],
+    "Ascofen": [
+      {
+        "file": "Ascofen.png",
+        "target": "ascofen.png",
+        "caption": "包裝標示：Ascofen 錠劑"
+      }
+    ],
+    "Befat": [
+      {
+        "file": "Befat.png",
+        "target": "befat.png",
+        "caption": "包裝標示：Befat 錠劑"
+      }
+    ],
+    "Broncolin": [
+      {
+        "file": "Broncolin.png",
+        "target": "broncolin.png",
+        "caption": "包裝標示：Broncolin Tablets"
+      }
+    ],
+    "Butmira Liq.": [
+      {
+        "file": "Butmira.png",
+        "target": "butmira-liquid.png",
+        "caption": "包裝標示：Butmira Liquid 60mL"
+      }
+    ],
+    "Erispan-S": [
+      {
+        "file": "Erispan-S.png",
+        "target": "erispan-s.png",
+        "caption": "包裝標示：Erispan-S 0.25mg 錠劑"
+      }
+    ],
+    "Etoxib": [
+      {
+        "file": "Etoxib.png",
+        "target": "etoxib.png",
+        "caption": "包裝標示：Etoxib 60mg"
+      }
+    ],
+    "Eufan Tab.": [
+      {
+        "file": "Eufan Tab.png",
+        "target": "eufan-tablet.png",
+        "caption": "包裝標示：Eufan F.C. Tablets 10mg；錠劑"
+      }
+    ],
+    "Framycin": [
+      {
+        "file": "Framycin.png",
+        "target": "framycin.png",
+        "caption": "包裝標示：Framycin 護樂黴素石蠟紗布 10cm × 10cm；外用"
+      }
+    ],
+    "Glubon-S": [
+      {
+        "file": "Glubon-S.png",
+        "target": "glubon-s.png",
+        "caption": "包裝標示：Glubon-S 速療骨"
+      }
+    ],
+    "Gouless": [
+      {
+        "file": "Gouless.png",
+        "target": "gouless.png",
+        "caption": "包裝標示：Gouless 25mg"
+      }
+    ],
+    "Grumed-M": [
+      {
+        "file": "Grumed-M.png",
+        "target": "grumed-m.png",
+        "caption": "包裝標示：Grumed-M 膜衣錠"
+      }
+    ],
+    "Levozine": [
+      {
+        "file": "Levozine.png",
+        "target": "levozine.png",
+        "caption": "包裝標示：Levozine 5mg"
+      }
+    ],
+    "Lodiglit": [
+      {
+        "file": "Lodiglit.png",
+        "target": "lodiglit.png",
+        "caption": "包裝標示：Lodiglit 15mg"
+      }
+    ],
+    "Migbose": [
+      {
+        "file": "Migbose.png",
+        "target": "migbose.png",
+        "caption": "包裝標示：Migbose 50mg"
+      }
+    ],
+    "Selexib": [
+      {
+        "file": "Selexib.png",
+        "target": "selexib.png",
+        "caption": "包裝標示：SELEXIB 200mg 膠囊"
+      }
+    ],
+    "Siliflo 8mg": [
+      {
+        "file": "Siliflo 8mg.png",
+        "target": "siliflo-8mg.png",
+        "caption": "包裝標示：Siliflo 8mg 膜衣錠"
+      }
+    ],
+    "Sindecon": [
+      {
+        "file": "Sindecon.png",
+        "target": "sindecon.png",
+        "caption": "包裝標示：醫鼻易噴鼻液 0.5mg／mL"
+      }
+    ],
+    "Soma": [
+      {
+        "file": "Soma.png",
+        "target": "soma.png",
+        "caption": "包裝標示：Soma 膠囊"
+      }
+    ],
+    "Tamlosin D": [
+      {
+        "file": "Tamlosin D.png",
+        "target": "tamlosin-d.png",
+        "caption": "包裝標示：Tamlosin D 0.2mg 持續釋放口溶錠"
+      }
+    ],
+    "Utraphen": [
+      {
+        "file": "Utraphen.png",
+        "target": "utraphen.png",
+        "caption": "包裝標示：Utraphen 37.5mg／325mg 膜衣錠"
+      }
+    ],
+    "Volna-K": [
+      {
+        "file": "Volna-K.png",
+        "target": "volna-k.png",
+        "caption": "包裝標示：Volna-K 25mg"
+      }
+    ],
+    "Deherp Cream": [
+      {
+        "file": "Deherp Cream.png",
+        "target": "deherp-cream.png",
+        "caption": "包裝標示：Deherp 乳膏 5%；5gm；非錠劑"
       }
     ]
   }

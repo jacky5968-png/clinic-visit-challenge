@@ -60,7 +60,7 @@ test('本機產品照片顯示於選品、診所任務與醫師對話', async ({
     animations: 'disabled',
   });
 });
-test('同產品兩種規格分開標示，劑型不同維持待補', async ({ page }, info) => {
+test('同產品兩種規格與不同劑型分別使用正確照片', async ({ page }, info) => {
   await selectProduct(page, 'Pitastatin');
   await expectLoaded(page, 2);
   await expect(page.locator('.product-photos figcaption').nth(0)).toHaveText(
@@ -80,13 +80,12 @@ test('同產品兩種規格分開標示，劑型不同維持待補', async ({ pa
   await selectProduct(page, 'Eufan Tab.');
   await expect(page.locator('.product-photos img')).toHaveAttribute(
     'src',
-    '/assets/products/product-placeholder.svg',
+    '/assets/products/local/eufan-tablet.png',
   );
-  await expect(page.getByText('題庫未提供產品照片', { exact: true })).toBeVisible();
   await selectProduct(page, 'Tamlosin D');
   await expect(page.locator('.product-photos img')).toHaveAttribute(
     'src',
-    '/assets/products/product-placeholder.svg',
+    '/assets/products/local/tamlosin-d.png',
   );
 });
 test('圖片載入失敗有替代畫面，切換產品後可正常顯示', async ({ page }) => {
@@ -108,7 +107,7 @@ test('圖片載入失敗有替代畫面，切換產品後可正常顯示', async
     '/assets/products/local/vildamet.jpg',
   );
 });
-test('25張照片均能由本機網址讀取且位元內容符合已核對原始複本', async ({ request }) => {
+test('52張照片均能由本機網址讀取且位元內容符合已核對原始複本', async ({ request }) => {
   const audit = JSON.parse(
     await readFile(new URL('../../output/product-photo-audit.json', import.meta.url), 'utf8'),
   );
@@ -126,5 +125,5 @@ test('25張照片均能由本機網址讀取且位元內容符合已核對原始
         .digest('hex'),
     ).toBe(record.sha256);
   }
-  expect(allPhotos).toHaveLength(25);
+  expect(allPhotos).toHaveLength(52);
 });

@@ -13,22 +13,31 @@ describe('實際產品照片', () => {
     for (const record of audit.records) {
       const file = fs.readFileSync(path.resolve(record.target));
       expect(createHash('sha256').update(file).digest('hex')).toBe(record.sha256);
+      expect(photos[record.product as keyof typeof photos]).toContainEqual({
+        src: '/' + record.target.replaceAll('\\', '/').replace(/^public\//, ''),
+        caption: record.caption,
+      });
     }
-    expect(audit.records).toHaveLength(25);
+    expect(audit.records).toHaveLength(52);
   });
   it('只匹配已核對產品，不以相近名稱推測劑型、劑量或混合題組', () => {
     for (const name of [
-      'Tamlosin D',
       'Tamlosin 0.8',
-      'Eufan Tab.',
-      'Deherp Cream',
+      'Eufan',
+      'Deherp',
       '止痛針劑',
-      'Acarose 100mg',
+      'Acarose 50mg',
+      'Amlobin',
     ]) {
       expect(findLocalProductPhotos(name)).toBeUndefined();
     }
     expect(findLocalProductPhotos('Tamlosin 0.4')?.[0].src).toContain('tamlosin-0-4mg');
     expect(findLocalProductPhotos('Eufan Sol.')?.[0].src).toContain('eufan-solution');
+    expect(findLocalProductPhotos('Eufan Tab.')?.[0].src).toContain('eufan-tablet');
+    expect(findLocalProductPhotos('Tamlosin D')?.[0].src).toContain('tamlosin-d');
+    expect(findLocalProductPhotos('Deherp Cream')?.[0].src).toContain('deherp-cream');
+    expect(findLocalProductPhotos('Deherp Tab.')?.[0].src).toContain('deherp-tablet');
+    expect(findLocalProductPhotos('Acarose 100mg')?.[0].src).toContain('acarose-100mg');
   });
   it('Pitastatin照片依包裝標示對應2mg與4mg，保留兩張規格圖', () => {
     const p = findLocalProductPhotos('Pitastatin')!;
@@ -66,7 +75,7 @@ describe('實際產品照片', () => {
     expect(data.products).toHaveLength(80);
     expect(data.questions).toHaveLength(1428);
     expect(data.warnings).toHaveLength(0);
-    expect(data.products.filter((p) => p.imageSource === 'local')).toHaveLength(23);
+    expect(data.products.filter((p) => p.imageSource === 'local')).toHaveLength(49);
     expect(data.questions.every((q) => q.explanation === undefined)).toBe(true);
   });
 });
