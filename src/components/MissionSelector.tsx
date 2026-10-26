@@ -8,6 +8,7 @@ import type {createIslandRenderer} from '../three/createIslandRenderer';
 import '../styles/islands.css';
 import {FormulationViewer} from './FormulationViewer';
 import {StageBrief} from './StageBrief';
+import {useMovementAudio} from '../audio/GameAudioContext';
 type Controller=ReturnType<typeof createIslandRenderer>;
 export interface IslandDepartureHandle {depart:(onArrival:()=>void)=>void;}
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 }
 export const MissionSelector=forwardRef<IslandDepartureHandle,Props>(function MissionSelector({selectedId,onSelect,onBrowse,completed,qualifications,legacyProgressAvailable,storageAvailable,onTravelChange},ref){
  const [travelling,setTravelling]=useState<StageId|null>(null),[briefId,setBriefId]=useState<StageId|null>(null),[landmarkOpen,setLandmarkOpen]=useState(false);
+ useMovementAudio('islands',Boolean(travelling));
  const landmarkButton=useRef<HTMLButtonElement>(null),trigger=useRef<HTMLElement|null>(null);
  const requestToken=useRef(0),selectByMap=useRef<(id:StageId)=>void>(()=>{});
  const [mode,setMode]=useState<'map'|'list'>('map'),[status,setStatus]=useState<'loading'|'ready'|'fallback'>('loading'),[notice,setNotice]=useState('');

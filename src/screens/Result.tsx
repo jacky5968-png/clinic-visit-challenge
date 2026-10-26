@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ArrowRight, RotateCcw, Home, CheckCircle2, BookOpen } from 'lucide-react';
 import type { GameState, Product } from '../types';
 import { calculateResult,QUESTION_COUNT } from '../engine/quiz';
@@ -13,7 +12,6 @@ export function Result({
   onRetry,
   onProducts,
   onHome,
-  onSuccess,
   completedCount,
   qualifiedCount,
   alreadyQualified,
@@ -26,7 +24,6 @@ export function Result({
   onRetry: () => void;
   onProducts: () => void;
   onHome: () => void;
-  onSuccess: () => void;
   completedCount: number;
   qualifiedCount:number;
   alreadyQualified:boolean;
@@ -36,9 +33,6 @@ export function Result({
 }) {
   const result = calculateResult(state.answers);
   const mission = useVisitMission();
-  useEffect(() => {
-    if (result.passed) onSuccess();
-  }, []);
   return (
     <section className={`result-screen ${result.passed ? 'passed' : ''}`}>
       <div className="result-emblem">

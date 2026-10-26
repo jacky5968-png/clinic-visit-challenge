@@ -13,6 +13,7 @@ import { AssetImage } from './AssetImage';
 import { Character } from './Character';
 import { ClinicMiniMap } from './ClinicMiniMap';
 import { useVisitMission } from '../context/VisitContext';
+import {useMovementAudio} from '../audio/GameAudioContext';
 
 
 export function ClinicExplorer({
@@ -29,6 +30,7 @@ export function ClinicExplorer({
   const visitDialogue=(_:unknown,id:LocationId)=>locations[id];
   const movement = useClinicMovement();
   const { progress, journey } = movement;
+  useMovementAudio('clinic-fallback',progress.moving);
   const conversation = useClinicConversation();
   const { opened } = conversation;
   useEffect(() => {

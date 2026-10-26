@@ -1,0 +1,24 @@
+.game-audio{position:relative;display:inline-flex;flex:0 0 auto;z-index:60}
+.site-header nav>.game-audio{margin-left:-10px}
+.audio-panel{max-width:calc(100vw - 56px)}
+@media(max-width:760px){.site-header nav>.game-audio{margin-left:0}}
+.audio-panel{position:absolute;right:0;top:calc(100% + 12px);width:min(340px,calc(100vw - 28px));padding:18px;color:#15384d;background:#fff;border:1px solid #8bbab9;border-bottom:5px solid #6e999d;border-radius:16px;box-shadow:0 14px 36px #123b4b40;font-family:"Microsoft JhengHei","微軟正黑體",sans-serif;max-height:calc(100dvh - 140px);overflow-y:auto;text-align:left;outline-offset:3px}
+.audio-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.audio-panel-heading h2{font-size:20px;line-height:1.4;margin:0;color:#15384d}
+.audio-panel-heading button{display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid #a6c2cd;border-radius:9px;background:#f1f8fb;color:#174b60;cursor:pointer;flex-shrink:0}
+.audio-channel{padding:12px 0;border-top:1px solid #d2e2e6}
+.audio-toggle,.audio-volume{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.audio-toggle{font-size:18px;font-weight:700;min-height:38px;cursor:pointer}
+.audio-toggle input{appearance:none;width:48px;height:28px;flex-shrink:0;position:relative;margin:0;border:2px solid #72929f;border-radius:18px;background:#d7e3e8;cursor:pointer}
+.audio-toggle input:before{content:"";position:absolute;width:18px;height:18px;border-radius:50%;left:3px;top:3px;background:#fff;box-shadow:0 1px 3px #183b4666}
+.audio-toggle input:checked{background:#00796d;border-color:#00675e}
+.audio-toggle input:checked:before{left:23px}
+.audio-volume{font-size:15px;margin:9px 0 2px;color:#36566a}
+.audio-volume output{font-size:16px;font-weight:700;color:#005e58}
+.audio-channel input[type=range]{display:block;width:100%;height:32px;min-height:32px;padding:0;margin:0;accent-color:#007f72;cursor:pointer;background:transparent;box-shadow:none}
+.audio-panel :is(button,input):focus-visible{outline:3px solid #136c96;outline-offset:3px}
+.audio-panel .audio-status{margin:10px 0 6px;padding:8px 10px;border:1px solid #a8d4c8;border-radius:8px;background:#effbf5;color:#005f54;font-size:15px;line-height:1.6}
+.audio-panel .audio-note{font-size:14px;line-height:1.65;margin:7px 0 0;color:#466071}
+.audio-panel .audio-retry{min-height:42px;border:1px solid #00655c;border-radius:9px;background:#00796c;color:#fff;font:inherit;font-size:16px;font-weight:700;padding:8px 14px;cursor:pointer}
+@media(max-width:650px){.site-header nav>.game-audio{margin-left:0}.audio-panel{width:min(320px,calc(100vw - 28px));padding:15px;max-height:calc(100dvh - 155px)}}
+@media(max-height:500px){.audio-panel{position:fixed;right:12px;top:12px;max-height:calc(100dvh - 24px)}}

@@ -39,6 +39,7 @@ import type { WorldPoint } from '../engine/clinic3d';
 import { useVisitMission } from '../context/VisitContext';
 import { useVisitSequence } from '../context/VisitSequenceContext';
 import { VisitSequence } from './VisitSequence';
+import {useMovementAudio} from '../audio/GameAudioContext';
 
 interface Props {
   consultation?: SceneConsultation;
@@ -149,6 +150,7 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
   const reduced = useReducedMotion(),
     movement = useClinicJourney(reduced),
     { progress, journey } = movement;
+  useMovementAudio('clinic',progress.moving||Boolean(progress.manualMoving));
   const [ready, setReady] = useState(false),
     [camera, setCamera] = useState<CameraSnapshot>({ zoom: 1, azimuth: 0, polar: 1 });
   const conversation = useClinicConversation();

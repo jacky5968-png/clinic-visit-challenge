@@ -1,46 +1,32 @@
-import { useCallback, useRef, useState, useEffect } from 'react';
-export function useSound() {
-  const [enabled, setEnabled] = useState(() => {
-    try {
-      return localStorage.getItem('clinic-sound') === 'true';
-    } catch {
-      return false;
-    }
-  });
-  const context = useRef<AudioContext | null>(null);
-  useEffect(() => {
-    try {
-      localStorage.setItem('clinic-sound', String(enabled));
-    } catch {}
-  }, [enabled]);
-  const play = useCallback(
-    (kind: 'correct' | 'wrong' | 'click' | 'success') => {
-      if (!enabled) return;
-      try {
-        const ctx = context.current ?? (context.current = new AudioContext());
-        void ctx.resume();
-        const tones =
-          kind === 'success'
-            ? [523, 659, 784]
-            : [kind === 'wrong' ? 220 : kind === 'correct' ? 659 : 440];
-        tones.forEach((freq, i) => {
-          const osc = ctx.createOscillator(),
-            gain = ctx.createGain(),
-            at = ctx.currentTime + i * 0.12;
-          osc.type = 'sine';
-          osc.frequency.value = freq;
-          gain.gain.setValueAtTime(0.055, at);
-          gain.gain.exponentialRampToValueAtTime(0.001, at + 0.18);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(at);
-          osc.stop(at + 0.2);
-        });
-      } catch {
-        /* 無音訊設備時仍可操作 */
-      }
-    },
-    [enabled],
-  );
-  return { enabled, toggle: () => setEnabled((e) => !e), play };
+import {useEffect,useRef,useState,useSyncExternalStore} from 'react';
+import {AudioManager} from '../audio/AudioManager';
+import type {Screen} from '../types';
+
+export interface AudioScene {screen:Screen;questionId?:string;submitted?:boolean;passed?:boolean;}
+/** Expands the original sound hook; the app owns exactly one manager. */
+export function useSound(scene:AudioScene){
+ const [manager]=useState(()=>new AudioManager());
+ const snapshot=useSyncExternalStore(manager.subscribe,manager.getSnapshot,manager.getSnapshot);
+ const previous=useRef<AudioScene|null>(null);
+ useEffect(()=>{
+  manager.mount();
+  const visibility=()=>manager.setHidden(document.hidden);
+  const click=(event:MouseEvent)=>{
+   const element=event.target instanceof Element?event.target.closest('button,summary'):null;
+   if(!element||element.closest('[data-audio-controls]')||element.matches(':disabled'))return;
+   manager.gesture();void manager.play('click');
+  };
+  visibility();document.addEventListener('visibilitychange',visibility);document.addEventListener('click',click,true);
+  return()=>{document.removeEventListener('visibilitychange',visibility);document.removeEventListener('click',click,true);manager.dispose();};
+ },[manager]);
+ useEffect(()=>{
+  const before=previous.current;
+  manager.setScene(scene.screen);
+  if(scene.screen==='consultation'&&before?.screen!=='consultation')void manager.play('enter');
+  if(scene.screen==='clinic'&&before?.screen==='products')void manager.play('enter');
+  if(scene.screen==='quiz'&&scene.questionId&&!scene.submitted&&(before?.screen!=='quiz'||before.questionId!==scene.questionId))void manager.play('question');
+  if(scene.screen==='result'&&before?.screen!=='result')manager.celebrate(Boolean(scene.passed));
+  previous.current={...scene};
+ },[manager,scene.screen,scene.questionId,scene.submitted,scene.passed]);
+ return {...snapshot,manager,start:manager.start,play:manager.play,setSettings:manager.setSettings,retry:manager.retry};
 }

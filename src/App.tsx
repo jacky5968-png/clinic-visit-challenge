@@ -1,7 +1,5 @@
 import { useReducer, useState, useEffect, useRef, useMemo } from 'react';
 import {
-  Volume2,
-  VolumeX,
   HelpCircle,
   ArrowLeft,
   ArrowUpRight,
@@ -12,6 +10,8 @@ import productData from './data/products.json';
 import questionData from './data/questions.json';
 import { gameReducer, initialState } from './engine/state';
 import { useSound } from './hooks/useSound';
+import {AudioControls} from './components/AudioControls';
+import {GameAudioContext} from './audio/GameAudioContext';
 import { Home } from './screens/Home';
 import { Products } from './screens/Products';
 import { Clinic } from './screens/Clinic';
@@ -40,7 +40,7 @@ export default function App() {
   );
   const [reload, setReload] = useState(0);
   const activeLoad = useRef<AbortController | null>(null);
-  const sound = useSound();
+  const sound = useSound({screen:state.screen,questionId:state.screen==='quiz'?state.questions[state.submitted?state.answers.length-1:state.answers.length]?.id:undefined,submitted:state.submitted,passed:state.screen==='result'?calculateResult(state.answers).passed:undefined});
   const missions = useStageProgress();
   const [selectedMissionId, setSelectedMissionId] = useState<StageId>(defaultStage.id);
   const [productView,setProductView]=useState<'map'|'bank'>('map');
@@ -132,7 +132,7 @@ export default function App() {
     const stage=getStage(missionId);
     const chosen=products.find(p=>p.id===state.productId&&allowedInStage(p,stage))??products.find(p=>allowedInStage(p,stage));
     if(!stageUnlocked(missionId,completed)||!chosen||availableQuestionCount(bank,chosen.id)<QUESTION_COUNT)return;
-    sound.play('click');setSelectedMissionId(missionId);
+    sound.start();setSelectedMissionId(missionId);
     setActiveVisit({missionId,productKey:missionProductKey(chosen,bank),productName:chosen.name,alreadyQualified:qualifications[missionId].some(r=>r.productName===chosen.name)});
     if(state.productId!==chosen.id)dispatch({type:'SELECT_PRODUCT',id:chosen.id});
     dispatch({type:'START',bank});
@@ -140,7 +140,7 @@ export default function App() {
   const nextVisit=sevenStages[(sevenStages.findIndex(s=>s.id===activeMission.id)+1)%sevenStages.length];
   const step = ['products', 'clinic', 'consultation', 'quiz', 'result'].indexOf(state.screen);
   return (
-    <VisitContext.Provider value={activeMission}>
+    <GameAudioContext.Provider value={sound.manager}><VisitContext.Provider value={activeMission}>
       <div className="app-shell">
         <a className="skip-link" href="#main">
           跳至主要內容
@@ -178,14 +178,7 @@ export default function App() {
             <button className="icon-button" onClick={() => setHelp(true)} aria-label="遊戲說明">
               <HelpCircle size={20} />
             </button>
-            <button
-              className="icon-button"
-              onClick={sound.toggle}
-              aria-label={`音效${sound.enabled ? '開啟' : '關閉'}`}
-              aria-pressed={sound.enabled}
-            >
-              {sound.enabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            </button>
+            <AudioControls audio={sound}/>
           </nav>
         </header>
         {state.screen !== 'home' && (
@@ -219,7 +212,7 @@ export default function App() {
         <main id="main" ref={main} tabIndex={-1} className="main-content" key={state.screen === 'consultation' ? 'clinic' : state.screen}>
           {state.screen === 'home' && (
             <Home
-              onStart={openJourney}
+              onStart={()=>{sound.start();openJourney();}}
               onHelp={() => setHelp(true)}
               onSkip={() => setSkipIntro(true)}
               skipIntro={skipIntro}
@@ -268,7 +261,6 @@ export default function App() {
               onRetry={() => start(activeMission.id)}
               onProducts={() => {selectStage(activeMission.id);setProductView('bank');}}
               onHome={() => navigate('home')}
-              onSuccess={() => sound.play('success')}
               completedCount={completed.length}
               qualifiedCount={qualifications[activeMission.id].length}
               alreadyQualified={activeVisit?.alreadyQualified??false}
@@ -290,6 +282,6 @@ export default function App() {
         </footer>
         {help && <HelpDialog onClose={() => setHelp(false)} />}
       </div>
-    </VisitContext.Provider>
+    </VisitContext.Provider></GameAudioContext.Provider>
   );
 }
