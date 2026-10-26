@@ -22,6 +22,7 @@ body{background:radial-gradient(ellipse at 12% 0,#b9f3ff 0,transparent 48%),radi
 .app-shell .scene-caption{background:linear-gradient(120deg,#fff8d5,#fff);border-top:2px solid #bddacf;padding:18px;color:#123f50}
 .app-shell .scene-caption .scene-number{background:linear-gradient(#ffdf72,#edb53f);color:#62430b;border:2px solid #c48c20;box-shadow:0 4px 0 #b58539}
 .home-world{position:relative;height:410px;min-width:0;background:#c9f4ed}.home-world-host{position:absolute;inset:0}.home-world canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}.home-world canvas:active{cursor:grabbing}.home-world-loading{position:absolute;inset:0;display:grid;place-items:center;color:#245869;background:#d6f8ee;margin:0}.home-world-hint{position:absolute;left:14px;bottom:12px;border:1px solid #7aaeb0;border-radius:7px;background:#ffffffec;padding:5px 9px;font-size:13px;color:#285b67;pointer-events:none}
+.home-world>.clinic-map{height:100%;aspect-ratio:auto}
 .app-shell .journey-section{border:1px solid #9fc9d3;border-bottom:5px solid #b5d4de;background:linear-gradient(135deg,#ffffff,#e9f8ff);box-shadow:0 12px 30px #14475a12;border-radius:20px;padding:28px}
 .app-shell .journey-icon{background:linear-gradient(#fff1b0,#ffd760);border:1px solid #d6a847;border-bottom:4px solid #c79230;color:#765005;box-shadow:0 5px 10px #8c5d1420;border-radius:14px}
 .app-shell .journey-item h3{font-size:19px;color:#143e52}

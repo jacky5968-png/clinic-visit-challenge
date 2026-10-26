@@ -51,8 +51,8 @@ export function Home({
         </div>
         <div className="hero-visual">
           <div className="scene-topline">
-            <span>訓練基地</span>
-            <span>3D TRAINING HUB</span>
+            <span>生達診所</span>
+            <span>3D CLINIC PREVIEW</span>
           </div>
           <HomeWorld />
           <div className="scene-caption">
