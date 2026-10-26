@@ -1,10 +1,11 @@
 /* Shared game shell: lightweight depth from painted surfaces and hard-edged shadows. */
 :root{--game-ink:#12364a;--game-teal:#007e75;--game-gold:#ffcd55;--game-edge:#85b9bc}
 body{background:radial-gradient(ellipse at 12% 0,#b9f3ff 0,transparent 48%),radial-gradient(ellipse at 95% 25%,#c1ffe6 0,transparent 42%),#edf8ff;color:var(--game-ink)}
-.app-shell .site-header{background:linear-gradient(145deg,#103d50,#075e65);border:1px solid #4d9b9c;border-bottom:5px solid #073447;box-shadow:inset 0 1px #b6ffff80,0 8px 24px #123e4a25;border-radius:0 0 20px 20px}
-.app-shell .brand b{color:#fff7d9;text-shadow:0 2px #052b38}.app-shell .brand small{color:#c6f5ee}
-.app-shell .brand-mark{background:#fff;border:2px solid #b5ded5;box-shadow:0 4px 0 #062e3d,0 6px 14px #001e3940;border-radius:16px}
-.app-shell .site-header .nav-link,.app-shell .site-header .icon-button{color:#f0ffff}.app-shell .site-header .nav-link.active{color:#ffdf80;background:#ffffff13}.app-shell .site-header .icon-button{border-color:#70a6ad;background:#163f50}
+.app-shell .site-header{background:#fff;border:1px solid #d0e0e4;border-bottom:4px solid #b6cdd4;box-shadow:0 6px 18px #123e4a12;border-radius:0 0 20px 20px}
+.app-shell .brand b{color:#12364a;text-shadow:none}.app-shell .brand small{color:#42566b}
+.app-shell .brand-mark{background:#fff;border:0;box-shadow:none;border-radius:12px}
+.app-shell .site-header .nav-link,.app-shell .site-header .icon-button{color:#23485b}.app-shell .site-header .nav-link.active{color:#00695f;background:#e5f5ef}.app-shell .site-header .icon-button{border-color:#c5d9df;background:#f4fafb}
+.app-shell .site-header .nav-link:hover{background:#f0f6f8}.app-shell .site-header .icon-button:hover{color:#12364a;background:#e5f2ef}
 .app-shell .progress-bar{border:1px solid #a7ced6;background:#ffffffeb;border-radius:12px;box-shadow:0 4px 0 #bfdbe4;margin-top:14px;padding:10px 16px;gap:16px}
 .app-shell .button{border-radius:12px;font-weight:700;min-height:48px;transition:transform .12s,box-shadow .12s}
 .app-shell .button.primary{background:linear-gradient(160deg,#009e89,#006f72);color:#fff;border:1px solid #005d62;box-shadow:inset 0 2px #86e9ce80,0 5px 0 #074c58,0 9px 16px #005b6a25}
