@@ -35,7 +35,7 @@ export function ClinicMap({
       <div className="map-grid" />
       <AssetImage
         src={assets.clinic}
-        alt="2.5D生達診所：藥局有藥師、掛號櫃台有掛號人員，另有入口與醫師診間"
+        alt="2.5D生達診所：藥局有藥師、掛號櫃台有護理師，另有入口與醫師診間"
         className="clinic-art"
       />
       <span className="map-location">

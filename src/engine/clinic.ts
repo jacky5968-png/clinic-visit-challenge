@@ -61,7 +61,7 @@ export const locations: Record<
     name: '掛號櫃台',
     marker: '02',
     label: { x: 650, y: 475 },
-    speaker: '掛號人員',
+    speaker: '護理師',
     message: '您好，拜訪報到已完成。陳醫師已知道您的來意，請帶著產品資料前往醫師診間。',
   },
   doctor: {
