@@ -57,7 +57,7 @@ describe('stage-specific roles and conversations', () => {
     sevenStages.forEach((stage, index) => expect(stage.doctor.greeting).toContain(topics[index]));
     expect(sceneLocations(sevenStages[3]).doctor.speaker).toBe('謝藥師');
     expect(sceneLocations(sevenStages[3]).reception.speaker).toBe('藥助');
-    expect(sceneLocations(sevenStages[3]).waiting.speaker).toBe('門市人員');
+    expect(sceneLocations(sevenStages[3]).waiting.speaker).toBe('採購助理');
     expect(staffSmallTalk('waiting', 0, sevenStages[3]).greeting).toContain('謝藥師');
   });
 });
