@@ -11,6 +11,6 @@ export function VisitSequence() {
       <strong>{locations[id].marker}</strong><span>{locations[id].name}<small>{sequence.status(id) === 'complete' ? '已完成對話' : sequence.status(id) === 'locked' ? '待解鎖' : '下一站'}</small></span>
       {sequence.status(id) === 'complete' ? <Check size={17}/> : sequence.status(id) === 'locked' ? <LockKeyhole size={17}/> : <MessageCircle size={17}/>}
     </li>)}</ol>
-    <p role="status">請依序完成01、02對話，再到03交流與考核。</p>
+    <p role="status">完成01、02對話後，外勤會自動走到下一站，抵達即開啟對話。</p>
   </div>;
 }

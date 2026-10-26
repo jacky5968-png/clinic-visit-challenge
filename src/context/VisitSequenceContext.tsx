@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { LocationId } from '../engine/clinic';
-import { canInteractAt, completePreparation, nextVisitPoint, visitPointStatus } from '../engine/visitSequence';
+import { canInteractAt, completePreparation, nextCounterAfterDialogue, nextVisitPoint, visitPointStatus } from '../engine/visitSequence';
 
 function useSequence() {
   const [completed, setCompleted] = useState<readonly LocationId[]>([]);
@@ -9,7 +9,11 @@ function useSequence() {
     next: nextVisitPoint(completed),
     canInteract: (id: LocationId) => canInteractAt(id, completed),
     status: (id: LocationId) => visitPointStatus(id, completed),
-    complete: (id: LocationId) => setCompleted(previous => completePreparation(previous, id)),
+    complete: (id: LocationId) => {
+      const destination = nextCounterAfterDialogue(id, completed);
+      if (destination) setCompleted(previous => completePreparation(previous, id));
+      return destination;
+    },
   };
 }
 const VisitSequenceContext = createContext<ReturnType<typeof useSequence> | null>(null);

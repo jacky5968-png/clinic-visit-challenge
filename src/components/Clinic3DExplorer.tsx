@@ -294,7 +294,14 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
             speaker={visitDialogue(mission,opened).speaker} round={conversation.round}
             replying={replying} reminder={visitDialogue(mission,opened).message}
             panel={speech} line={speechLine} onReply={()=>setReplying(true)}
-            onComplete={()=>{sequence.complete(opened);setReplying(false);conversation.close();setSequenceNotice('');api.current?.focus();}}
+            onComplete={()=>{
+              const destination=sequence.complete(opened);
+              api.current?.stopMovement();
+              setReplying(false);conversation.close();setSequenceNotice('');
+              // Start the route directly: this event's visit() closure still has the old prerequisites.
+              if(destination)movement.moveTo(destination);
+              api.current?.focus();
+            }}
             onClose={()=>{conversation.close();api.current?.focus();}} />
         )}
         {!ready && (

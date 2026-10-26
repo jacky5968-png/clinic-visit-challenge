@@ -38,7 +38,7 @@ async function checkBanks(page:Page,index:number){
  while(await pager.getByRole('button',{name:'上一頁',exact:true}).isEnabled())await pager.getByRole('button',{name:'上一頁',exact:true}).click();
  for(let n=0;n<selectedPage;n++)await pager.getByRole('button',{name:'下一頁',exact:true}).click();
 }
-async function enter(page:Page,index:number,reduced=false){
+async function enter(page:Page,index:number,_reduced=false){
  await page.getByRole('button',{name:'開始第'+(index+1)+'關',exact:true}).click();
  await expect.poll(async()=>await page.locator('.active-visit-profile').isVisible()||await page.getByTestId('island-travel-status').isVisible()).toBe(true);
  if(await page.getByTestId('island-travel-status').isVisible())await page.getByRole('button',{name:'略過移動',exact:true}).click();
@@ -46,10 +46,9 @@ async function enter(page:Page,index:number,reduced=false){
  const stops=page.locator('.minimap-destinations button');
  await expect(stops.nth(1)).toHaveAttribute('aria-disabled','true');
  await expect(stops.nth(2)).toHaveAttribute('aria-disabled','true');
+ await stops.nth(0).click();
  for(let point=0;point<2;point++){
-  await stops.nth(point).click();
   const speech=page.getByTestId('scene-speech');
-  if(!reduced&&await page.getByRole('button',{name:'略過移動',exact:true}).isVisible())await page.getByRole('button',{name:'略過移動',exact:true}).click();
   const in3D=await page.getByTestId('clinic-3d-canvas').count();
   const talk=in3D?speech:page.getByRole('region',{name:'診所互動對話'});
   await expect(talk).toBeVisible();
@@ -59,9 +58,7 @@ async function enter(page:Page,index:number,reduced=false){
   if(point===0)await expect(stops.nth(2)).toHaveAttribute('aria-disabled','true');
  }
  await expect(stops.nth(2)).not.toHaveAttribute('aria-disabled','true');
- await page.getByRole('button',{name:'前往'+stages[index].target,exact:true}).click();
- if(!reduced)await page.getByRole('button',{name:'略過移動',exact:true}).click();
- // Arrival opens the conversation without a second interaction click.
+ // 01 and 02 completion each starts its route; no destination click or movement skip is needed.
 
  const bubble=page.getByTestId('doctor-scene-speech'),canvas=page.getByTestId('clinic-3d-canvas');
  if(await canvas.count()){

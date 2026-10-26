@@ -190,7 +190,11 @@ export function ClinicExplorer({
             {opened!==target && (opened === 'reception' || opened === 'waiting') ? (
               <StaffSmallTalk key={conversation.sequence} location={opened} speaker={visitDialogue(mission, opened).speaker}
                 round={conversation.round} reminder={visitDialogue(mission, opened).message}
-                onComplete={() => {sequence.complete(opened);conversation.close();setNotice('');}} />
+                onComplete={() => {
+                  const destination=sequence.complete(opened);
+                  conversation.close();setNotice('');
+                  if(destination)movement.moveTo(destination);
+                }} />
             ) : <p>{visitDialogue(mission, opened).message}</p>}
           </div>
           <button

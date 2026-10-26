@@ -16,6 +16,11 @@ export function completePreparation(completed: readonly LocationId[], id: Locati
   if ((id !== 'reception' && id !== 'waiting') || !canInteractAt(id, completed) || completed.includes(id)) return completed;
   return [...completed, id];
 }
+export function nextCounterAfterDialogue(id: LocationId, completed: readonly LocationId[]): 'waiting' | 'doctor' | null {
+  if (!canInteractAt(id, completed)) return null;
+  // Repeated conversations still follow the physical 01 → 02 → 03 route.
+  return id === 'reception' ? 'waiting' : id === 'waiting' ? 'doctor' : null;
+}
 export function visitPointStatus(id: LocationId, completed: readonly LocationId[]) {
   return id === 'entrance' ? 'entrance' : completed.includes(id) ? 'complete'
     : canInteractAt(id, completed) ? 'next' : 'locked';
