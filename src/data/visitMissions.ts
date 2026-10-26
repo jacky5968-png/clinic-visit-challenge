@@ -1,5 +1,5 @@
 import { locations, type LocationId } from '../engine/clinic';
-export type MissionId = 'cheng-xin' | 'qing-chuan' | 'xiang-yang' | 'new-training' | 'product-names' | 'ent' | 'pharmacy-client' | 'gastro' | 'orthopedics' | 'family';
+export type MissionId = 'cheng-xin' | 'qing-chuan' | 'xiang-yang' | 'new-training' | 'product-names' | 'ent' | 'pharmacy-client' | 'gastro' | 'orthopedics' | 'internal-medicine' | 'family';
 export interface VisitMission {
   stageNumber?:number; kind?:'training'|'clinic'|'pharmacy'; allowedCategories?:string[]; target?:'doctor'|'reception';
   id: MissionId;

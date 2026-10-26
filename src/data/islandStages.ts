@@ -7,9 +7,10 @@ export const islandThemes:Record<StageId,{color:number;label:string;feature:stri
  'pharmacy-client':{color:0x00995f,label:'綠意藥局',feature:'綠色藥局門市・藥品陳列架'},
  gastro:{color:0xe25b27,label:'暖陽診所',feature:'胃腸科檢查床・檢查設備'},
  orthopedics:{color:0x7842d5,label:'復健之島',feature:'骨架模型・骨骼燈箱・拐杖架'},
+ 'internal-medicine':{color:0xcc4585,label:'循環之島',feature:'內科診療室・循環監測站'},
  family:{color:0x009888,label:'健康之家',feature:'健康量測站・家庭醫學診所'}
 };
 export function islandPositions(portrait:boolean):[number,number][]{
- return portrait?[[-5.2,27],[5.2,27],[5.2,9],[-5.2,9],[-5.2,-9],[5.2,-9],[0,-33]]
- :[[-12,7],[0,7],[12,7],[12,-3],[0,-3],[-12,-3],[-24,-5]];
+ return portrait?[[-5.2,33],[5.2,33],[5.2,11],[-5.2,11],[-5.2,-11],[5.2,-11],[5.2,-33],[-5.2,-33]]
+ :[[-18,11],[-6,11],[6,11],[18,11],[18,-11],[6,-11],[-6,-11],[-18,-11]];
 }

@@ -10,10 +10,12 @@ function fixture(){
  const records:StageCompletion[]=products.map((p,i)=>({missionId:sevenStages[Math.floor(i/5)].id,productKey:missionProductKey(p,bank),productName:p.name,questionCount:10,correctCount:10,completedAt:Date.now()}));
  return{products,bank,records};
 }
-describe('seven stage restrictions',()=>{
- it('keeps all seven names, roles and classification rules',()=>{
-  expect(sevenStages.map(s=>s.clinic)).toEqual(['新訓中心','認識產品','耳鼻喉科診所','生達大藥局','胃腸科診所','骨科診所','家醫科診所']);
-  expect(sevenStages.slice(2).map(s=>s.doctor.name)).toEqual(['林醫師','謝藥師','王醫師','李醫師','陳醫師']);
+describe('eight stage restrictions',()=>{
+ it('keeps all eight names, roles and classification rules',()=>{
+  expect(sevenStages.map(s=>s.clinic)).toEqual(['新訓中心','認識產品','耳鼻喉科診所','生達大藥局','胃腸科診所','骨科診所','內科診所','家醫科診所']);
+  expect(sevenStages.slice(2).map(s=>s.doctor.name)).toEqual(['林醫師','謝藥師','王醫師','李醫師','陳醫師','陳醫師']);
+  expect(getStage('internal-medicine').allowedCategories).toEqual(['泌尿科','痛風','抗血栓','循環系統']);
+  expect(getStage('family').allowedCategories).toEqual(['糖尿病','高血壓','高血脂']);
   expect(getStage('pharmacy-client').target).toBe('doctor');
  });
  it('filters by exact category tags, not product names or partial matches',()=>{
@@ -24,7 +26,8 @@ describe('seven stage restrictions',()=>{
   expect(allowedInStage({...p,category:'糖尿病學'},getStage('family'))).toBe(false);
   for(const category of ['泌尿科|自費',' 泌尿科 ｜ 自費 ']){
    expect(allowedInStage({...p,category},getStage('pharmacy-client'))).toBe(true);
-   expect(allowedInStage({...p,category},getStage('family'))).toBe(true);
+   expect(allowedInStage({...p,category},getStage('internal-medicine'))).toBe(true);
+   expect(allowedInStage({...p,category},getStage('family'))).toBe(false);
   }
   expect(allowedInStage({...p,demo:true},sevenStages[0])).toBe(false);
  });
@@ -47,8 +50,8 @@ describe('seven stage restrictions',()=>{
   expect(completedStages(sole,products,changed)).toEqual(sevenStages.slice(1).map(s=>s.id));
   expect(completedStages(sole,products.map((p,i)=>i===0?{...p,category:'其他'}:p),bank)).toEqual(sevenStages.slice(1).map(s=>s.id));
   expect(stageQualifications(records,products,changed)['new-training']).toHaveLength(4);
-  expect(completedStages(records,products,bank)).toHaveLength(7);
-  expect(records).toHaveLength(35);
+  expect(completedStages(records,products,bank)).toHaveLength(8);
+  expect(records).toHaveLength(40);
  });
  it('uses a separate storage key and rejects malformed completions',()=>{
   expect(STAGE_STORAGE_KEY).not.toBe(MISSION_STORAGE_KEY);
@@ -56,7 +59,7 @@ describe('seven stage restrictions',()=>{
   expect(parseStageProgress('bad')).toEqual([]);
   expect(parseStageProgress(JSON.stringify({version:1,completed:[{missionId:'new-training'}]}))).toEqual([]);
   const {records}=fixture();expect(parseStageProgress(JSON.stringify({version:1,completed:records}))).toEqual([]);
-  expect(parseStageProgress(JSON.stringify({version:2,completed:records}))).toHaveLength(35);
+  expect(parseStageProgress(JSON.stringify({version:2,completed:records}))).toHaveLength(40);
  });
  it('does not count a replay, a 90-point attempt or an old five-question pass',()=>{
   const {products,bank,records}=fixture(),first=records[0];
@@ -83,6 +86,6 @@ describe('seven stage restrictions',()=>{
   const short=bank.filter(q=>q.productId!==products[0].id||q.id!==products[0].id+'-q9');
   expect(completedStages([records[0]],products,short)).toEqual([]);
   expect(stageQualifications(records,products,short)['new-training']).toHaveLength(4);
-  expect(records).toHaveLength(35);
+  expect(records).toHaveLength(40);
  });
 });

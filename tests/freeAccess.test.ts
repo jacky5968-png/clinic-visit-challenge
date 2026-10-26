@@ -3,7 +3,7 @@ import {sevenStages} from '../src/data/sevenStages';
 import {completedStagesFromQualifications,stageUnlocked,type StageQualifications} from '../src/engine/stageProgress';
 import {planIslandWalk} from '../src/engine/islandWalk';
 import {gameRules} from '../src/data/gameRules';
-it('a player may start with the seventh island and keep an independent qualification there',()=>{
+it('a player may start with the eighth island and keep an independent qualification there',()=>{
  const qualifications=Object.fromEntries(sevenStages.map(stage=>[stage.id,[]])) as unknown as StageQualifications;
  qualifications.family=[{missionId:'family',productKey:'version',productName:'主題',correctCount:10,questionCount:10,completedAt:0}];
  expect(completedStagesFromQualifications(qualifications)).toEqual(['family']);

@@ -46,8 +46,8 @@ export function FormulationViewer({ onClose }: { onClose: () => void }) {
       <button disabled={status !== 'ready'} onClick={() => api.current?.reset()} aria-label="重設大樓視角"><RotateCcw size={20}/><span>重設</span></button>
     </div>
     <div className="formulation-viewer-stage" data-testid="formulation-viewer-stage"><div ref={host} className="formulation-viewer-host"/>
-      {status !== 'ready' && <div className="formulation-viewer-message" role="status">{status === 'loading' ? '正在準備大樓3D模型…' : '此裝置暫時無法顯示放大模型，請返回七島全景繼續。'}</div>}
+      {status !== 'ready' && <div className="formulation-viewer-message" role="status">{status === 'loading' ? '正在準備大樓3D模型…' : '此裝置暫時無法顯示放大模型，請返回八島全景繼續。'}</div>}
     </div>
-    <footer className="formulation-viewer-footer"><p>拖曳旋轉 · 滾輪／雙指縮放</p><button className="button primary" onClick={onClose}><House size={19}/>回到七島全景</button></footer>
+    <footer className="formulation-viewer-footer"><p>拖曳旋轉 · 滾輪／雙指縮放</p><button className="button primary" onClick={onClose}><House size={19}/>回到八島全景</button></footer>
   </dialog>;
 }

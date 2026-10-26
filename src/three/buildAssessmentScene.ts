@@ -90,6 +90,10 @@ export function buildAssessmentScene(mission: VisitMission) {
     for(const y of [1.48,1.72,1.96])box(.08,.19,.045,-2.43,y,-.65,ivory).rotation.z=.12;
   }
   if(mission.id==='family')box(.35,.19,.3,-1.02,.97,-.22,material(0x8bbec1),'blood-pressure-monitor');
+  if(mission.id==='internal-medicine'){
+    box(.54,.42,.04,-2.48,1.68,-.65,ink,'internal-circulation-display').rotation.y=Math.PI/2;
+    box(.045,.18,.035,-2.43,1.68,-.65,material(0x5bd6aa));
+  }
   cylinder(.22,.4,-2.03,.2,1.51,wood);
   for(const [x,y,z] of [[-2.03,.78,1.51],[-2.21,.67,1.53],[-1.88,.67,1.52]]){
     const leaf=new THREE.Mesh(new THREE.IcosahedronGeometry(.29,1),material(0x518a69));leaf.scale.set(.65,1.6,.65);leaf.position.set(x,y,z);root.add(leaf);

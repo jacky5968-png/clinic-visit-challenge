@@ -14,8 +14,8 @@ test('building inspection returns to the seven-island panorama without changing 
   const dialog = page.getByTestId('formulation-viewer-dialog'), model = page.getByTestId('formulation-viewer-canvas');
   await expect(dialog).toBeVisible(); await expect(model).toHaveAttribute('data-renderer', 'webgl');
   await page.getByRole('button', { name: '關閉大樓放大檢視', exact: true }).press('Shift+Tab');
-  await expect(page.getByRole('button', { name: '回到七島全景', exact: true })).toBeFocused();
-  await page.getByRole('button', { name: '回到七島全景', exact: true }).press('Tab');
+  await expect(page.getByRole('button', { name: '回到八島全景', exact: true })).toBeFocused();
+  await page.getByRole('button', { name: '回到八島全景', exact: true }).press('Tab');
   await expect(page.getByRole('button', { name: '關閉大樓放大檢視', exact: true })).toBeFocused();
   await page.getByRole('button', { name: '放大大樓', exact: true }).click();
   await expect(model).toHaveAttribute('data-zoom', '1.200');
@@ -31,6 +31,6 @@ test('building inspection returns to the seven-island panorama without changing 
   const area = JSON.parse((await map.getAttribute('data-landmark-area'))!);
   await map.click({ position: { x: area.x + area.width / 2, y: area.y + area.height * .55 } });
   await expect(dialog).toBeVisible();
-  await page.getByRole('button', { name: '回到七島全景', exact: true }).click();
+  await page.getByRole('button', { name: '回到八島全景', exact: true }).click();
   await expect(dialog).toHaveCount(0); await expect(map).toHaveAttribute('data-selected', selected!);
 });

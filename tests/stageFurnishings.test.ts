@@ -8,7 +8,7 @@ import {obstacles,planWalkingRoute,clearSegment} from '../src/engine/freeWalk';
 import {worldLocations} from '../src/engine/clinic3d';
 beforeEach(()=>vi.stubGlobal('document',{createElement:()=>({width:0,height:0,getContext:()=>({fillRect(){},fillText(){}})})}));
 afterEach(()=>vi.unstubAllGlobals());
-describe('seven scene furniture preserves usable space',()=>{
+describe('eight scene furniture preserves usable space',()=>{
  for(const stage of sevenStages)it(stage.clinic+' keeps furnishings behind existing collision boundaries and NPCs accessible',()=>{
   const model=buildClinic(stage);
   expect(model.doctor.root.userData.outfit).toBe(examinerRole(stage));
@@ -44,7 +44,7 @@ describe('seven scene furniture preserves usable space',()=>{
   expect(model.doctor.root.userData.doctorName).toBe(stage.doctor.name);
   expect(model.markers.size).toBe(4);
  });
- it('all seven have different visual identities',()=>{
-  expect(new Set(sevenStages.map(s=>buildClinic(s).root.userData.sceneIdentity)).size).toBe(7);
+ it('all eight have different visual identities',()=>{
+  expect(new Set(sevenStages.map(s=>buildClinic(s).root.userData.sceneIdentity)).size).toBe(8);
  });
 });

@@ -15,7 +15,7 @@ export function Home({
     <div className={`home-screen ${skipIntro ? 'skip-intro' : ''}`}>
       <section className="hero">
         <div className="hero-copy">
-          <span className="hero-game-badge">FIELD ADVENTURE · 七島自由探索</span>
+          <span className="hero-game-badge">FIELD ADVENTURE · 八島自由探索</span>
           <h1>
             讓專業，
             <br />
@@ -29,7 +29,7 @@ export function Home({
             。
           </h1>
           <p className="hero-description">
-            七座島嶼，七種外勤情境，隨時自由出發。
+            八座島嶼，八種外勤情境，隨時自由出發。
             <br />
             在情境中練習，把產品知識轉化為推廣的自信。
           </p>
@@ -59,7 +59,7 @@ export function Home({
             <span className="scene-number">01</span>
             <div>
               <b>從這裡，展開你的外勤旅程</b>
-              <small>新人必修・產品知識・五類客戶拜訪</small>
+              <small>新人必修・產品知識・六類客戶拜訪</small>
             </div>
             <ArrowUpRight size={22} />
           </div>
@@ -77,7 +77,7 @@ export function Home({
           </span>
           <div>
             <small>STEP 01</small>
-            <h3>七座島嶼，自由選關</h3>
+            <h3>八座島嶼，自由選關</h3>
             <p>點島先看說明，再選本關題庫</p>
           </div>
         </div>

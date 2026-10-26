@@ -49,11 +49,11 @@ describe('stage-specific roles and conversations', () => {
     });
   }
 
-  it('uses distinct primary dialogue for all seven stages and names the correct specialty', () => {
+  it('uses distinct primary dialogue for all eight stages and names the correct specialty', () => {
     for (let line = 0; line < 3; line++) {
-      expect(new Set(sevenStages.map(stage => doctorConversation(stage)[line].text)).size).toBe(7);
+      expect(new Set(sevenStages.map(stage => doctorConversation(stage)[line].text)).size).toBe(8);
     }
-    const topics = ['新人', '商品名', '呼吸系統', '自費', '胃腸', '肌肉骨骼', '慢性病'];
+    const topics = ['新人', '商品名', '呼吸系統', '自費', '胃腸', '肌肉骨骼', '慢性病用藥-1', '慢性病用藥-2'];
     sevenStages.forEach((stage, index) => expect(stage.doctor.greeting).toContain(topics[index]));
     expect(sceneLocations(sevenStages[3]).doctor.speaker).toBe('謝藥師');
     expect(sceneLocations(sevenStages[3]).reception.speaker).toBe('門市接待員');

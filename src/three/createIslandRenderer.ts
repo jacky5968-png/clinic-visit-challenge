@@ -12,7 +12,7 @@ let islandSession:{id:StageId;atGate:boolean}|null=null;
 export interface IslandState {selected:StageId;completed:StageId[];}
 export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSelect:(id:StageId)=>void,onLocked:(message:string)=>void,onLandmark?:()=>void){
  const canvas=document.createElement('canvas');
- canvas.dataset.testid='island-map-canvas';canvas.setAttribute('aria-label','七座島嶼3D地圖，可拖曳旋轉，以島名按鈕選關；點選生達製劑大樓可放大查看');canvas.tabIndex=0;
+ canvas.dataset.testid='island-map-canvas';canvas.setAttribute('aria-label','八座島嶼3D地圖，可拖曳旋轉，以島名按鈕選關；點選生達製劑大樓可放大查看');canvas.tabIndex=0;
  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'low-power'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0x40bfdf);
@@ -64,11 +64,11 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   building.scale.setScalar(baseScale);building.position.set(portrait?0:3,.3,portrait?-32:-28.5);
   model.root.updateMatrixWorld(true);
   let area=projectArea(building,'landmark');
-  const factor=Math.min(1,(portrait?150:160)/area.height,(width-32)/area.width);
+  const factor=Math.min(1,120/area.height,(width-32)/area.width);
   building.scale.setScalar(baseScale*factor);model.root.updateMatrixWorld(true);area=projectArea(building,'landmark');
   const ray=new THREE.Raycaster(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),-.3);
   function groundAt(x:number,y:number){ray.setFromCamera(new THREE.Vector2(x/width*2-1,1-y/height*2),camera);return ray.ray.intersectPlane(plane,new THREE.Vector3());}
-  const from=groundAt(area.x+area.width/2,area.y+area.height/2),to=groundAt(width*.5,130);
+  const from=groundAt(area.x+area.width/2,area.y+area.height/2),to=groundAt(width*.5,110);
   if(from&&to)building.position.add(to.sub(from));
   model.root.updateMatrixWorld(true);
  }
@@ -76,7 +76,8 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   camera.left=-baseHeight*width/height/2;camera.right=-camera.left;
   camera.top=baseHeight/2;camera.bottom=-baseHeight/2;camera.zoom=zoom;camera.updateProjectionMatrix();camera.updateMatrixWorld(true);model.root.updateMatrixWorld(true);
   const upper=Math.max(...sevenStages.slice(3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+20+(portrait?(host.querySelector<HTMLElement>('.island-map-caption')?.offsetHeight||40)+20:0)+(portrait?120:180);
-  const lower=Math.max(...sevenStages.slice(0,3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+(portrait?20:40);
+  // The foreground needs room for both the representative and the below-island callouts.
+  const lower=Math.max(...sevenStages.slice(0,3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+(portrait?70:120);
   let areas=sevenStages.map((s,i)=>projectArea(model.islands[i].getObjectByName('building-'+s.id)!,s.id));
   let min=Math.min(...areas.map(a=>a.y)),max=Math.max(...areas.map(a=>a.y+a.height));
   if(max-min>height-upper-lower){camera.zoom*=Math.max(.3,(height-upper-lower)/(max-min));camera.updateProjectionMatrix();areas=sevenStages.map((s,i)=>projectArea(model.islands[i].getObjectByName('building-'+s.id)!,s.id));min=Math.min(...areas.map(a=>a.y));max=Math.max(...areas.map(a=>a.y+a.height));}
@@ -144,7 +145,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  function draw(){
   if(disposed)return;
   renderer.render(scene,camera);labels();
-  canvas.dataset.renderer='webgl';canvas.dataset.islands='7';canvas.dataset.selected=state.selected;
+  canvas.dataset.renderer='webgl';canvas.dataset.islands=String(sevenStages.length);canvas.dataset.selected=state.selected;
   canvas.dataset.actorX=actor.root.position.x.toFixed(3);canvas.dataset.actorZ=actor.root.position.z.toFixed(3);
   canvas.dataset.actorIsland=currentIsland;canvas.dataset.actorWalking=String(!!travel);
   canvas.dataset.actorProgress=(travel?.progress??1).toFixed(4);

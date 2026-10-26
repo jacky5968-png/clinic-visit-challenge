@@ -5,6 +5,7 @@ import { calculateResult,QUESTION_COUNT } from '../engine/quiz';
 import { assets } from '../data/assets';
 import { AssetImage } from '../components/AssetImage';
 import { GAME_NAME } from '../config/game';
+import {sevenStages} from '../data/sevenStages';
 import { useVisitMission } from '../context/VisitContext';
 export function Result({
   state,
@@ -66,9 +67,9 @@ export function Result({
         <p className="stage-qualification-progress" data-testid="result-qualified-count" role="status">本關已有 {qualifiedCount} 項合格紀錄。可繼續挑戰，或自由前往其他島嶼。</p>
         {result.passed&&<p>{alreadyQualified?'此產品／主題先前已合格，重複挑戰不增加合格數。':'本次10題全對，已列入本關合格進度。'}</p>}
         <p>
-          {completedCount === 7
-            ? '七座島嶼都有你的合格紀錄！'
-            : `已有合格紀錄的島嶼：${completedCount} / 7`}
+          {completedCount === sevenStages.length
+            ? '八座島嶼都有你的合格紀錄！'
+            : `已有合格紀錄的島嶼：${completedCount} / ${sevenStages.length}`}
         </p>
         {!storageAvailable && <small>本次進度僅在頁面開啟期間保留，瀏覽器無法寫入本機紀錄。</small>}
       </div>

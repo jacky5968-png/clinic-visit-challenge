@@ -40,7 +40,7 @@ it('first island still has a visible approach before entering, but an arrived vi
 });
 it('route order reverses safely when revisiting an earlier island',()=>{
  const route=planIslandWalk('family','new-training',all,false)!;
- expect(route.points.filter(p=>p.surface==='bridge').map(p=>p.bridge)).toEqual(all.slice(1).reverse().map((id,i)=>[id,all[5-i]]));
+ expect(route.points.filter(p=>p.surface==='bridge').map(p=>p.bridge)).toEqual(all.slice(1).reverse().map((id,i)=>[id,all[all.length-2-i]]));
 });
 it('island labels avoid the field representative without leaving the viewport',()=>{
  const avoid=[{id:'person',x:130,y:190,width:42,height:84}];

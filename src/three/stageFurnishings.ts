@@ -7,7 +7,7 @@ interface Rooms {root:THREE.Group;reception:THREE.Group;waiting:THREE.Group;offi
 // People, interaction targets and the central walking corridor keep their original positions.
 export function furnishStage(m:VisitMission,r:Rooms){
  if(!m.stageNumber)return;
- const color=[0,0x087e78,0x285bd5,0x007cad,0x008c69,0xc06a21,0x6550bd,0x258560][m.stageNumber]??0x087e78;
+ const color=[0,0x087e78,0x285bd5,0x007cad,0x008c69,0xc06a21,0x6550bd,0xcc4585,0x258560][m.stageNumber]??0x087e78;
  const white=new THREE.MeshStandardMaterial({color:0xf7fafc,roughness:.8});
  const accent=new THREE.MeshStandardMaterial({color,roughness:.75});
  const metal=new THREE.MeshStandardMaterial({color:0x7b909f,metalness:.35,roughness:.5});
@@ -140,6 +140,17 @@ export function furnishStage(m:VisitMission,r:Rooms){
    for(const x of [-2.6,-2.24]){rod(crutches,new THREE.Vector3(x,.2,z),new THREE.Vector3(x,1.8,z));box(crutches,.25,.07,.12,x,1.8,z,amber);box(crutches,.21,.06,.12,x,1.18,z,amber);}
    sign(g,'骨科 · 骨骼與復健區',-3.6,2.76,-3.48);
    r.root.userData.sceneIdentity='骨科診療室';
+  }else if(m.id==='internal-medicine'){
+   const monitor=zone(g,'internal-circulation-monitor');
+   box(monitor,.65,.83,.5,-4.62,.65,z,white);display(monitor,-4.62,1.55,z,.72);
+   for(const y of [.6,.85])box(monitor,.51,.045,.025,-4.62,y,z+.26,dark);
+   const exam=zone(g,'internal-examination-station');
+   box(exam,1.3,.18,.57,-3.23,.85,z,cushion);box(exam,.31,.12,.49,-3.72,1,z,white);
+   for(const x of [-3.73,-2.73])box(exam,.07,.6,.42,x,.46,z,metal);
+   const chart=zone(g,'internal-circulation-chart');
+   display(chart,-3.3,2.02,z,.9);
+   sign(g,'內科 · 慢性病用藥-1',-3.6,2.76,-3.48);
+   r.root.userData.sceneIdentity='內科循環監測室';
   }else{
    const scale=zone(g,'family-height-weight-station');
    box(scale,.66,.1,.5,-4.65,.24,z,metal);

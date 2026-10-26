@@ -123,7 +123,7 @@ export function Products({
         selectedStageId={selectedMissionId} loading={sourceStatus==='loading'} busy={travelBusy} onChoose={chooseFromOverview}/>
       </div>
       <div className="stage-bank-section" hidden={view!=='bank'}>
-      <button className="button secondary bank-back" onClick={()=>onViewChange('map')}><ArrowLeft size={18}/>返回七島選關</button>
+      <button className="button secondary bank-back" onClick={()=>onViewChange('map')}><ArrowLeft size={18}/>返回八島選關</button>
       <div className="section-heading">
         <span className="eyebrow">PREPARE YOUR VISIT</span>
         <h1 ref={bankHeading} tabIndex={-1}>第{stage.stageNumber}關：{stage.clinic}</h1>

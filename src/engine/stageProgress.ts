@@ -1,6 +1,6 @@
 import type {Product,Question} from '../types';
 import {sevenStages,type StageId} from '../data/sevenStages';
-import {allowedInStage} from '../data/stageRules';
+import {allowedInStage,categoryTags} from '../data/stageRules';
 import {missionProductKey} from './missionProgress';
 import {availableQuestionCount} from './quiz';
 import {QUESTION_COUNT} from '../config/challenge';
@@ -37,9 +37,13 @@ export function stageQualifications(records:StageCompletion[],products:Product[]
  const keys=new Map(products.filter(p=>!p.demo&&availableQuestionCount(bank,p.id)>=QUESTION_COUNT).map(p=>[p.name,{product:p,key:missionProductKey(p,bank)}]));
  for(const record of records){
   if(!validStageCompletion(record))continue;
-  const current=keys.get(record.productName),stage=sevenStages.find(s=>s.id===record.missionId)!;
-  if(!current||current.key!==record.productKey||!allowedInStage(current.product,stage))continue;
-  if(!qualified[stage.id].some(r=>r.productName===record.productName))qualified[stage.id].push(record);
+  const current=keys.get(record.productName);
+  if(!current||current.key!==record.productKey)continue;
+  let stage=sevenStages.find(s=>s.id===record.missionId)!;
+  // Keep seven-island family records intact in storage; display moved categories in the new internal-medicine stage.
+  if(record.missionId==='family'&&!allowedInStage(current.product,stage)&&categoryTags(current.product.category).some(tag=>tag==='泌尿科'||tag==='痛風'))stage=sevenStages.find(s=>s.id==='internal-medicine')!;
+  if(!allowedInStage(current.product,stage))continue;
+  if(!qualified[stage.id].some(r=>r.productName===record.productName))qualified[stage.id].push(stage.id===record.missionId?record:{...record,missionId:stage.id});
  }
  return qualified;
 }

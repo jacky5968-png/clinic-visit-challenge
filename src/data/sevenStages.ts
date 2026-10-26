@@ -1,6 +1,6 @@
 import {getMission,type VisitMission} from './visitMissions';
 import {stageConversation} from './stageConversations';
-export type StageId='new-training'|'product-names'|'ent'|'pharmacy-client'|'gastro'|'orthopedics'|'family';
+export type StageId='new-training'|'product-names'|'ent'|'pharmacy-client'|'gastro'|'orthopedics'|'internal-medicine'|'family';
 export interface StageMission extends VisitMission {
  id:StageId; stageNumber:number; kind:'training'|'clinic'|'pharmacy'; allowedCategories:string[]; target:'doctor'|'reception';
 }
@@ -22,7 +22,8 @@ export const sevenStages:StageMission[]=[
  make('pharmacy-client',4,'生達大藥局','謝藥師','自費品項',['自費'],'pharmacy'),
  make('gastro',5,'胃腸科診所','王醫師','胃腸科',['胃腸藥'],'clinic','xiang-yang'),
  make('orthopedics',6,'骨科診所','李醫師','骨科',['肌肉骨骼'],'clinic','qing-chuan'),
- make('family',7,'家醫科診所','陳醫師','家庭醫學科',['糖尿病','高血壓','高血脂','泌尿科','痛風'],'clinic'),
+ make('internal-medicine',7,'內科診所','陳醫師','慢性病用藥-1',['泌尿科','痛風','抗血栓','循環系統'],'clinic','qing-chuan'),
+ make('family',8,'家醫科診所','陳醫師','慢性病用藥-2',['糖尿病','高血壓','高血脂'],'clinic'),
 ];
 export const defaultStage=sevenStages[0];
 export function getStage(id:string){return sevenStages.find(s=>s.id===id)??defaultStage;}

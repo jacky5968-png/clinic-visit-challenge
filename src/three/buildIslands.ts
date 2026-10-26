@@ -88,6 +88,10 @@ export function buildIslands(){
     box(building,.6,.66,.07,-.8,1.05,-.69,dark);
     for(const x of [-.92,-.69])box(building,.055,.47,.025,x,1.05,-.64,white);
     for(const x of [1.72,2.03]){cyl(building,.025,.95,x,.6,.55,dark,6);box(building,.22,.05,.13,x,1.1,.55,color);}
+   }else if(stage.id==='internal-medicine'){
+    bed(building,.55,-.18,material(0xecc7df));
+    monitor(building,.85,1.1,.35);box(building,.45,.6,.4,1.75,.45,-.2,white);
+    box(building,.07,.7,.06,1.75,1.1,-.2,color);sign(building,'內科',0,1.05,-.69,1.4);
    }else{
     box(building,.6,.52,.5,.65,.4,.4,white);box(building,.27,.18,.23,.65,.76,.4,color);
     box(building,.45,.07,.45,1.75,.2,-.1,dark);cyl(building,.025,1.6,1.75,.9,-.25,dark,6);box(building,.35,.06,.25,1.75,1.7,-.2,color);
@@ -101,7 +105,7 @@ export function buildIslands(){
   const ring=new THREE.Mesh(new THREE.TorusGeometry(3.28,.055,5,64),new THREE.MeshBasicMaterial({color:0xffc744}));ring.rotation.x=-Math.PI/2;ring.position.y=1.12;g.add(ring);markers.push(ring);
   g.traverse(o=>{o.userData.stageId=stage.id;});
  });
- for(let i=0;i<6;i++){
+ for(let i=0;i<sevenStages.length-1;i++){
   const g=new THREE.Group();g.name='bridge-'+(i+1);root.add(g);bridges.push(g);
   for(let n=0;n<10;n++)box(g,.75,.07,.085,0,0,-.45+n*.1,wood);
   for(const x of [-.42,.42]){box(g,.035,.035,1,x,.32,0,wood);for(let n=0;n<4;n++)box(g,.045,.35,.025,x,.15,-.45+n*.3,wood);}

@@ -44,6 +44,6 @@ export function AssessmentScene({question,selected,submitted,correct}:{question:
       <div className="assessment-speech examiner"><b>{mission.doctor.name}</b><p>{examinerText}</p></div>
       <div className="assessment-speech representative"><b>外勤代表 · 你</b><p>{representativeText}</p></div>
     </div>
-    <div className="assessment-rule"><CheckCircle2 size={17}/><span>本項10題全對即合格 · 七關自由挑戰</span></div>
+    <div className="assessment-rule"><CheckCircle2 size={17}/><span>本項10題全對即合格 · 八關自由挑戰</span></div>
   </aside>;
 }
