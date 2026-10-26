@@ -104,6 +104,7 @@ export const MissionSelector=forwardRef<IslandDepartureHandle,MissionSelectorPro
      })}
     </div>
     <span className="island-actor-label" data-testid="island-actor-label" aria-hidden="true">外勤</span>
+    {mode==='map'&&<span className="island-landmark-label">生達製劑大樓</span>}
     {mode==='map'&&<div className="island-map-caption"><Compass size={15}/><span>拖曳旋轉 · 點島名選關</span></div>}
    </div>
    <aside className={'island-itinerary'+(!unlock.unlocked?' is-preview':'')} aria-label="所選島嶼資訊">

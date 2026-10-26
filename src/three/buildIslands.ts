@@ -1,4 +1,5 @@
 import {ISLAND_WALK_RADIUS} from '../engine/islandWalk';
+import {buildFormulationBuilding} from './buildFormulationBuilding';
 import * as THREE from 'three';
 import {sevenStages,type StageId} from '../data/sevenStages';
 import {islandPositions,islandThemes,ISLAND_SCENE_SCALE} from '../data/islandStages';
@@ -109,10 +110,17 @@ export function buildIslands(){
  const shoreline=new THREE.Group();shoreline.name='island-bay-shoreline';root.add(shoreline);
  for(let i=0;i<12;i++){
   const x=-32+i*6;const mountain=new THREE.Mesh(new THREE.ConeGeometry(6.5,3+(i%3),5),material(i%2?0xa9b896:0xb5bf9d));
-  mountain.position.set(x,1.5,-26-(i%2)*3);shoreline.add(mountain);
+  mountain.position.set(x,1.5,(x>-12&&x<18?-36:-26)-(i%2)*3);shoreline.add(mountain);
  }
  const shore=cyl(shoreline,36,.35,0,.12,-32,material(0xc8d0a6),18);shore.scale.z=.42;
- for(let i=0;i<48;i++)tree(shoreline,-31+(i*7.19)%62,-18-(i%4)*2,.6+(i%3)*.16);
+ for(let i=0;i<48;i++){
+  const x=-31+(i*7.19)%62,z=-18-(i%4)*2;
+  if(x>-6&&x<12&&z>-28)continue;
+  tree(shoreline,x,z,.6+(i%3)*.16);
+ }
+ const formulationBuilding=buildFormulationBuilding();
+ formulationBuilding.scale.setScalar(.45);formulationBuilding.position.set(3,.3,-28.5);formulationBuilding.rotation.y=-.18;
+ shoreline.add(formulationBuilding);
  // Small sailboat, modeled geometry rather than a photo.
  const boat=new THREE.Group();boat.position.set(-14,.05,3);root.add(boat);
  const hull=cyl(boat,.5,.18,0,.1,0,wood,5,.65);hull.scale.z=2;
@@ -121,6 +129,8 @@ export function buildIslands(){
  function layout(portrait:boolean){
   const points=islandPositions(portrait);
   shoreline.position.z=Math.min(...points.map(p=>p[1]))+10;
+  formulationBuilding.scale.setScalar(portrait?.4:.45);
+  formulationBuilding.position.set(portrait?0:3,.3,portrait?-32:-28.5);
   islands.forEach((g,i)=>g.position.set(points[i][0],0,points[i][1]));
   bridges.forEach((g,i)=>{
    const a=islands[i].position,b=islands[i+1].position,delta=b.clone().sub(a),length=delta.length();
@@ -136,5 +146,5 @@ export function buildIslands(){
   });
  }
  layout(false);
- return {root,islands,bridges,boat,flags,markers,layout,state};
+ return {root,islands,bridges,boat,flags,markers,formulationBuilding,layout,state};
 }

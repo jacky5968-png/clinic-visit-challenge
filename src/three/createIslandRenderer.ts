@@ -11,7 +11,7 @@ let islandSession:{id:StageId;atGate:boolean}|null=null;
 export interface IslandState {selected:StageId;completed:StageId[];}
 export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSelect:(id:StageId)=>void,onLocked:(message:string)=>void){
  const canvas=document.createElement('canvas');
- canvas.dataset.testid='island-map-canvas';canvas.setAttribute('aria-label','七座島嶼3D地圖，可拖曳旋轉；以島名按鈕選擇關卡');canvas.tabIndex=0;
+ canvas.dataset.testid='island-map-canvas';canvas.setAttribute('aria-label','七座島嶼3D地圖，後方陸地設有生達製劑大樓；可拖曳旋轉，以島名按鈕選擇關卡');canvas.tabIndex=0;
  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'low-power'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0x40bfdf);
@@ -57,10 +57,24 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   const xs=points.map(p=>(p.x+1)*width/2),ys=points.map(p=>(1-p.y)*height/2);
   return {id,x:Math.min(...xs)-3,y:Math.min(...ys)-3,width:Math.max(...xs)-Math.min(...xs)+6,height:Math.max(...ys)-Math.min(...ys)+6};
  }
+ function frameLandmark(){
+  // Frame only the distant backdrop; island positions, camera scale and walking routes stay unchanged.
+  const building=model.formulationBuilding,baseScale=portrait?.4:.45;
+  building.scale.setScalar(baseScale);building.position.set(portrait?0:3,.3,portrait?-32:-28.5);
+  model.root.updateMatrixWorld(true);
+  let area=projectArea(building,'landmark');
+  const factor=Math.min(1,(portrait?100:110)/area.height,(width-32)/area.width);
+  building.scale.setScalar(baseScale*factor);model.root.updateMatrixWorld(true);area=projectArea(building,'landmark');
+  const ray=new THREE.Raycaster(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),-.3);
+  function groundAt(x:number,y:number){ray.setFromCamera(new THREE.Vector2(x/width*2-1,1-y/height*2),camera);return ray.ray.intersectPlane(plane,new THREE.Vector3());}
+  const from=groundAt(area.x+area.width/2,area.y+area.height/2),to=groundAt(width*.5,portrait?100:80);
+  if(from&&to)building.position.add(to.sub(from));
+  model.root.updateMatrixWorld(true);
+ }
  function frameCallouts(){
   camera.left=-baseHeight*width/height/2;camera.right=-camera.left;
   camera.top=baseHeight/2;camera.bottom=-baseHeight/2;camera.zoom=zoom;camera.updateProjectionMatrix();camera.updateMatrixWorld(true);model.root.updateMatrixWorld(true);
-  const upper=Math.max(...sevenStages.slice(3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+20+(portrait?(host.querySelector<HTMLElement>('.island-map-caption')?.offsetHeight||40)+20:0);
+  const upper=Math.max(...sevenStages.slice(3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+20+(portrait?(host.querySelector<HTMLElement>('.island-map-caption')?.offsetHeight||40)+20:0)+(portrait?70:110);
   const lower=Math.max(...sevenStages.slice(0,3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+(portrait?20:40);
   let areas=sevenStages.map((s,i)=>projectArea(model.islands[i].getObjectByName('building-'+s.id)!,s.id));
   let min=Math.min(...areas.map(a=>a.y)),max=Math.max(...areas.map(a=>a.y+a.height));
@@ -77,8 +91,15 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   const centerX=(Math.min(...fittedIslands.map(a=>a.x))+Math.max(...fittedIslands.map(a=>a.x+a.width)))/2;
   const shiftX=(width/2-centerX)*baseHeight/height/camera.zoom;
   camera.left-=shiftX;camera.right-=shiftX;camera.updateProjectionMatrix();
+  frameLandmark();
  }
  function labels(){
+  const landmark=projectArea(model.formulationBuilding,'shengda-formulation-building');
+  const landmarkLabel=host.querySelector<HTMLElement>('.island-landmark-label');
+  if(landmarkLabel){
+   landmarkLabel.style.left=(portrait?width-landmarkLabel.offsetWidth-10:Math.max(8,Math.min(width-landmarkLabel.offsetWidth-8,landmark.x+landmark.width/2-landmarkLabel.offsetWidth/2)))+'px';
+   landmarkLabel.style.top=(portrait?10:Math.max(8,landmark.y-28))+'px';landmarkLabel.style.visibility='visible';
+  }
   const buildings=sevenStages.map((s,i)=>projectArea(model.islands[i].getObjectByName('building-'+s.id)!,'building-'+s.id));
   const candidates=sevenStages.map((s,i)=>{
    const element=host.querySelector<HTMLButtonElement>('[data-testid="stage-'+s.id+'"]')!;
@@ -100,12 +121,13 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   if(badge){badge.style.transform='translate('+((person.x+person.width/2)-22).toFixed(1)+'px,'+person.y.toFixed(1)+'px)';badge.style.visibility='visible';}
   canvas.dataset.actorArea=JSON.stringify(person);
   const hint=host.querySelector<HTMLElement>('.island-map-caption'),hostBox=host.getBoundingClientRect(),hintBox=hint?.getBoundingClientRect();
-  const obstacles=[...buildings,person,...(hintBox?[{id:'map-hint',x:hintBox.x-hostBox.x,y:hintBox.y-hostBox.y,width:hintBox.width,height:hintBox.height}]:[])];
+  const obstacles=[...buildings,landmark,person,...(hintBox?[{id:'map-hint',x:hintBox.x-hostBox.x,y:hintBox.y-hostBox.y,width:hintBox.width,height:hintBox.height}]:[])];
   const cameraKey=[width,height,camera.zoom,camera.position.x,camera.position.y,camera.position.z,camera.top,camera.bottom,...candidates.flatMap(p=>[p.width,p.height])].join(',');
   if(cameraKey!==previousCameraKey||!previousCallouts||!islandLabelsFit(previousCallouts,width,height,obstacles)){
    previousCallouts=placeIslandCallouts(candidates,width,height,obstacles);previousCameraKey=cameraKey;
   }
   canvas.dataset.buildingAreas=JSON.stringify(buildings);
+  canvas.dataset.landmarkArea=JSON.stringify(projectArea(model.formulationBuilding,'shengda-formulation-building'));
   canvas.dataset.islandAreas=JSON.stringify(model.islands.map((island,i)=>projectArea(island,sevenStages[i].id)));
   canvas.dataset.calloutSides=JSON.stringify(candidates.map(c=>({id:c.id,minY:c.minY,maxY:c.maxY})));
   for(const [i,candidate] of candidates.entries()){
