@@ -15,15 +15,15 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  canvas.dataset.testid='island-map-canvas';canvas.setAttribute('aria-label','八座島嶼3D地圖，可拖曳旋轉，以島名按鈕選關；點選生達製劑大樓可放大查看');canvas.tabIndex=0;
  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'low-power'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
- renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0x40bfdf);
- renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
+ renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0x0bb6d8);
+ renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;renderer.shadowMap.autoUpdate=false;
  host.prepend(canvas);
  const leaderLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
  leaderLayer.setAttribute('aria-hidden','true');Object.assign(leaderLayer.style,{position:'absolute',inset:'0',width:'100%',height:'100%',pointerEvents:'none',zIndex:'1'});
  const leaders=sevenStages.map(()=>{const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('fill','none');p.setAttribute('stroke','#38646a');p.setAttribute('stroke-width','1.4');p.setAttribute('opacity','.6');leaderLayer.append(p);return p;});host.append(leaderLayer);
- const scene=new THREE.Scene();scene.background=new THREE.Color(0x40bfdf);
- scene.add(new THREE.HemisphereLight(0xf5fcff,0x5b8d91,1.35));
- const light=new THREE.DirectionalLight(0xfff5df,2.8);light.position.set(-20,55,30);light.castShadow=true;
+ const scene=new THREE.Scene();scene.background=new THREE.Color(0x0bb6d8);
+ scene.add(new THREE.HemisphereLight(0xedfcff,0x6a9a9b,1.5));
+ const light=new THREE.DirectionalLight(0xfff1ce,2.6);light.position.set(-20,55,30);light.castShadow=true;
  light.shadow.mapSize.set(1024,1024);Object.assign(light.shadow.camera,{left:-55,right:55,top:55,bottom:-55,near:1,far:160});light.shadow.camera.updateProjectionMatrix();light.shadow.normalBias=.035;light.shadow.bias=-.0002;scene.add(light);
  const camera=new THREE.OrthographicCamera(-15,15,12,-12,.1,160);
  const model=buildIslands();scene.add(model.root);
@@ -33,7 +33,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  controls.touches.ONE=THREE.TOUCH.ROTATE;controls.touches.TWO=THREE.TOUCH.ROTATE;
  let state=initial,raf=0,disposed=false,width=1,height=1,portrait=false,zoom=1,baseHeight=24;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- let moving=!reduced.matches,inView=true,lastTime=0,phase=0;
+ let moving=!reduced.matches,inView=true,lastTime=0,lastPaint=0,phase=0,shadowDirty=true,labelsDirty=true,frames=0;
  let currentIsland:StageId=islandSession&&stageUnlocked(islandSession.id,initial.completed)?islandSession.id:(initial.completed.at(-1)??sevenStages[0].id);
  let atGate=islandSession?.id===currentIsland?islandSession.atGate:false;
  let travel:{from:StageId;to:StageId;fromGate:boolean;progress:number;duration:number;arrive:()=>void;cancel?:()=>void}|null=null;
@@ -41,6 +41,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  function positionActor(){
   const path=route(),p=path?sampleIslandWalk(path,travel!.progress):islandStandingPoint(currentIsland,portrait,atGate);
   actor.root.position.set(p.x,1.16*ISLAND_SCENE_SCALE,p.z);
+  shadowDirty=labelsDirty=true;
  }
  function finish(){
   if(!travel)return;const pending=travel;
@@ -79,6 +80,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   }
  }
  function frameCallouts(){
+  shadowDirty=labelsDirty=true;
   camera.left=-baseHeight*width/height/2;camera.right=-camera.left;
   camera.top=baseHeight/2;camera.bottom=-baseHeight/2;camera.zoom=zoom;camera.updateProjectionMatrix();camera.updateMatrixWorld(true);model.root.updateMatrixWorld(true);
   const upper=Math.max(...sevenStages.slice(3).map(s=>host.querySelector<HTMLElement>('[data-testid="stage-'+s.id+'"]')?.offsetHeight||70))+20+(portrait?(host.querySelector<HTMLElement>('.island-map-caption')?.offsetHeight||40)+20:0)+(portrait?120:180);
@@ -115,11 +117,13 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
    const v=model.islands[i].position.clone().add((above?new THREE.Vector3(0,3.6,-1.2):new THREE.Vector3(0,1.05,2.9)).multiplyScalar(ISLAND_SCENE_SCALE)).project(camera);
    const w=element?.offsetWidth||148,h=element?.offsetHeight||66;
    const building=buildings[i];
-   const x=above?building.x+building.width/2-w/2:(v.x+1)*width/2-w/2,nearX=Math.max(8,Math.min(width-w-8,x));
+   // Two stable label lanes keep the tall phone layout readable while rotating.
+   const lane=model.islands[i].position.x<0?8:width-w-8;
+   const x=portrait?lane:above?building.x+building.width/2-w/2:(v.x+1)*width/2-w/2,nearX=Math.max(8,Math.min(width-w-8,x));
    // Keep 05 and 06 beside their own roofs during placement and cached frames.
    const nearbyLimit=s.id==='gastro'?{horizontal:portrait?40:24,vertical:26}:s.id==='orthopedics'?{horizontal:48,vertical:32}:null;
    const nearby=nearbyLimit?{minX:Math.max(8,nearX-nearbyLimit.horizontal),maxX:Math.min(width-w-8,nearX+nearbyLimit.horizontal),minY:Math.max(8,building.y-h-nearbyLimit.vertical)}:{};
-   return {id:s.id,x,y:above?building.y-h-10:(1-v.y)*height/2+5,width:w,height:h,minY:above?8:building.y+building.height+8,maxY:above?building.y-h-8:height-h-8,...nearby};
+   return {id:s.id,x,y:above?building.y-h-10:(1-v.y)*height/2+5,width:w,height:h,minY:above?8:building.y+building.height+8,maxY:above?building.y-h-8:height-h-8,...nearby,...(portrait?{minX:lane,maxX:lane}:{})};
   });
   const bounds=new THREE.Box3().setFromObject(actor.root),corners:THREE.Vector3[]=[];
   for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z])corners.push(new THREE.Vector3(x,y,z).project(camera));
@@ -150,7 +154,9 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  }
  function draw(){
   if(disposed)return;
-  renderer.render(scene,camera);labels();
+  if(shadowDirty||travel){renderer.shadowMap.needsUpdate=true;shadowDirty=false;}
+  renderer.render(scene,camera);if(labelsDirty||travel){labels();labelsDirty=false;}
+  canvas.dataset.drawCalls=String(renderer.info.render.calls);canvas.dataset.triangles=String(renderer.info.render.triangles);canvas.dataset.frames=String(++frames);
   canvas.dataset.renderer='webgl';canvas.dataset.islands=String(sevenStages.length);canvas.dataset.selected=state.selected;
   canvas.dataset.actorX=actor.root.position.x.toFixed(3);canvas.dataset.actorZ=actor.root.position.z.toFixed(3);
   canvas.dataset.actorIsland=currentIsland;canvas.dataset.actorWalking=String(!!travel);
@@ -161,6 +167,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  }
  function frame(t:number){
   raf=0;if(disposed)return;
+  if(t-lastPaint<1000/30){if(inView&&!document.hidden)raf=requestAnimationFrame(frame);return;}lastPaint=t;
   const dt=lastTime?Math.max(0,(t-lastTime)/1000):0;lastTime=t;
   if(travel&&inView&&!document.hidden){
    const path=route();if(!path){cancel();onLocked('無法前往這座島嶼，請重新選擇。');}
@@ -171,7 +178,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
    }
   }
   if(disposed)return;
-  if(moving&&inView&&!document.hidden){model.boat.rotation.z=Math.sin(t*.0007)*.035;model.boat.position.y=.05+Math.sin(t*.0006)*.025;}
+  if(moving&&inView&&!document.hidden){model.boat.rotation.z=Math.sin(t*.0007)*.035;model.boat.position.y=.05+Math.sin(t*.0006)*.025;model.waterTexture.offset.set(t*.000002,t*.000001);}
   draw();if((moving||travel)&&inView&&!document.hidden)raf=requestAnimationFrame(frame);
  }
  function invalidate(){if(!raf&&!disposed)raf=requestAnimationFrame(frame);}
@@ -181,11 +188,13 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
   width=rect.width;height=rect.height;
   // The backdrop's extra height must not switch an iPad from its existing wide island layout.
   portrait=width/Math.max(1,height-180)<.85;model.layout(portrait);
-  const azimuthLimit=portrait?.14:.42;
+  // A long two-column map needs a gentler orbit on narrow phones, otherwise
+  // fitting its diagonal squeezes the vertical gaps needed by readable labels.
+  const azimuthLimit=portrait?Math.min(.06,Math.max(.025,(width-240)/1500)):.14;
   controls.minAzimuthAngle=-azimuthLimit;controls.maxAzimuthAngle=azimuthLimit;
   const viewHeight=portrait?44*height/670:Math.max(20,27/(width/height)),viewWidth=viewHeight*width/height;
   baseHeight=viewHeight;camera.left=-viewWidth/2;camera.right=viewWidth/2;camera.top=viewHeight/2;camera.bottom=-viewHeight/2;
-  camera.zoom=zoom;camera.updateProjectionMatrix();renderer.setSize(width,height,false);positionActor();
+  camera.zoom=zoom;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio,2,Math.sqrt(2_200_000/(width*height))));renderer.setSize(width,height,false);positionActor();
   if(reset||portrait!==wasPortrait){camera.position.set(0,portrait?28:24,portrait?36:40);controls.target.set(0,.9,portrait?-2.5:-.6);camera.lookAt(controls.target);controls.update();}
   else if(Math.abs(controls.getAzimuthalAngle())>azimuthLimit)controls.update();
   frameCallouts();invalidate();
@@ -225,7 +234,7 @@ export function createIslandRenderer(host:HTMLElement,initial:IslandState,onSele
  canvas.addEventListener('keydown',key);
  model.state(state.selected,state.completed);fit(true);
  return {
-  update(next:IslandState){state=next;if(!stageUnlocked(currentIsland,next.completed)){cancel();currentIsland=next.completed.at(-1)??sevenStages[0].id;atGate=false;islandSession={id:currentIsland,atGate};positionActor();}if(travel&&!stageUnlocked(travel.to,next.completed)){cancel();onLocked('無法前往這座島嶼，請重新選擇。');}model.state(next.selected,next.completed);invalidate();},
+  update(next:IslandState){state=next;labelsDirty=true;if(!stageUnlocked(currentIsland,next.completed)){cancel();currentIsland=next.completed.at(-1)??sevenStages[0].id;atGate=false;islandSession={id:currentIsland,atGate};positionActor();}if(travel&&!stageUnlocked(travel.to,next.completed)){cancel();onLocked('無法前往這座島嶼，請重新選擇。');}model.state(next.selected,next.completed);invalidate();},
   walk(to:StageId,arrive:()=>void,onCancel?:()=>void){
    if(travel||!stageUnlocked(to,state.completed))return false;
    if(currentIsland===to&&atGate){arrive();return true;}
