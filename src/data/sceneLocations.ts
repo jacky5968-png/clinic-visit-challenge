@@ -11,7 +11,7 @@ export function sceneLocations(m:VisitMission){
   if(m.kind==='pharmacy')name=id==='doctor'?'產品諮詢區':id==='reception'?'藥局櫃台':id==='waiting'?'服務櫃台':'藥局入口';
   const staff=stageStaffConversation(m,id);
   const speaker=id===target?m.doctor.name:staff?.name??(id==='waiting'?'掛號人員':id==='reception'?'藥師':id==='doctor'?'產品諮詢資料':'拜訪準備');
-  const message=id===target?'已抵達'+m.clinic+'，可與'+m.doctor.name+'交流，再接入10題考驗。':id==='entrance'?m.brief:staff?.reminder??(m.kind==='pharmacy'&&id==='doctor'?'這裡可整理自費品項的介紹資料；謝藥師在藥局櫃台等候與您交流。':'您好，歡迎來到'+m.clinic+'，準備好後可前往與'+m.doctor.name+'交流。');
+  const message=id===target?'已抵達'+m.clinic+'，完成01、02對話後，可與'+m.doctor.name+'交流，再接入10題考驗。':id==='entrance'?'請依01 → 02 → 03的順序完成櫃台對話，再接受本關考核。':staff?.reminder??('您好，歡迎來到'+m.clinic+'，請依01、02、03的順序完成對話。');
   return [id,{...value,name,speaker,message}];
  })) as typeof locations;
 }

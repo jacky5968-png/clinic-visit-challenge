@@ -319,7 +319,7 @@ export function buildClinic(mission: VisitMission = defaultMission) {
   const staff = clinicStaff.map(profile => {
     const isMain=target==='reception' && profile.location===target;
     const displayName=names[profile.location].speaker;
-    const outfit:ProfessionalRole=mission.kind==='training'?'staff':profile.location==='reception'?'pharmacist':'staff';
+    const outfit:ProfessionalRole=mission.kind==='training'||mission.kind==='pharmacy'?'staff':profile.location==='reception'?'pharmacist':'staff';
     const appearance={...profile.appearance,outfit,...(mission.kind==='training'?{coat:0x2877ce,badge:0xffd16a}:{})};
     const rig = createPerson(true, isMain?examinerAppearance(mission):appearance);
     if(isMain){primary=rig;rig.root.userData.doctorName=mission.doctor.name;}
@@ -339,11 +339,11 @@ export function buildClinic(mission: VisitMission = defaultMission) {
   for (const id of ['entrance', 'reception', 'waiting', 'doctor'] as LocationId[]) {
     const point = worldLocations[id];
     const ring = new THREE.Mesh(
-      new THREE.RingGeometry(0.32, 0.39, 36),
+      new THREE.RingGeometry(0.33, 0.55, 48),
       new THREE.MeshBasicMaterial({
-        color: 0x9eb77a,
+        color: 0x005cc8,
         transparent: true,
-        opacity: 0.6,
+        opacity: 1,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
@@ -351,6 +351,10 @@ export function buildClinic(mission: VisitMission = defaultMission) {
     ring.rotation.x = -Math.PI / 2;
     ring.position.set(point.x, 0.17, point.z);
     ring.userData.location = id;
+    const outline = new THREE.Mesh(new THREE.RingGeometry(0.55, 0.60, 48),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, depthWrite: false }));
+    outline.position.z = 0.002;
+    ring.add(outline);
     root.add(ring);
     pickables.push(ring);
     markers.set(id, ring);

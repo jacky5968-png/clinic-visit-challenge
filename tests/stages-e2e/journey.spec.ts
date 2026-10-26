@@ -7,7 +7,7 @@ const stages=[
  {id:'new-training',name:'新訓中心',npc:'外勤主管',tags:['新人必修'],target:'新訓考場',action:'與外勤主管交流',challenge:'開始新人必修考驗'},
  {id:'product-names',name:'認識產品',npc:'產品教官',tags:['商品名測驗'],target:'產品教學區',action:'與產品教官交流',challenge:'開始商品名測驗'},
  {id:'ent',name:'耳鼻喉科診所',npc:'林醫師',tags:['呼吸系統'],target:'醫師診間',action:'進入診間',challenge:'接受醫師挑戰'},
- {id:'pharmacy-client',name:'生達大藥局',npc:'謝藥師',tags:['自費'],target:'藥局櫃台',action:'與謝藥師交流',challenge:'接受藥師挑戰'},
+ {id:'pharmacy-client',name:'生達大藥局',npc:'謝藥師',tags:['自費'],target:'產品諮詢區',action:'與謝藥師交流',challenge:'接受藥師挑戰'},
  {id:'gastro',name:'胃腸科診所',npc:'王醫師',tags:['胃腸藥'],target:'醫師診間',action:'進入診間',challenge:'接受醫師挑戰'},
  {id:'orthopedics',name:'骨科診所',npc:'李醫師',tags:['肌肉骨骼'],target:'醫師診間',action:'進入診間',challenge:'接受醫師挑戰'},
  {id:'family',name:'家醫科診所',npc:'陳醫師',tags:['糖尿病','高血壓','高血脂','泌尿科','痛風'],target:'醫師診間',action:'進入診間',challenge:'接受醫師挑戰'},
@@ -43,6 +43,22 @@ async function enter(page:Page,index:number,reduced=false){
  await expect.poll(async()=>await page.locator('.active-visit-profile').isVisible()||await page.getByTestId('island-travel-status').isVisible()).toBe(true);
  if(await page.getByTestId('island-travel-status').isVisible())await page.getByRole('button',{name:'略過移動',exact:true}).click();
  await expect(page.locator('.active-visit-profile')).toContainText(stages[index].npc);
+ const stops=page.locator('.minimap-destinations button');
+ await expect(stops.nth(1)).toHaveAttribute('aria-disabled','true');
+ await expect(stops.nth(2)).toHaveAttribute('aria-disabled','true');
+ for(let point=0;point<2;point++){
+  await stops.nth(point).click();
+  const speech=page.getByTestId('scene-speech');
+  if(!reduced&&await page.getByRole('button',{name:'略過移動',exact:true}).isVisible())await page.getByRole('button',{name:'略過移動',exact:true}).click();
+  const in3D=await page.getByTestId('clinic-3d-canvas').count();
+  const talk=in3D?speech:page.getByRole('region',{name:'診所互動對話'});
+  await expect(talk).toBeVisible();
+  await talk.getByRole('button',{name:'回應',exact:true}).click();
+  await expect(stops.nth(2)).toHaveAttribute('aria-disabled','true');
+  await talk.getByRole('button',{name:'完成對話',exact:true}).click();
+  if(point===0)await expect(stops.nth(2)).toHaveAttribute('aria-disabled','true');
+ }
+ await expect(stops.nth(2)).not.toHaveAttribute('aria-disabled','true');
  await page.getByRole('button',{name:'前往'+stages[index].target,exact:true}).click();
  if(!reduced)await page.getByRole('button',{name:'略過移動',exact:true}).click();
  // Arrival opens the conversation without a second interaction click.
@@ -57,7 +73,7 @@ async function enter(page:Page,index:number,reduced=false){
   expect(b.x+b.width).toBeLessThanOrEqual(sb.x+sb.width+1);expect(b.y+b.height).toBeLessThanOrEqual(sb.y+sb.height+1);
   const overlap=(a:{x:number;y:number;width:number;height:number},c:typeof a)=>Math.min(a.x+a.width,c.x+c.width)-Math.max(a.x,c.x)>2&&Math.min(a.y+a.height,c.y+c.height)-Math.max(a.y,c.y)>2;
   const people=JSON.parse((await canvas.getAttribute('data-people-areas'))!) as {left:number;top:number;width:number;height:number}[];
-  expect(people).toHaveLength(index===3?3:4);
+  expect(people).toHaveLength(4);
   for(const p of people)expect(overlap(b,{x:cb.x+p.left,y:cb.y+p.top,width:p.width,height:p.height})).toBe(false);
   for(const button of await page.locator('.three-hotspot').all())if(await button.isVisible())expect(overlap(b,(await button.boundingBox())!)).toBe(false);
   if(test.info().title.startsWith('seven stages:'))await page.getByTestId('clinic-map').screenshot({path:'output/playwright/seven-scene-'+(index+1)+'-'+test.info().project.name+'.png',animations:'disabled'});

@@ -1,10 +1,11 @@
 import {mainTarget,sceneLocations,targetAction} from '../data/sceneLocations';
 import { useClinicConversation } from '../hooks/useClinicConversation';
 import { useArrivalInteraction } from '../hooks/useArrivalInteraction';
-import { missingRequirements } from '../data/visitMissions';
+import { useVisitSequence } from '../context/VisitSequenceContext';
+import { VisitSequence } from './VisitSequence';
 import { StaffSmallTalk } from './StaffSmallTalk';
-import { useEffect } from 'react';
-import { ArrowRight, Check, Footprints, MapPin, MessageCircle, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowRight, Check, Footprints, MapPin, MessageCircle, LockKeyhole, X } from 'lucide-react';
 import { assets } from '../data/assets';
 import { nodes, type ClinicProgress, type LocationId } from '../engine/clinic';
 import { useClinicMovement } from '../hooks/useClinicMovement';
@@ -23,6 +24,8 @@ export function ClinicExplorer({
 }) {
   const mission = useVisitMission();
   const target=mainTarget(mission),locations=sceneLocations(mission);
+  const sequence=useVisitSequence(),[notice,setNotice]=useState('');
+  const blockedMessage='請先完成'+locations[sequence.next].marker+' '+locations[sequence.next].name+'的對話。';
   const visitDialogue=(_:unknown,id:LocationId)=>locations[id];
   const movement = useClinicMovement();
   const { progress, journey } = movement;
@@ -32,15 +35,17 @@ export function ClinicExplorer({
     onProgress?.(progress);
     if (!progress.moving && progress.visited.length && progress.location==='entrance') conversation.open(progress.location, false);
   }, [progress, onProgress]);
-  useArrivalInteraction(progress.visited.length ? progress.location : null, progress.moving, (id) => {
+  useArrivalInteraction(progress.visited.length ? progress.location : null, progress.moving || !sequence.canInteract(progress.location), (id) => {
     if(id===target) {
-      if(missingRequirements(mission,progress.visited).length) return false;
+      if(!sequence.canInteract(id)) return false;
       onEnter?.();
     } else conversation.open(id);
     return true;
   });
   function visit(id: LocationId) {
     if (progress.moving) return;
+    if(!sequence.canInteract(id)){setNotice(blockedMessage);return;}
+    setNotice('');
     if (progress.location === id) {
       if (id === target) onEnter?.();
       else conversation.open(id);
@@ -52,6 +57,8 @@ export function ClinicExplorer({
   const route = journey?.points ?? [];
   return (
     <div className="clinic-explorer">
+      <VisitSequence/>
+      {notice&&<p className="visit-sequence-notice" role="status">{notice}</p>}
       <div className="clinic-stage" data-testid="clinic-map">
         <div className="map-grid" />
         <div className="scene-artwork">
@@ -95,6 +102,8 @@ export function ClinicExplorer({
             <button
               key={id}
               className={`explorer-hotspot hotspot-${id} ${here ? 'current' : ''} ${progress.visited.includes(id) ? 'visited' : ''}`}
+              data-visit-status={sequence.status(id)}
+              aria-disabled={!sequence.canInteract(id)||undefined}
               style={{
                 left: `${((location.label.x + 100) / 1100) * 100}%`,
                 top: `${(location.label.y / 650) * 100}%`,
@@ -110,10 +119,10 @@ export function ClinicExplorer({
               }
             >
               <span className="hotspot-marker">
-                {progress.visited.includes(id) ? <Check size={12} /> : location.marker}
+                {location.marker}
               </span>
               <span>{id === target && here ? targetAction(mission) : location.name}</span>
-              {id === 'doctor' ? <ArrowRight size={14} /> : <MessageCircle size={13} />}
+              {sequence.status(id)==='complete'?<Check size={17}/>:sequence.status(id)==='locked'?<LockKeyhole size={17}/>:id === 'doctor' ? <ArrowRight size={17} /> : <MessageCircle size={17} />}
             </button>
           );
         })}
@@ -160,9 +169,7 @@ export function ClinicExplorer({
               ? '沿路線自動移動中，抵達後即可互動。'
               : progress.location === target
                 ? '抵達後自動展開交流；關閉後可再次點選人物對話。'
-                : mission.required.length
-                  ? '請依任務提示完成拜訪準備，再前往醫師診間。'
-                  : '可點擊場景或小地圖探索，藥局與掛號櫃台為選擇性互動。'}
+                : '請依01 → 02 → 03的順序，完成櫃台對話再接受考核。'}
           </span>
         </div>
         {progress.moving && (
@@ -181,9 +188,9 @@ export function ClinicExplorer({
             <small>{locations[opened].name}</small>
             <h3>{visitDialogue(mission, opened).speaker}</h3>
             {opened!==target && (opened === 'reception' || opened === 'waiting') ? (
-              <StaffSmallTalk location={opened} speaker={visitDialogue(mission, opened).speaker}
+              <StaffSmallTalk key={conversation.sequence} location={opened} speaker={visitDialogue(mission, opened).speaker}
                 round={conversation.round} reminder={visitDialogue(mission, opened).message}
-                onContinue={() => conversation.open(opened)} />
+                onComplete={() => {sequence.complete(opened);conversation.close();setNotice('');}} />
             ) : <p>{visitDialogue(mission, opened).message}</p>}
           </div>
           <button

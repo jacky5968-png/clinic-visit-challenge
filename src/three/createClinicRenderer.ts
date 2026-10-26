@@ -1,4 +1,5 @@
 import {mainTarget} from '../data/sceneLocations';
+import { visitMarkerColors, visitPointStatus } from '../engine/visitSequence';
 import { createDoctorAnimator } from './doctorAnimation';
 import { layoutSceneSpeech } from './layoutSceneSpeech';
 import { createStaffAnimator } from './staffAnimation';
@@ -27,6 +28,7 @@ import type { VisitMission } from '../data/visitMissions';
 
 export interface RenderState {
   progress: ClinicProgress;
+  completedDialogues?: readonly LocationId[];
   journey: ClinicJourney | null;
   reduced: boolean;
   conversation?: LocationId | null;
@@ -454,8 +456,9 @@ export function createClinicRenderer(options: Options): ClinicRendererAPI {
     canvas.dataset.staffMotion = JSON.stringify(staffMotion.frames);
     for (const [id, marker] of model.markers) {
       const material = marker.material as THREE.MeshBasicMaterial;
-      material.opacity = state.progress.destination === id ? 0.8 : 0.35;
-      material.color.setHex(state.progress.visited.includes(id) ? 0x4d8970 : 0x9eb77a);
+      const markerStatus = visitPointStatus(id, state.completedDialogues ?? []);
+      material.opacity = markerStatus === 'locked' ? 0.8 : 1;
+      material.color.setHex(visitMarkerColors[markerStatus]);
       marker.scale.setScalar(
         state.progress.destination === id && !state.reduced ? 1 + Math.sin(now * 0.006) * 0.12 : 1,
       );

@@ -9,7 +9,7 @@ function make(id:StageId,stageNumber:number,clinic:string,name:string,specialty:
  const conversation=stageConversation(id);
  return {...source,id,stageNumber,clinic,english:'STAGE '+String(stageNumber).padStart(2,'0'),kind,
   title:clinic,brief:kind==='training'?'選擇指定主題，每項10題全對才合格，至少5項不同主題合格才通關。':'拜訪'+name+'，介紹本關指定類別；每項10題全對，至少5項不同產品合格才通關。',
-  required:[],allowedCategories:categories,target:kind==='pharmacy'?'reception':'doctor',
+  required:['reception','waiting'],allowedCategories:categories,target:'doctor',
   doctor:{...source.doctor,name,specialty,initial:name[0],stethoscope:kind==='clinic',
    coat:kind==='training'?0x2877ce:source.doctor.coat,
    greeting:conversation?.greeting??source.doctor.greeting,

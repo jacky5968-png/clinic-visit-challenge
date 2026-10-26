@@ -14,7 +14,7 @@ describe('seven stage restrictions',()=>{
  it('keeps all seven names, roles and classification rules',()=>{
   expect(sevenStages.map(s=>s.clinic)).toEqual(['新訓中心','認識產品','耳鼻喉科診所','生達大藥局','胃腸科診所','骨科診所','家醫科診所']);
   expect(sevenStages.slice(2).map(s=>s.doctor.name)).toEqual(['林醫師','謝藥師','王醫師','李醫師','陳醫師']);
-  expect(getStage('pharmacy-client').target).toBe('reception');
+  expect(getStage('pharmacy-client').target).toBe('doctor');
  });
  it('filters by exact category tags, not product names or partial matches',()=>{
   const {products}=fixture(),p=products[0];

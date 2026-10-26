@@ -12,6 +12,7 @@ import {
   ArrowUp,
   ArrowDown,
   Check,
+  LockKeyhole,
   Compass,
   Footprints,
   MapPin,
@@ -36,7 +37,8 @@ import { ClinicExplorer } from './ClinicExplorer';
 import { nearbyLocation, type WalkDirection } from '../engine/freeWalk';
 import type { WorldPoint } from '../engine/clinic3d';
 import { useVisitMission } from '../context/VisitContext';
-import { missingRequirements } from '../data/visitMissions';
+import { useVisitSequence } from '../context/VisitSequenceContext';
+import { VisitSequence } from './VisitSequence';
 
 interface Props {
   consultation?: SceneConsultation;
@@ -138,6 +140,9 @@ function ThreeCanvas({
 function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Props & { onFailure: () => void }) {
   const mission = useVisitMission();
   const target=mainTarget(mission),locations=sceneLocations(mission);
+  const sequence=useVisitSequence();
+  const [sequenceNotice,setSequenceNotice]=useState('');
+  const blockedMessage='請先完成'+locations[sequence.next].marker+' '+locations[sequence.next].name+'的對話。';
   const visitDialogue=(_:unknown,id:LocationId)=>locations[id];
   const consulting=Boolean(consultation);
   const [doctorLine,setDoctorLine]=useState(0);
@@ -179,6 +184,8 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
   function interact(id: LocationId) {
     if (consulting) return false;
     api.current?.stopMovement();
+    if (!sequence.canInteract(id)) { setSequenceNotice(blockedMessage); return false; }
+    setSequenceNotice('');
     if (!movement.interactAt(id)) return false;
     if (id === target) { conversation.close(); onEnter?.(); }
     else conversation.open(id);
@@ -186,6 +193,8 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
   }
   function visit(id: LocationId) {
     if (progress.moving || consulting) return;
+    if (!sequence.canInteract(id)) { setSequenceNotice(blockedMessage); return; }
+    setSequenceNotice('');
     if (nearbyLocation(movement.position.current) === id) return interact(id);
     api.current?.stopMovement();
     conversation.close();
@@ -197,16 +206,17 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
     ['down', '向後走', ArrowDown],
     ['right', '向右走', ArrowRight],
   ] as const;
-  const missing = missingRequirements(mission, progress.visited);
   const arrival = progress.freeRoam ? progress.nearby ?? null : progress.visited.length ? progress.location : null;
-  useArrivalInteraction(arrival, !ready || consulting || progress.moving || (arrival===target && missing.length>0), interact);
+  useArrivalInteraction(arrival, !ready || consulting || progress.moving || Boolean(arrival&&!sequence.canInteract(arrival)), interact);
   const nearbyStaff = clinicStaff.find(s => s.location === progress.nearby);
-  const doctorBlocked = progress.nearby === target && missing.length > 0;
+  const interactionBlocked = Boolean(progress.nearby&&!sequence.canInteract(progress.nearby));
   function setDirection(direction: WalkDirection, pressed: boolean) {
     api.current?.setDirection(direction, pressed);
   }
   return (
     <div className={'clinic-explorer clinic3d-explorer'+(consulting?' doctor-conversation':'')}>
+      <VisitSequence/>
+      {sequenceNotice&&<p className="visit-sequence-notice" role="status">{sequenceNotice}</p>}
       <div className="clinic3d-toolbar">
         <div className="three-status">
           <span className="live-dot" />
@@ -250,7 +260,7 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
       </div>
       <div className={'clinic3d-stage'+((staffTalking||consulting)?' has-staff-dialogue':'')} data-testid="clinic-map" data-scene="threejs">
         <ThreeCanvas
-          state={{ progress, journey, reduced, conversation:consulting?target:opened, conversationSequence:consulting?doctorLine:conversation.sequence, speechSpeaker:consulting?(doctorLine===1?'representative':'staff'):(replying?'representative':'staff'), talkingToDoctor:consulting }}
+          state={{ progress, journey, reduced, completedDialogues:sequence.completed, conversation:consulting?target:opened, conversationSequence:consulting?doctorLine:conversation.sequence, speechSpeaker:consulting?(doctorLine===1?'representative':'staff'):(replying?'representative':'staff'), talkingToDoctor:consulting }}
           labels={labels}
           player={player}
           miniPlayer={miniPlayer}
@@ -284,7 +294,7 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
             speaker={visitDialogue(mission,opened).speaker} round={conversation.round}
             replying={replying} reminder={visitDialogue(mission,opened).message}
             panel={speech} line={speechLine} onReply={()=>setReplying(true)}
-            onContinue={()=>{setReplying(false);conversation.open(opened);}}
+            onComplete={()=>{sequence.complete(opened);setReplying(false);conversation.close();setSequenceNotice('');api.current?.focus();}}
             onClose={()=>{conversation.close();api.current?.focus();}} />
         )}
         {!ready && (
@@ -304,6 +314,8 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
                 labels.current[id] = el;
               }}
               className={`three-hotspot hotspot-${id} ${here ? 'current' : ''}`}
+              data-visit-status={sequence.status(id)}
+              aria-disabled={!sequence.canInteract(id)||undefined}
               disabled={!ready || progress.moving || consulting}
               aria-label={
                 id === target
@@ -315,10 +327,10 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
               onClick={() => visit(id)}
             >
               <span>
-                {progress.visited.includes(id) ? <Check size={12} /> : locations[id].marker}
+                {locations[id].marker}
               </span>
               <b>{id === target && consulting ? '交流中' : id === target && here ? targetAction(mission) : locations[id].name}</b>
-              {id === 'doctor' ? <ArrowRight size={13} /> : <MessageCircle size={12} />}
+              {sequence.status(id)==='complete'?<Check size={17}/>:sequence.status(id)==='locked'?<LockKeyhole size={17}/>:id === 'doctor' ? <ArrowRight size={17} /> : <MessageCircle size={17} />}
             </button>
           );
         })}
@@ -375,15 +387,15 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
           data-testid="proximity-action"
         >
           <span role="status">
-            {doctorBlocked
-              ? `請先完成${missing.map((id) => (id === 'reception' ? '藥局確認' : '掛號報到')).join('、')}`
+            {interactionBlocked
+              ? blockedMessage
               : progress.nearby
                 ? `附近：${locations[progress.nearby].name}`
                 : '靠近'+mission.doctor.name+'或其他人員，即可互動'}
           </span>
           <button
             className="button primary"
-            disabled={!ready || !progress.nearby || progress.moving || doctorBlocked || consulting}
+            disabled={!ready || !progress.nearby || progress.moving || interactionBlocked || consulting}
             onClick={() => {
               if (progress.nearby) interact(progress.nearby);
             }}
@@ -432,9 +444,7 @@ function ThreeClinicSession({ onEnter, onProgress, onFailure, consultation }: Pr
                   : '方向鍵可繼續探索；桌椅與牆面會擋住角色。'
                 : progress.location === target
                   ? '抵達後自動展開交流；關閉後可再次點選人物對話。'
-                  : mission.required.length
-                    ? '請依左側任務提示完成拜訪準備，再前往醫師診間。'
-                    : '可點擊3D物件、地點標籤或小地圖，前往本關交流位置。'}
+                : '請依01 → 02 → 03的順序，完成櫃台對話再接受考核。'}
           </span>
         </div>
         {progress.moving && (

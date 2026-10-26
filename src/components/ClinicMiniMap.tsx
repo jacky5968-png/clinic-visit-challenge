@@ -1,6 +1,8 @@
 import {useVisitMission} from '../context/VisitContext';
 import {sceneLocations} from '../data/sceneLocations';
-import { Check, Compass } from 'lucide-react';
+import { Check, Compass, LockKeyhole } from 'lucide-react';
+import { useVisitSequence } from '../context/VisitSequenceContext';
+import { visitMarkerColors } from '../engine/visitSequence';
 import type { RefObject } from 'react';
 import {
   nodes,
@@ -20,8 +22,8 @@ export function ClinicMiniMap({
   playerRef: RefObject<SVGCircleElement | null>;
 }) {
   const locations=sceneLocations(useVisitMission());
+  const sequence=useVisitSequence();
   const current = progress.freeRoam ? progress.nearby : progress.location;
-  const destination = progress.destination ?? current;
   return (
     <aside className="clinic-minimap" aria-label="診所小地圖">
       <div className="minimap-heading">
@@ -54,10 +56,10 @@ export function ClinicMiniMap({
             key={id}
             cx={nodes[id].x}
             cy={nodes[id].y}
-            r="12"
-            fill={destination === id ? '#245d50' : '#fff'}
-            stroke="#7f9e71"
-            strokeWidth="4"
+            r="16"
+            fill={'#'+visitMarkerColors[sequence.status(id)].toString(16).padStart(6,'0')}
+            stroke="#ffffff"
+            strokeWidth="5"
           />
         ))}
         <circle
@@ -88,13 +90,16 @@ export function ClinicMiniMap({
             key={id}
             onClick={() => onNavigate(id)}
             disabled={progress.moving}
+            data-visit-status={sequence.status(id)}
+            aria-disabled={!sequence.canInteract(id)||undefined}
             aria-label={`小地圖：${locations[id].name}`}
             aria-current={current === id ? 'location' : undefined}
           >
             <span>
-              {progress.visited.includes(id) ? <Check size={11} /> : locations[id].marker}
+              {locations[id].marker}
             </span>
             {locations[id].name}
+            {sequence.status(id)==='complete'?<Check size={15}/>:sequence.status(id)==='locked'?<LockKeyhole size={15}/>:null}
           </button>
         ))}
       </div>

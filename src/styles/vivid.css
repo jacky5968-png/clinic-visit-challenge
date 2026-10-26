@@ -67,3 +67,36 @@ body{background:radial-gradient(ellipse at 0 0,#c4f2ff 0,transparent 48%),radial
  .site-header .brand{width:100%}
 }
 @media(prefers-reduced-motion:reduce){.button.primary:active:not(:disabled){translate:none}}
+/* One ordered visit flow on desktop, tablet, phone and the simplified scene. */
+.visit-sequence { padding:12px 16px; background:#f1f7ff; border-bottom:1px solid #b8cce5; color:#17384b; }
+.visit-sequence ol { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; list-style:none; margin:0; padding:0; }
+.visit-sequence li { display:flex; align-items:center; gap:8px; padding:8px; border:1px solid #a8b6c5; border-radius:10px; background:#fff; min-width:0; }
+.visit-sequence li strong { display:grid; place-items:center; width:34px; height:34px; flex-shrink:0; border-radius:50%; background:#596979; color:#fff; font-size:17px; box-shadow:0 2px 0 #19374b33; }
+.visit-sequence li > span { flex:1; min-width:0; font-size:15px; font-weight:700; line-height:1.4; overflow-wrap:anywhere; }
+.visit-sequence li small { display:block; font-size:13px; font-weight:400; margin-top:2px; }
+.visit-sequence li > svg { flex-shrink:0; }
+.visit-sequence li[data-status="next"] { border:2px solid #005cc8; background:#e9f3ff; }
+.visit-sequence li[data-status="next"] strong { background:#005cc8; }
+.visit-sequence li[data-status="complete"] { border-color:#007f52; background:#e9fff3; }
+.visit-sequence li[data-status="complete"] strong { background:#007f52; }
+.visit-sequence p { margin:8px 0 0; font-size:14px; line-height:1.6; }
+.visit-sequence-notice { padding:12px 16px; margin:0; background:#fff1cb; color:#653500; border-bottom:1px solid #d89e22; font-size:16px; line-height:1.6; }
+.clinic3d-stage .three-hotspot[data-visit-status],.explorer-hotspot[data-visit-status] { min-height:48px; opacity:1; }
+.clinic3d-stage .three-hotspot[data-visit-status] > span:first-child,.explorer-hotspot[data-visit-status] > .hotspot-marker,.minimap-destinations button[data-visit-status] > span { width:34px; min-width:34px; height:34px; border-radius:50%; display:grid; place-items:center; background:#005cc8; color:#fff; border:2px solid #fff; outline:1px solid #005cc8; font-size:17px; font-weight:800; flex-shrink:0; box-shadow:0 2px 0 #19374b33; }
+.clinic3d-stage .three-hotspot[data-visit-status="next"],.explorer-hotspot[data-visit-status="next"] { border-color:#005cc8; background:#fff; color:#17384b; box-shadow:0 0 0 3px #ffcf3c,0 4px 12px #142e4340; }
+.clinic3d-stage .three-hotspot[data-visit-status="locked"],.explorer-hotspot[data-visit-status="locked"] { border-color:#596979; background:#f7f9fc; color:#354b60; cursor:not-allowed; }
+.clinic3d-stage .three-hotspot[data-visit-status="complete"],.explorer-hotspot[data-visit-status="complete"] { border-color:#007f52; background:#f0fff6; color:#005c3c; }
+.clinic3d-stage .three-hotspot[data-visit-status="locked"] > span:first-child,.explorer-hotspot[data-visit-status="locked"] > .hotspot-marker,.minimap-destinations button[data-visit-status="locked"] > span { background:#596979; outline-color:#596979; }
+.clinic3d-stage .three-hotspot[data-visit-status="complete"] > span:first-child,.explorer-hotspot[data-visit-status="complete"] > .hotspot-marker,.minimap-destinations button[data-visit-status="complete"] > span { background:#007f52; outline-color:#007f52; }
+.minimap-destinations button[data-visit-status] { gap:8px; }
+.minimap-destinations button[data-visit-status="next"] { outline:2px solid #005cc8; outline-offset:-2px; }
+.clinic3d-stage .three-hotspot[data-visit-status="entrance"] > span:first-child,.explorer-hotspot[data-visit-status="entrance"] > .hotspot-marker { background:#596979; outline-color:#596979; }
+@media(max-width:600px) {
+  .visit-sequence { padding:10px; }
+  .visit-sequence ol { gap:6px; }
+  .visit-sequence li { flex-wrap:wrap; justify-content:center; gap:5px; padding:7px 4px; text-align:center; }
+  .visit-sequence li > span { flex-basis:100%; order:2; font-size:14px; }
+  .visit-sequence li strong { width:30px; height:30px; font-size:16px; }
+  .visit-sequence li > svg { width:14px; }
+  .clinic3d-stage .three-hotspot[data-visit-status] > span:first-child,.explorer-hotspot[data-visit-status] > .hotspot-marker { width:30px; min-width:30px; height:30px; font-size:16px; }
+}

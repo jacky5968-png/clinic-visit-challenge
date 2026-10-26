@@ -4,10 +4,10 @@ import type { LocationId } from '../engine/clinic';
 import { staffSmallTalk } from '../data/staffSmallTalk';
 import { useVisitMission } from '../context/VisitContext';
 
-export function StaffSceneDialogue({location,speaker,round,replying,reminder,panel,line,onReply,onContinue,onClose}:{
+export function StaffSceneDialogue({location,speaker,round,replying,reminder,panel,line,onReply,onComplete,onClose}:{
   location:LocationId; speaker:string; round:number; replying:boolean; reminder:string;
   panel:RefObject<HTMLElement|null>; line:RefObject<SVGLineElement|null>;
-  onReply:()=>void; onContinue:()=>void; onClose:()=>void;
+  onReply:()=>void; onComplete:()=>void; onClose:()=>void;
 }){
   const mission=useVisitMission();
   const talk=staffSmallTalk(location,round,mission);
@@ -31,8 +31,8 @@ export function StaffSceneDialogue({location,speaker,round,replying,reminder,pan
         <button className="icon-button" onClick={onClose} aria-label="關閉診所互動對話"><X size={18}/></button>
       </header>
       <p className="scene-speech-text" aria-live="polite" aria-atomic="true">{replying?talk.reply:talk.greeting}</p>
-      <button ref={next} className="button primary scene-speech-next" onClick={replying?onContinue:onReply}>
-        {replying?'繼續聊聊':'回應'} <span aria-hidden="true">→</span>
+      <button ref={next} className="button primary scene-speech-next" onClick={replying?onComplete:onReply}>
+        {replying?'完成對話':'回應'} <span aria-hidden="true">→</span>
       </button>
       <details className="scene-speech-note"><summary>拜訪提醒</summary><p>{reminder}</p></details>
     </section>
